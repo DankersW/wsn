@@ -13,6 +13,6 @@ docker run \
     --rm \
 	--user $UID:$UID \
 	--volume ${base_dir}:/work \
-	${extra_options} \
+	-it --privileged \
     ${image_name}:${image_tag} $@ \
         || fail "running docker"
