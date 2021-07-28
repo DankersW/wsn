@@ -1,3 +1,7 @@
+# env
+.vscode/
+build/
+
 # Toolchain
 ncs/
 
