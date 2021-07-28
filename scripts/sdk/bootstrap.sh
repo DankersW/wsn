@@ -17,5 +17,8 @@ cp ncs/bootloader/mcuboot/scripts/*.txt _requirements/bootloader || exit 1
 echo "Building build docker"
 docker build --tag dankersw/$DOCKER_IMAGE:$TOOLCHAIN_TAG -f docker/toolchain.dockerfile . || exit 1
 
+echo "Install 3th party tools"
+pip3 install -r requirements.txt
+
 echo "Cleaning up"
 rm -fr _requirements
