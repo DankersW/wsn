@@ -5,7 +5,7 @@
 #include <random/rand32.h>
 #include "gpio_definitions.h"
 
-#define SLEEP_TIME_MS   500
+#define SLEEP_TIME_MS   250
 
 const struct device *rgb_led_gpio[3];
 
@@ -26,10 +26,9 @@ void random_blinking_gpio(uint8_t state)
 void main(void)
 {
 	setup_led();
-	bool state = false;
 	while (1) {
-		state = !state;
-		gpio_pin_set(rgb_led_gpio[RED], PIN_R, state);
+		uint8_t random_number = sys_rand32_get() % 2;
+		random_blinking_gpio(random_number);
 		k_msleep(SLEEP_TIME_MS);
 	}
 }
