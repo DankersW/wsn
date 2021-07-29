@@ -1,20 +1,4 @@
-/*
- * Copyright (c) 2019 Nordic Semiconductor ASA
- *
- * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
- */
-
-#include <bluetooth/bluetooth.h>
-#include <bluetooth/mesh/models.h>
-#include <dk_buttons_and_leds.h>
 #include "model_handler.h"
-
-static void led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx,
-		    const struct bt_mesh_onoff_set *set,
-		    struct bt_mesh_onoff_status *rsp);
-
-static void led_get(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx,
-		    struct bt_mesh_onoff_status *rsp);
 
 static const struct bt_mesh_onoff_srv_handlers onoff_handlers = {
 	.set = led_set,
@@ -55,9 +39,8 @@ static void led_status(struct led_ctx *led, struct bt_mesh_onoff_status *status)
 	status->present_on_off = led->value || status->remaining_time;
 }
 
-static void led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx,
-		    const struct bt_mesh_onoff_set *set,
-		    struct bt_mesh_onoff_status *rsp)
+void led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, const struct bt_mesh_onoff_set *set,
+		     struct bt_mesh_onoff_status *rsp)
 {
 	struct led_ctx *led = CONTAINER_OF(srv, struct led_ctx, srv);
 	int led_idx = led - &led_ctx[0];
@@ -84,11 +67,9 @@ respond:
 	}
 }
 
-static void led_get(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx,
-		    struct bt_mesh_onoff_status *rsp)
+void led_get(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, struct bt_mesh_onoff_status *rsp)
 {
 	struct led_ctx *led = CONTAINER_OF(srv, struct led_ctx, srv);
-
 	led_status(led, rsp);
 }
 

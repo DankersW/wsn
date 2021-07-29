@@ -35,7 +35,7 @@ static void bt_ready(int err)
 		settings_load();
 	}
 
-	/* This will be a no-op if settings_load() loaded provisioning info */
+	// This will be a no-op if settings_load() loaded provisioning info
 	bt_mesh_prov_enable(BT_MESH_PROV_ADV | BT_MESH_PROV_GATT);
 
 	printk("Mesh initialized\n");
