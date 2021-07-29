@@ -1,14 +1,20 @@
 #!/bin/bash
+
 help() {
     echo "FAIL: $@"
-    echo "Usage: $0 -s sample" 1>&2
+    echo "Usage: $0 -t type -a app" 1>&2
     exit 1
 }
 
-while getopts "s:" opt; do
+while getopts "a:t:" opt; do
     case "${opt}" in
-        s)
+        a)
             APP=$OPTARG
+            ;;
+        t)
+            if [ $OPTARG = "sample" ]; then TYPE="samples"
+            elif [ $OPTARG = "app" ]; then TYPE="app"
+            fi
             ;;
         *)
             help illegal option "$OPTARG"
@@ -23,9 +29,10 @@ fi
 
 BOARD="nrf52840dongle_nrf52840"
 HEX_FILE="build/zephyr/zephyr.hex"
+SRC_LOCATION="$TYPE/$APP"
 
 echo "Building application $APP"
-./scripts/toolchain.sh west build -p -b $BOARD samples/$APP || exit 1
+./scripts/toolchain.sh west build -p -b $BOARD $SRC_LOCATION || exit 1
 
 echo "Flashing hex"
 PKG_NAME="$APP.zip" 
