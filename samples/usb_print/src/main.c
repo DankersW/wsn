@@ -1,17 +1,12 @@
 #include <zephyr.h>
 #include <sys/printk.h>
-#include <logging/log.h>
 #include <stdlib.h>
 
 #include <usb/usb_device.h>
 #include <drivers/uart.h>
 
-
-LOG_MODULE_REGISTER(cdc_acm_echo, LOG_LEVEL_INF);
-
 void main(void)
 {
-	
 	if (usb_enable(NULL)) {
 		return;
 	}
