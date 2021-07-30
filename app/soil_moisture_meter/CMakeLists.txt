@@ -5,11 +5,21 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 list(APPEND BOARD_ROOT /work)
 
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
-project(NONE)
+project(
+	moisture_sensor
+	VERSION "0.0.1"
+	DESCRIPTION "Wireless sensor network to detect the soil moisture level"
+	LANGUAGES CXX
+)
 
 target_sources(app PRIVATE
-	src/main.c)
+	src/main.c
+
+	src/bt/mesh.c
+	src/bt/model_definition.c
+
+)
 
 target_include_directories(app PRIVATE 
-	src
+	src/bt
 )
