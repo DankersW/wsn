@@ -12,9 +12,6 @@ static void led_work(struct k_work *work)
 	handler_led_work(work, led_ctx);
 }
 
-
-
-
 void led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, const struct bt_mesh_onoff_set *set,
 		     struct bt_mesh_onoff_status *rsp)
 {
@@ -105,7 +102,7 @@ const struct bt_mesh_comp *model_handler_init(void)
 	k_delayed_work_init(&attention_blink_work, attention_blink);
 
 	for (int i = 0; i < ARRAY_SIZE(led_ctx); ++i) {
-		k_delayed_work_init(&led_ctx[i].work, led_work);
+		k_delayed_work_init(&led_ctx[i].work, handler_led_work);
 	}
 
 	return &comp;
