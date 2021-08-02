@@ -16,11 +16,13 @@ target_sources(app PRIVATE
 	src/main.c
 
 	src/bt/mesh.c
-	src/bt/model_definitions.c
-	src/bt/led_model_handlers.c
-	src/bt/attention_model_handlers.c
+
+	src/bt/models/model_definitions.c
+	src/bt/models/led_model_handlers.c
+	src/bt/models/attention_model_handlers.c
 )
 
 target_include_directories(app PRIVATE 
 	src/bt
+	src/bt/models
 )
