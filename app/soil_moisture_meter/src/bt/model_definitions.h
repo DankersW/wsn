@@ -6,6 +6,7 @@
 #include <bluetooth/mesh/models.h>
 #include <dk_buttons_and_leds.h>
 
+#include "bt_types.h"
 #include "model_handler.h"
 
 

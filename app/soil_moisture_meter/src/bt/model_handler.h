@@ -6,12 +6,7 @@
 #include <bluetooth/mesh/models.h>
 #include <dk_buttons_and_leds.h>
 
-struct led_ctx {
-	struct bt_mesh_onoff_srv srv;
-	struct k_delayed_work work;
-	uint32_t remaining;
-	bool value;
-};
+#include "bt_types.h"
 
 void led_transition_start__(struct led_ctx *led, struct led_ctx led_ctx[]);
 
