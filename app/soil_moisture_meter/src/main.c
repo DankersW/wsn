@@ -5,6 +5,15 @@
 #include <random/rand32.h>
 #include "gpio_definitions.h"
 
+#include <bluetooth/bluetooth.h>
+#include <bluetooth/mesh/models.h>
+#include <bluetooth/mesh/dk_prov.h>
+#include <dk_buttons_and_leds.h>
+//#include "model_handler.h"
+
+
+#include "mesh.h"
+
 #define SLEEP_TIME_MS   250
 
 const struct device *rgb_led_gpio[3];
@@ -25,6 +34,8 @@ void random_blinking_gpio(uint8_t state)
 
 void main(void)
 {
+	enable_bt();
+
 	setup_led();
 	while (1) {
 		uint8_t random_number = sys_rand32_get() % 2;
