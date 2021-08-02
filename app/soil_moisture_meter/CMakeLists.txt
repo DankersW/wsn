@@ -18,7 +18,6 @@ target_sources(app PRIVATE
 	src/bt/mesh.c
 	src/bt/model_definitions.c
 	src/bt/led_model_handlers.c
-
 )
 
 target_include_directories(app PRIVATE 

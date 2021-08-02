@@ -9,16 +9,13 @@ struct led_ctx led_ctx[4] = {
 
 void led_transition_start(struct led_ctx *led)
 {
-	_led_transition_start(led, led_ctx);
+	handler_led_transition_start(led, led_ctx);
 }
 
 
 void led_status(struct led_ctx *led, struct bt_mesh_onoff_status *status)
 {
-	status->remaining_time = k_delayed_work_remaining_get(&led->work) + led->remaining;
-	status->target_on_off = led->value;
-	// As long as the transition is in progress, the onoff state is "on":
-	status->present_on_off = led->value || status->remaining_time;
+	handler_led_status(led, status);
 }
 
 
