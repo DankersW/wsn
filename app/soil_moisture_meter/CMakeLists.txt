@@ -16,7 +16,7 @@ target_sources(app PRIVATE
 	src/main.c
 
 	src/bt/mesh.c
-	src/bt/model_definition.c
+	src/bt/model_definitions.c
 
 )
 
