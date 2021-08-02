@@ -1,4 +1,4 @@
-#include "attention_model_handlers.h"
+#include "attention_handlers.h"
 
 static struct k_delayed_work attention_blink_work;
 

@@ -1,5 +1,5 @@
-#ifndef MODEL_HANDLER_H
-#define MODEL_HANDLER_H
+#ifndef LED_HANDLER_H
+#define LED_HANDLER_H
 
 #include <bluetooth/mesh.h>
 #include <bluetooth/bluetooth.h>
@@ -13,4 +13,4 @@ void handler_led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx,
                      struct bt_mesh_onoff_status *rsp, struct led_ctx led_ctx[]);
 void handler_led_work(struct k_work *work, struct led_ctx led_ctx[]);
 
-#endif // MODEL_HANDLER_H
+#endif // LED_HANDLER_H

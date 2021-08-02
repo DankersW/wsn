@@ -18,8 +18,8 @@ target_sources(app PRIVATE
 	src/bt/mesh.c
 
 	src/bt/models/model_definitions.c
-	src/bt/models/led_model_handlers.c
-	src/bt/models/attention_model_handlers.c
+	src/bt/models/led_handlers.c
+	src/bt/models/attention_handlers.c
 )
 
 target_include_directories(app PRIVATE 

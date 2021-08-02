@@ -1,5 +1,5 @@
-#ifndef ATTENTION_MODEL_HANDLERS_H
-#define ATTENTION_MODEL_HANDLERS_H
+#ifndef ATTENTION_HANDLERS_H
+#define ATTENTION_HANDLERS_H
 
 #include <bluetooth/mesh.h>
 #include <bluetooth/bluetooth.h>
@@ -11,4 +11,4 @@ void attention_on(struct bt_mesh_model *mod);
 void attention_off(struct bt_mesh_model *mod);
 struct k_delayed_work *get_attention_blink_work();
 
-#endif // ATTENTION_MODEL_HANDLERS_H
+#endif // ATTENTION_HANDLERS_H
