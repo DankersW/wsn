@@ -18,7 +18,7 @@ void led_transition_start(struct led_ctx *led)
 	k_delayed_work_submit(&led->work, K_MSEC(led->remaining));
 	led->remaining = 0;
 	*/
-	led_transition_start__(&led, led_ctx);
+	led_transition_start__(led, led_ctx);
 }
 
 
