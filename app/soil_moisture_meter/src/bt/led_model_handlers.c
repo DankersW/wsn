@@ -45,22 +45,25 @@ void handler_led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx,
 	struct led_ctx *led = CONTAINER_OF(srv, struct led_ctx, srv);
 	int led_idx = led - &led_ctx[0];
 
-	if (set->on_off == led->value) {
-		goto respond;
+	if (set->on_off != led->value)
+	{
+		led->value = set->on_off;
+		led->remaining = set->transition->time;
+
+		if (set->transition->delay > 0) 
+		{
+			k_delayed_work_submit(&led->work, K_MSEC(set->transition->delay));
+		} 
+		else if (set->transition->time > 0) 
+		{
+			led_transition_start(led, led_ctx);
+		} 
+		else 
+		{
+			dk_set_led(led_idx, set->on_off);
+		}
 	}
 
-	led->value = set->on_off;
-	led->remaining = set->transition->time;
-
-	if (set->transition->delay > 0) {
-		k_delayed_work_submit(&led->work, K_MSEC(set->transition->delay));
-	} else if (set->transition->time > 0) {
-		led_transition_start(led, led_ctx);
-	} else {
-		dk_set_led(led_idx, set->on_off);
-	}
-
-respond:
 	if (rsp) {
 		led_status(led, rsp);
 	}
