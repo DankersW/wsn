@@ -1,6 +1,6 @@
-#include "model_handler.h"
+#include "led_model_handlers.h"
 
-void led_transition_start__(struct led_ctx *led, struct led_ctx led_ctx[])
+void _led_transition_start(struct led_ctx *led, struct led_ctx led_ctx[])
 {
 	int led_idx = led - &led_ctx[0];
 	dk_set_led(led_idx, true);

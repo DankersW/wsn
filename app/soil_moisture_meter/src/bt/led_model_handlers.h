@@ -8,6 +8,6 @@
 
 #include "bt_types.h"
 
-void led_transition_start__(struct led_ctx *led, struct led_ctx led_ctx[]);
+void _led_transition_start(struct led_ctx *led, struct led_ctx led_ctx[]);
 
 #endif // MODEL_HANDLER_H

@@ -7,7 +7,7 @@
 #include <dk_buttons_and_leds.h>
 
 #include "bt_types.h"
-#include "model_handler.h"
+#include "led_model_handlers.h"
 
 
 const struct bt_mesh_comp *model_handler_init(void);
