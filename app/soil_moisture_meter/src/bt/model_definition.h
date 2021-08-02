@@ -21,18 +21,21 @@ struct led_ctx {
 };
 
 
-void led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, const struct bt_mesh_onoff_set *set,		    struct bt_mesh_onoff_status *rsp);
-
+void led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, const struct bt_mesh_onoff_set *set, struct bt_mesh_onoff_status *rsp);
 void led_get(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, struct bt_mesh_onoff_status *rsp);
 
+void led_transition_start(struct led_ctx *led);
+void led_status(struct led_ctx *led, struct bt_mesh_onoff_status *status);
+void led_work(struct k_work *work);
+
+void attention_blink(struct k_work *work);
+void attention_on(struct bt_mesh_model *mod);
+void attention_off(struct bt_mesh_model *mod);
 
 static const struct bt_mesh_onoff_srv_handlers onoff_handlers = {
 	.set = led_set,
 	.get = led_get,
 };
-
-
-
 
 
 #endif // MODEL_DEFINITION_H

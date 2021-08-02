@@ -8,7 +8,9 @@ struct led_ctx led_ctx[4] = {
 };
 
 
-static void led_transition_start(struct led_ctx *led)
+
+//static void led_transition_start(struct led_ctx *led)
+void led_transition_start(struct led_ctx *led)
 {
 	int led_idx = led - &led_ctx[0];
 
@@ -20,7 +22,8 @@ static void led_transition_start(struct led_ctx *led)
 
 
 
-static void led_status(struct led_ctx *led, struct bt_mesh_onoff_status *status)
+//static void led_status(struct led_ctx *led, struct bt_mesh_onoff_status *status)
+void led_status(struct led_ctx *led, struct bt_mesh_onoff_status *status)
 {
 	status->remaining_time = k_delayed_work_remaining_get(&led->work) + led->remaining;
 	status->target_on_off = led->value;
@@ -64,7 +67,8 @@ void led_get(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, struct 
 }
 
 
-static void led_work(struct k_work *work)
+//static void led_work(struct k_work *work)
+void led_work(struct k_work *work)
 {
 	struct led_ctx *led = CONTAINER_OF(work, struct led_ctx, work.work);
 	int led_idx = led - &led_ctx[0];
@@ -87,7 +91,8 @@ static void led_work(struct k_work *work)
 
 static struct k_delayed_work attention_blink_work;
 
-static void attention_blink(struct k_work *work)
+//static void attention_blink(struct k_work *work)
+void attention_blink(struct k_work *work)
 {
 	static int idx;
 	const uint8_t pattern[] = {
@@ -100,12 +105,14 @@ static void attention_blink(struct k_work *work)
 	k_delayed_work_submit(&attention_blink_work, K_MSEC(30));
 }
 
-static void attention_on(struct bt_mesh_model *mod)
+//static void attention_on(struct bt_mesh_model *mod)
+void attention_on(struct bt_mesh_model *mod)
 {
 	k_delayed_work_submit(&attention_blink_work, K_NO_WAIT);
 }
 
-static void attention_off(struct bt_mesh_model *mod)
+//static void attention_off(struct bt_mesh_model *mod)
+void attention_off(struct bt_mesh_model *mod)
 {
 	k_delayed_work_cancel(&attention_blink_work);
 	dk_set_leds(DK_NO_LEDS_MSK);
