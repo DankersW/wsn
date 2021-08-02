@@ -8,7 +8,9 @@
 
 #include "bt_types.h"
 
-void handler_led_transition_start(struct led_ctx *led, struct led_ctx led_ctx[]);
-void handler_led_status(struct led_ctx *led, struct bt_mesh_onoff_status *status);
+void handler_led_get(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, struct bt_mesh_onoff_status *rsp);
+void handler_led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, const struct bt_mesh_onoff_set *set, 
+                     struct bt_mesh_onoff_status *rsp, struct led_ctx led_ctx[]);
+void handler_led_work(struct k_work *work, struct led_ctx led_ctx[]);
 
 #endif // MODEL_HANDLER_H

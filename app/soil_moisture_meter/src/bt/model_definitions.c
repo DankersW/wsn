@@ -7,71 +7,27 @@ struct led_ctx led_ctx[4] = {
 	}
 };
 
-void led_transition_start(struct led_ctx *led)
+static void led_work(struct k_work *work)
 {
-	handler_led_transition_start(led, led_ctx);
+	handler_led_work(work, led_ctx);
 }
 
 
-void led_status(struct led_ctx *led, struct bt_mesh_onoff_status *status)
-{
-	handler_led_status(led, status);
-}
 
 
 void led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, const struct bt_mesh_onoff_set *set,
 		     struct bt_mesh_onoff_status *rsp)
 {
-	struct led_ctx *led = CONTAINER_OF(srv, struct led_ctx, srv);
-	int led_idx = led - &led_ctx[0];
-
-	if (set->on_off == led->value) {
-		goto respond;
-	}
-
-	led->value = set->on_off;
-	led->remaining = set->transition->time;
-
-	if (set->transition->delay > 0) {
-		k_delayed_work_submit(&led->work, K_MSEC(set->transition->delay));
-	} else if (set->transition->time > 0) {
-		led_transition_start(led);
-	} else {
-		dk_set_led(led_idx, set->on_off);
-	}
-
-respond:
-	if (rsp) {
-		led_status(led, rsp);
-	}
+	handler_led_set(srv, ctx, set, rsp, led_ctx);
 }
-
 
 void led_get(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, struct bt_mesh_onoff_status *rsp)
 {
-	struct led_ctx *led = CONTAINER_OF(srv, struct led_ctx, srv);
-	led_status(led, rsp);
+	handler_led_get(srv, ctx, rsp);
 }
 
 
-//static void led_work(struct k_work *work)
-void led_work(struct k_work *work)
-{
-	struct led_ctx *led = CONTAINER_OF(work, struct led_ctx, work.work);
-	int led_idx = led - &led_ctx[0];
 
-	if (led->remaining) {
-		led_transition_start(led);
-	} else {
-		dk_set_led(led_idx, led->value);
-
-		// Publish the new value at the end of the transition
-		struct bt_mesh_onoff_status status;
-
-		led_status(led, &status);
-		bt_mesh_onoff_srv_pub(&led->srv, NULL, &status);
-	}
-}
 
 
 // Set up a repeating delayed work to blink the DK's LEDs when attention is requested.
