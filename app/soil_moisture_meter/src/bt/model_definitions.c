@@ -10,12 +10,15 @@ struct led_ctx led_ctx[4] = {
 
 void led_transition_start(struct led_ctx *led)
 {
+	/*
 	int led_idx = led - &led_ctx[0];
 
 	// As long as the transition is in progress, the onoff state is "on":
 	dk_set_led(led_idx, true);
 	k_delayed_work_submit(&led->work, K_MSEC(led->remaining));
 	led->remaining = 0;
+	*/
+	led_transition_start__(&led, led_ctx);
 }
 
 

@@ -13,23 +13,6 @@ struct led_ctx {
 	bool value;
 };
 
-struct k_delayed_work attention_blink_work;
-
-
-void led_get(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, struct bt_mesh_onoff_status *rsp);
-void led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, const struct bt_mesh_onoff_set *set, struct bt_mesh_onoff_status *rsp);
-
-void led_status(struct led_ctx *led, struct bt_mesh_onoff_status *status);
-void led_work(struct k_work *work);
-void led_transition_start(struct led_ctx *led);
-
-void attention_off(struct bt_mesh_model *mod);
-void attention_on(struct bt_mesh_model *mod);
-void attention_blink(struct k_work *work);
-
-static const struct bt_mesh_onoff_srv_handlers onoff_handlers = {
-	.set = led_set,
-	.get = led_get,
-};
+void led_transition_start__(struct led_ctx *led, struct led_ctx led_ctx[]);
 
 #endif // MODEL_HANDLER_H

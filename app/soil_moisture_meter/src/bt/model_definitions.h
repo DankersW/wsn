@@ -6,7 +6,7 @@
 #include <bluetooth/mesh/models.h>
 #include <dk_buttons_and_leds.h>
 
-//#include "model_handler.h"
+#include "model_handler.h"
 
 
 const struct bt_mesh_comp *model_handler_init(void);
