@@ -41,6 +41,5 @@ void main(void)
 		uint8_t random_number = sys_rand32_get() % 2;
 		random_blinking_gpio(random_number);
 		k_msleep(SLEEP_TIME_MS);
-		printk("Hello world\n");
 	}
 }
