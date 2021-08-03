@@ -4,9 +4,6 @@
 #include <drivers/gpio.h>
 #include <random/rand32.h>
 
-//#include <usb/usb_device.h>
-//#include <sys/printk.h>
-
 #include "gpio_definitions.h"
 #include "mesh.h"
 
@@ -30,10 +27,6 @@ void random_blinking_gpio(uint8_t state)
 
 void main(void)
 {
-	//if (usb_enable(NULL)) {
-	//	return;
-	//}
-
 	enable_bt();
 
 	setup_led();
