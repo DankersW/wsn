@@ -3,15 +3,11 @@
 #include <devicetree.h>
 #include <drivers/gpio.h>
 #include <random/rand32.h>
+
+#include <usb/usb_device.h>
+#include <drivers/uart.h>
+
 #include "gpio_definitions.h"
-
-#include <bluetooth/bluetooth.h>
-#include <bluetooth/mesh/models.h>
-#include <bluetooth/mesh/dk_prov.h>
-#include <dk_buttons_and_leds.h>
-//#include "model_handler.h"
-
-
 #include "mesh.h"
 
 #define SLEEP_TIME_MS   250
@@ -34,6 +30,10 @@ void random_blinking_gpio(uint8_t state)
 
 void main(void)
 {
+
+	if (usb_enable(NULL)) {
+		return;
+	}
 	enable_bt();
 
 	setup_led();
