@@ -1,30 +1,30 @@
 #include "mesh.h"
 
+LOG_MODULE_REGISTER(mesh, LOG_LEVEL_DBG);
+
 void enable_bt(void)
 {
-    printk("Initializing BT\n");
 	int err = bt_enable(bt_ready);
 	if (err) {
-		printk("Bluetooth init failed (err %d)\n", err);
+		LOG_ERR("Bluetooth init failed (err %d)", err);
 	}
-    printk("BT initialized\n");
 }
 
 void bt_ready(int err)
 {
 	if (err) {
-		printk("Bluetooth init failed (err %d)\n", err);
+		LOG_ERR("Bluetooth init failed (err %d)", err);
 		return;
 	}
 
-	printk("Bluetooth initialized\n");
+	LOG_INF("Bluetooth initialized");
 
 	dk_leds_init();
 	dk_buttons_init(NULL);
 
 	err = bt_mesh_init(bt_mesh_dk_prov_init(), model_handler_init());
 	if (err) {
-		printk("Initializing mesh failed (err %d)\n", err);
+		LOG_ERR("Initializing mesh failed (err %d)", err);
 		return;
 	}
 
@@ -35,5 +35,5 @@ void bt_ready(int err)
 	// This will be a no-op if settings_load() loaded provisioning info
 	bt_mesh_prov_enable(BT_MESH_PROV_ADV | BT_MESH_PROV_GATT);
 
-	printk("Mesh initialized\n");
+	LOG_INF("Mesh initialized");
 }

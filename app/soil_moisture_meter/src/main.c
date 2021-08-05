@@ -3,12 +3,14 @@
 #include <devicetree.h>
 #include <drivers/gpio.h>
 #include <random/rand32.h>
-
 #include <usb/usb_device.h>
-#include <drivers/uart.h>
+#include <logging/log.h>
 
 #include "gpio_definitions.h"
 #include "mesh.h"
+
+#define LOG_MODULE_NAME wsn_node
+LOG_MODULE_REGISTER(LOG_MODULE_NAME, LOG_LEVEL_DBG);
 
 #define SLEEP_TIME_MS   250
 
@@ -30,10 +32,16 @@ void random_blinking_gpio(uint8_t state)
 
 void main(void)
 {
-
 	if (usb_enable(NULL)) {
 		return;
 	}
+	k_sleep(K_SECONDS(1));
+	LOG_ERR("Error message example.");
+	LOG_WRN("Warning message example.");
+	LOG_INF("Info message example.");
+	LOG_DBG("Debug message example.");
+
+
 	enable_bt();
 
 	setup_led();

@@ -2,7 +2,6 @@
 
 ## Sensor app
 
-- Logging interface
 - Mulible model definitions
 - Sensor server model
 - Un-provisioning on button click
