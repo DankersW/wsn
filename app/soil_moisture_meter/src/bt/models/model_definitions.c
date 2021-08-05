@@ -20,8 +20,8 @@ static struct bt_mesh_elem elements[] = {
 						BT_MESH_MODEL_ONOFF_SRV(&led_ctx[0].srv)),
 					BT_MESH_MODEL_NONE),
 	BT_MESH_ELEM(2, BT_MESH_MODEL_LIST(BT_MESH_MODEL_ONOFF_SRV(&led_ctx[1].srv)), BT_MESH_MODEL_NONE),
-	BT_MESH_ELEM(3, BT_MESH_MODEL_LIST(BT_MESH_MODEL_ONOFF_SRV(&led_ctx[2].srv)), BT_MESH_MODEL_NONE),
-	BT_MESH_ELEM(4, BT_MESH_MODEL_LIST(BT_MESH_MODEL_ONOFF_SRV(&led_ctx[3].srv)), BT_MESH_MODEL_NONE),
+	//BT_MESH_ELEM(3, BT_MESH_MODEL_LIST(BT_MESH_MODEL_ONOFF_SRV(&led_ctx[2].srv)), BT_MESH_MODEL_NONE),
+	//BT_MESH_ELEM(4, BT_MESH_MODEL_LIST(BT_MESH_MODEL_ONOFF_SRV(&led_ctx[3].srv)), BT_MESH_MODEL_NONE),
 };
 
 static const struct bt_mesh_comp comp = {
