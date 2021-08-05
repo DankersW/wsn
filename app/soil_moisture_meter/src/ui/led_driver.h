@@ -10,8 +10,7 @@
 enum rbg_colors {RED, GREEN, BLUE};
 
 void setup_leds(void);
-
-void random_blinking();
+void random_state_led2();
 
 
 #endif // LED_DRIVER_H

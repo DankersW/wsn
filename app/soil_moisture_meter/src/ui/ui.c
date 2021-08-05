@@ -10,5 +10,5 @@ void enable_ui(void)
 
 void show_heartbeat()
 {
-    random_blinking();
+    random_state_led2();
 }
