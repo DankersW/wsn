@@ -8,6 +8,7 @@
 
 #include "gpio_definitions.h"
 #include "mesh.h"
+#include "ui.h"
 
 #define LOG_MODULE_NAME wsn_node
 LOG_MODULE_REGISTER(LOG_MODULE_NAME, LOG_LEVEL_DBG);
@@ -30,19 +31,17 @@ void random_blinking_gpio(uint8_t state)
 	gpio_pin_set(rgb_led_gpio[RED], PIN_R, state % 2);
 }
 
+void init_node(void)
+{
+	usb_enable(NULL);
+	enable_bt();
+
+	enable_ui();
+}
+
 void main(void)
 {
-	if (usb_enable(NULL)) {
-		return;
-	}
-	k_sleep(K_SECONDS(1));
-	LOG_ERR("Error message example.");
-	LOG_WRN("Warning message example.");
-	LOG_INF("Info message example.");
-	LOG_DBG("Debug message example.");
-
-
-	enable_bt();
+	init_node();
 
 	setup_led();
 	while (1) {
