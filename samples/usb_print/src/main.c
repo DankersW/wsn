@@ -1,9 +1,7 @@
 #include <zephyr.h>
 #include <sys/printk.h>
-#include <stdlib.h>
 
 #include <usb/usb_device.h>
-#include <drivers/uart.h>
 
 void main(void)
 {
