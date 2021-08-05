@@ -11,6 +11,7 @@ void main(void)
 	if (usb_enable(NULL)) {
 		return;
 	}
+	k_sleep(K_SECONDS(1));
 
 	LOG_ERR("Error message example.");
 	LOG_WRN("Warning message example.");
