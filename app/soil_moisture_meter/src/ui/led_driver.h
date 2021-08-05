@@ -10,6 +10,9 @@
 enum rbg_colors {RED, GREEN, BLUE};
 
 void setup_leds(void);
+
+void blink_rgb(uint8_t led);
+
 void random_state_led2();
 
 

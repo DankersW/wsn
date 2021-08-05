@@ -42,3 +42,24 @@ void set_led1(bool state)
 {
     gpio_pin_set(led1, LED1_PIN, state);
 }
+
+void blink_rgb(uint8_t led)
+{
+    switch (led)
+    {
+    case RED:
+        gpio_pin_toggle(rgb_led2[RED], LED2_PIN_R);
+        break;
+
+    case GREEN:
+        gpio_pin_toggle(rgb_led2[GREEN], LED2_PIN_G);
+        break;
+
+    case BLUE:
+        gpio_pin_toggle(rgb_led2[BLUE], LED2_PIN_B);
+        break;
+    
+    default:
+        break;
+    }
+}
