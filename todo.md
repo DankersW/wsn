@@ -2,11 +2,12 @@
 
 ## Sensor app
 
+- Make the generic ON/OFF models use the UI layer
 - Mulible model definitions
 - Sensor server model
 - Un-provisioning on button click
-- Interaction layer (UI) handling LED stuff
 - Send out a message without using the build-in models
+- Solve CMake includes with different directories
 
 ## Edge node
 
