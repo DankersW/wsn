@@ -22,9 +22,11 @@ target_sources(app PRIVATE
 	src/bt/models/attention_handlers.c
 
 	src/ui/ui.c
+	src/ui/led_driver.c
 )
 
 target_include_directories(app PRIVATE 
+	src
 	src/bt
 	src/bt/models
 	src/ui
