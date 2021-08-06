@@ -3,7 +3,8 @@
 static void led_transition_start(struct led_ctx *led, struct led_ctx led_ctx[])
 {
 	int led_idx = led - &led_ctx[0];
-	dk_set_led(led_idx, true);
+	//set_led1(true);
+	//dk_set_led(led_idx, true);
 	k_delayed_work_submit(&led->work, K_MSEC(led->remaining));
 	led->remaining = 0;
 }
@@ -26,7 +27,7 @@ void handler_led_work(struct k_work *work, struct led_ctx led_ctx[])
 	} 
 	else 
 	{
-		dk_set_led(led_idx, led->value);
+		set_led1(led->value);
 		struct bt_mesh_onoff_status status;
 		led_status(led, &status);
 		bt_mesh_onoff_srv_pub(&led->srv, NULL, &status);
@@ -60,7 +61,8 @@ void handler_led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx,
 		} 
 		else 
 		{
-			dk_set_led(led_idx, set->on_off);
+			set_led1(set->on_off);
+			//dk_set_led(led_idx, set->on_off);
 		}
 	}
 

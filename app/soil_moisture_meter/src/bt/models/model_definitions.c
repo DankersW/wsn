@@ -16,8 +16,8 @@ static struct bt_mesh_elem elements[] = {
 	BT_MESH_ELEM(1, BT_MESH_MODEL_LIST
 					(
 						BT_MESH_MODEL_CFG_SRV,
-						BT_MESH_MODEL_HEALTH_SRV(&health_srv, &health_pub),
-						BT_MESH_MODEL_ONOFF_SRV(&led_ctx[0].srv)),
+						BT_MESH_MODEL_HEALTH_SRV(&health_srv, &health_pub)
+					),
 					BT_MESH_MODEL_NONE),
 	BT_MESH_ELEM(2, BT_MESH_MODEL_LIST(BT_MESH_MODEL_ONOFF_SRV(&led_ctx[1].srv)), BT_MESH_MODEL_NONE),
 	//BT_MESH_ELEM(3, BT_MESH_MODEL_LIST(BT_MESH_MODEL_ONOFF_SRV(&led_ctx[2].srv)), BT_MESH_MODEL_NONE),
