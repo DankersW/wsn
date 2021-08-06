@@ -1,10 +1,7 @@
 #ifndef MODEL_DEFINITION_H
 #define MODEL_DEFINITION_H
 
-#include <bluetooth/mesh.h>
-#include <bluetooth/bluetooth.h>
 #include <bluetooth/mesh/models.h>
-#include <dk_buttons_and_leds.h>
 
 #include "bt_types.h"
 #include "led_handlers.h"

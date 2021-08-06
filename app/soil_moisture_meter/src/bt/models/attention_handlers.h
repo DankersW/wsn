@@ -1,8 +1,6 @@
 #ifndef ATTENTION_HANDLERS_H
 #define ATTENTION_HANDLERS_H
 
-#include <bluetooth/mesh.h>
-#include <bluetooth/bluetooth.h>
 #include <bluetooth/mesh/models.h>
 #include <dk_buttons_and_leds.h>
 

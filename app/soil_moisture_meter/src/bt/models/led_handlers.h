@@ -1,14 +1,9 @@
 #ifndef LED_HANDLER_H
 #define LED_HANDLER_H
 
-#include <bluetooth/mesh.h>
-#include <bluetooth/bluetooth.h>
-#include <bluetooth/mesh/models.h>
-#include <dk_buttons_and_leds.h>
-
+#include "bt_types.h"
 #include "led_driver.h"
 
-#include "bt_types.h"
 
 void led_get(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, struct bt_mesh_onoff_status *rsp);
 void led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, const struct bt_mesh_onoff_set *set, struct bt_mesh_onoff_status *rsp);
