@@ -2,10 +2,17 @@
 
 BT_MESH_HEALTH_PUB_DEFINE(health_pub, 0);
 
+
+/*
 struct led_ctx led_ctx[4] = {
 	[0 ... 3] = {
 		.srv = BT_MESH_ONOFF_SRV_INIT(&onoff_handlers),
 	}
+};
+*/
+
+struct led_ctx led_ctx = {
+	.srv = BT_MESH_ONOFF_SRV_INIT(&onoff_handlers),
 };
 
 static struct bt_mesh_health_srv health_srv = {
@@ -19,9 +26,7 @@ static struct bt_mesh_elem elements[] = {
 						BT_MESH_MODEL_HEALTH_SRV(&health_srv, &health_pub)
 					),
 					BT_MESH_MODEL_NONE),
-	BT_MESH_ELEM(2, BT_MESH_MODEL_LIST(BT_MESH_MODEL_ONOFF_SRV(&led_ctx[1].srv)), BT_MESH_MODEL_NONE),
-	//BT_MESH_ELEM(3, BT_MESH_MODEL_LIST(BT_MESH_MODEL_ONOFF_SRV(&led_ctx[2].srv)), BT_MESH_MODEL_NONE),
-	//BT_MESH_ELEM(4, BT_MESH_MODEL_LIST(BT_MESH_MODEL_ONOFF_SRV(&led_ctx[3].srv)), BT_MESH_MODEL_NONE),
+	BT_MESH_ELEM(2, BT_MESH_MODEL_LIST(BT_MESH_MODEL_ONOFF_SRV(&led_ctx.srv)), BT_MESH_MODEL_NONE),
 };
 
 static const struct bt_mesh_comp comp = {
@@ -34,10 +39,8 @@ const struct bt_mesh_comp *model_handler_init(void)
 {
 	k_delayed_work_init(get_attention_blink_work(), attention_blink);
 
-	for (int i = 0; i < ARRAY_SIZE(led_ctx); ++i) 
-	{
-		k_delayed_work_init(&led_ctx[i].work, led_work);
-	}
+	k_delayed_work_init(&led_ctx.work, led_work);
+
 	return &comp;
 }
 
