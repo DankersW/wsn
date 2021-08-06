@@ -13,6 +13,11 @@ static void led_status(struct led_ctx *led, struct bt_mesh_onoff_status *status)
 	status->present_on_off = led->value || status->remaining_time;
 }
 
+void led_init(void)
+{
+	setup_led1();
+}
+
 void led_work(struct k_work *work)
 {
 	struct led_ctx *led = CONTAINER_OF(work, struct led_ctx, work.work);

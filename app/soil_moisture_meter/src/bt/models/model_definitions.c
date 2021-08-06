@@ -199,6 +199,8 @@ const struct bt_mesh_comp *model_handler_init(void)
 	k_delayed_work_init(get_attention_blink_work(), attention_blink);
 	k_delayed_work_init(&led_ctx.work, led_work);
 
+	led_init();
+
 	// TEST
 
 	k_delayed_work_init(&end_of_presence_work, end_of_presence);
