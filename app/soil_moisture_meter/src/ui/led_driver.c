@@ -63,7 +63,7 @@ void set_led1(bool state)
     gpio_pin_set(led1, LED1_PIN, state);
 }
 
-void blink_rgb(uint8_t led)
+void blink_rgb(enum rbg_colors led)
 {
     switch (led)
     {
