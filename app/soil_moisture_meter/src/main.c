@@ -21,7 +21,7 @@ void main(void)
 	init_node();
 
 	while (1) {
-		k_msleep(250);
+		k_msleep(500);
 		show_heartbeat();
 	}
 }
