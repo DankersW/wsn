@@ -24,8 +24,7 @@ static uint32_t col_samps[ARRAY_SIZE(columns)];
 
 static int32_t prev_pres;
 
-static int chip_temp_get(struct bt_mesh_sensor *sensor,
-			 struct bt_mesh_msg_ctx *ctx, struct sensor_value *rsp)
+static int chip_temp_get(struct bt_mesh_sensor *sensor, struct bt_mesh_msg_ctx *ctx, struct sensor_value *rsp)
 {
 	int err;
 
@@ -54,14 +53,11 @@ static struct bt_mesh_sensor chip_temp = {
 	.get = chip_temp_get,
 };
 
-static int relative_runtime_in_chip_temp_get(
-	struct bt_mesh_sensor *sensor, struct bt_mesh_msg_ctx *ctx,
-	const struct bt_mesh_sensor_column *column, struct sensor_value *value)
+static int relative_runtime_in_chip_temp_get(struct bt_mesh_sensor *sensor, struct bt_mesh_msg_ctx *ctx, const struct bt_mesh_sensor_column *column, struct sensor_value *value)
 {
 	if (tot_temp_samps) {
 		int32_t index = column - &columns[0];
-		uint8_t percent_steps =
-			(200 * col_samps[index]) / tot_temp_samps;
+		uint8_t percent_steps = (200 * col_samps[index]) / tot_temp_samps;
 
 		value[0].val1 = percent_steps / 2;
 		value[0].val2 = (percent_steps % 2) * 500000;
@@ -89,16 +85,13 @@ static struct bt_mesh_sensor presence_sensor = {
 	.type = &bt_mesh_sensor_presence_detected,
 };
 
-static int time_since_presence_detected_get(struct bt_mesh_sensor *sensor,
-					    struct bt_mesh_msg_ctx *ctx,
-					    struct sensor_value *rsp)
+static int time_since_presence_detected_get(struct bt_mesh_sensor *sensor, struct bt_mesh_msg_ctx *ctx, struct sensor_value *rsp)
 {
 	if (prev_pres) {
 		rsp->val1 = (k_uptime_get_32() - prev_pres) / MSEC_PER_SEC;
 	} else {
 		rsp->val1 = 0;
 	}
-
 	return 0;
 }
 
@@ -114,15 +107,12 @@ static struct bt_mesh_sensor *const sensors[] = {
 	&time_since_presence_detected,
 };
 
-static struct bt_mesh_sensor_srv sensor_srv =
-	BT_MESH_SENSOR_SRV_INIT(sensors, ARRAY_SIZE(sensors));
+static struct bt_mesh_sensor_srv sensor_srv = BT_MESH_SENSOR_SRV_INIT(sensors, ARRAY_SIZE(sensors));
 
 static struct k_delayed_work end_of_presence_work;
 
 static void end_of_presence(struct k_work *work)
 {
-	int err;
-
 	/* This sensor value must be boolean -
 	 * .val1 can only be '0' or '1'
 	 */
@@ -130,8 +120,7 @@ static void end_of_presence(struct k_work *work)
 		.val1 = 0,
 	};
 
-	err = bt_mesh_sensor_srv_pub(&sensor_srv, NULL, &presence_sensor, &val);
-
+	int err = bt_mesh_sensor_srv_pub(&sensor_srv, NULL, &presence_sensor, &val);
 	if (err) {
 		printk("Error publishing end of presence (%d)\n", err);
 	}
@@ -140,8 +129,6 @@ static void end_of_presence(struct k_work *work)
 static void button_handler_cb(uint32_t pressed, uint32_t changed)
 {
 	if ((pressed & BIT(0))) {
-		int err;
-
 		/* This sensor value must be boolean -
 		 * .val1 can only be '0' or '1'
 		 */
@@ -149,9 +136,7 @@ static void button_handler_cb(uint32_t pressed, uint32_t changed)
 			.val1 = 1,
 		};
 
-		err = bt_mesh_sensor_srv_pub(&sensor_srv, NULL,
-					     &presence_sensor, &val);
-
+		int err = bt_mesh_sensor_srv_pub(&sensor_srv, NULL, &presence_sensor, &val);
 		if (err) {
 			printk("Error publishing presence (%d)\n", err);
 		}
