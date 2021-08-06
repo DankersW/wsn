@@ -13,7 +13,7 @@ static void led_status(struct led_ctx *led, struct bt_mesh_onoff_status *status)
 	status->present_on_off = led->value || status->remaining_time;
 }
 
-void handler_led_work(struct k_work *work)
+void led_work(struct k_work *work)
 {
 	struct led_ctx *led = CONTAINER_OF(work, struct led_ctx, work.work);
 
@@ -30,13 +30,13 @@ void handler_led_work(struct k_work *work)
 	}
 }
 
-void handler_led_get(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, struct bt_mesh_onoff_status *rsp)
+void led_get(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, struct bt_mesh_onoff_status *rsp)
 {
 	struct led_ctx *led = CONTAINER_OF(srv, struct led_ctx, srv);
 	led_status(led, rsp);
 }
 
-void handler_led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, const struct bt_mesh_onoff_set *set,
+void led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, const struct bt_mesh_onoff_set *set,
  					 struct bt_mesh_onoff_status *rsp)
 {
 	struct led_ctx *led = CONTAINER_OF(srv, struct led_ctx, srv);

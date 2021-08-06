@@ -3,14 +3,6 @@
 BT_MESH_HEALTH_PUB_DEFINE(health_pub, 0);
 
 
-/*
-struct led_ctx led_ctx[4] = {
-	[0 ... 3] = {
-		.srv = BT_MESH_ONOFF_SRV_INIT(&onoff_handlers),
-	}
-};
-*/
-
 struct led_ctx led_ctx = {
 	.srv = BT_MESH_ONOFF_SRV_INIT(&onoff_handlers),
 };
@@ -42,20 +34,4 @@ const struct bt_mesh_comp *model_handler_init(void)
 	k_delayed_work_init(&led_ctx.work, led_work);
 
 	return &comp;
-}
-
-void led_set(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, const struct bt_mesh_onoff_set *set,
-		     struct bt_mesh_onoff_status *rsp)
-{
-	handler_led_set(srv, ctx, set, rsp);
-}
-
-void led_get(struct bt_mesh_onoff_srv *srv, struct bt_mesh_msg_ctx *ctx, struct bt_mesh_onoff_status *rsp)
-{
-	handler_led_get(srv, ctx, rsp);
-}
-
-void led_work(struct k_work *work)
-{
-	handler_led_work(work);
 }
