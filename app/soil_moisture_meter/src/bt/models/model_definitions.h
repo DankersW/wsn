@@ -2,6 +2,7 @@
 #define MODEL_DEFINITION_H
 
 #include <bluetooth/mesh/models.h>
+#include <logging/log.h>
 
 #include "bt_types.h"
 #include "led_handlers.h"
