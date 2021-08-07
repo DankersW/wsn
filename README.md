@@ -1,5 +1,7 @@
 # WSN
 
+Repository containing several WSN node projects. All nodes use Zephyr RTOS and the Nordic nrf52840 dongle MDK.
+
 ## Getting started
 
 ```sh
