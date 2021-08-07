@@ -18,6 +18,5 @@ void blink_rgb(enum rbg_colors led);
 void set_led1(bool state);
 
 void random_state_led2(void);
-//bool is_initialized(const struct device *led);
 
 #endif // LED_DRIVER_H
