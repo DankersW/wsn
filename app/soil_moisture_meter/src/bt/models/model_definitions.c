@@ -7,9 +7,9 @@ BT_MESH_HEALTH_PUB_DEFINE(health_pub, 0);
 
 ////// TEST
 
-#include <dk_buttons_and_leds.h>
-#include <bluetooth/mesh/models.h>
-#include <bluetooth/mesh.h>
+//#include <dk_buttons_and_leds.h>
+//#include <bluetooth/mesh/models.h>
+//#include <bluetooth/mesh.h>
 
 static const struct device *dev;
 
