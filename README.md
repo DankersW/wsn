@@ -14,7 +14,6 @@ Building and flashing any app or sample is done with the following command. One 
 ./scripts/build_and_flash.sh -p app/soil_moisture_meter
 ```
 
-
 ### Toolchain
 
 Manual access to the toolchain can be provided via:
