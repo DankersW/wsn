@@ -11,7 +11,7 @@ static const struct device *dev;
 
 static int chip_temp_get(struct bt_mesh_sensor *sensor, struct bt_mesh_msg_ctx *ctx, struct sensor_value *rsp)
 {
-	_chip_temp_get(sensor, ctx, rsp);
+	//_chip_temp_get(sensor, ctx, rsp);
 	sensor_sample_fetch(dev);
 
 	int err = sensor_channel_get(dev, SENSOR_CHAN_DIE_TEMP, rsp);
@@ -24,7 +24,7 @@ static int chip_temp_get(struct bt_mesh_sensor *sensor, struct bt_mesh_msg_ctx *
 
 static struct bt_mesh_sensor chip_temp = {
 	.type = &bt_mesh_sensor_present_dev_op_temp,
-	.get = chip_temp_get,
+	.get = _chip_temp_get,
 };
 
 static struct bt_mesh_sensor *const sensors[] = {
@@ -70,6 +70,7 @@ const struct bt_mesh_comp *model_handler_init(void)
 	sensors_init();
 
 	// TEST
+	/*
 	dev = device_get_binding(DT_PROP(DT_NODELABEL(temp), label));
 
 	if (dev == NULL) {
@@ -77,6 +78,7 @@ const struct bt_mesh_comp *model_handler_init(void)
 	} else {
 		LOG_INF("Temperature sensor (%s) initiated", dev->name);
 	}
+	*/
 	// END TEST
 
 	return &comp;

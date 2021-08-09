@@ -3,7 +3,6 @@
 
 #include <bluetooth/mesh/models.h>
 
-
 #include "chip_temp.h"
 
 void sensors_init(void);

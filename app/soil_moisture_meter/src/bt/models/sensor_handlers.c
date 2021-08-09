@@ -7,5 +7,5 @@ void sensors_init(void)
 
 int _chip_temp_get(struct bt_mesh_sensor *sensor, struct bt_mesh_msg_ctx *ctx, struct sensor_value *rsp)
 {
-    get_chip_temp(sensor, ctx, rsp);
+    get_chip_temp(rsp);
 }

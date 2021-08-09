@@ -5,6 +5,6 @@
 #include <logging/log.h>
 
 void setup_chip_temp_sensor(void);
-int get_chip_temp(struct bt_mesh_sensor *sensor, struct bt_mesh_msg_ctx *ctx, struct sensor_value *rsp);
+int get_chip_temp(struct sensor_value *rsp);
 
 #endif // CHIP_TEMP_H
