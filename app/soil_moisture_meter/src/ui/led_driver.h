@@ -14,11 +14,9 @@ void setup_leds(void);
 void setup_led1(void);
 void setup_led_rgb(void);
 
-void blink_rgb(uint8_t led);
+void blink_rgb(enum rbg_colors led);
 void set_led1(bool state);
 
 void random_state_led2(void);
-bool is_led1_initialized(void);
-
 
 #endif // LED_DRIVER_H

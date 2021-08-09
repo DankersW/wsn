@@ -5,6 +5,11 @@ LOG_MODULE_REGISTER(led_driver, LOG_LEVEL_DBG);
 const struct device *rgb_led2[3];
 const struct device *led1 = NULL;
 
+static bool is_initialized(const struct device *led)
+{
+    return led == NULL ? false : true;
+}
+
 void setup_leds(void)
 {
     setup_led1();
@@ -13,9 +18,12 @@ void setup_leds(void)
 
 void setup_led1(void)
 {
-    led1 = device_get_binding(LED1);
-	gpio_pin_configure(led1, LED1_PIN, GPIO_OUTPUT_ACTIVE | LED1_FLAG);
-	gpio_pin_set(led1, LED1_PIN, 0);
+    if (!is_initialized(led1))
+    {
+        led1 = device_get_binding(LED1);
+	    gpio_pin_configure(led1, LED1_PIN, GPIO_OUTPUT_ACTIVE | LED1_FLAG);
+	    gpio_pin_set(led1, LED1_PIN, 0);
+    }
 }
 
 void setup_led_rgb(void)
@@ -29,11 +37,6 @@ void setup_led_rgb(void)
     rgb_led2[BLUE] = device_get_binding(LED2_B);
 	gpio_pin_configure(rgb_led2[BLUE], LED2_PIN_B, GPIO_OUTPUT_ACTIVE | LED2_FLAG_B);
 	gpio_pin_set(rgb_led2[BLUE], LED2_PIN_B, 0);
-}
-
-bool is_led1_initialized()
-{
-    return led1 == NULL ? false : true;
 }
 
 void random_state_led2()
@@ -60,7 +63,7 @@ void set_led1(bool state)
     gpio_pin_set(led1, LED1_PIN, state);
 }
 
-void blink_rgb(uint8_t led)
+void blink_rgb(enum rbg_colors led)
 {
     switch (led)
     {

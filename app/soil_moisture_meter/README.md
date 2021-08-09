@@ -1,5 +1,5 @@
-# Blinky
+# Soil Moisture Meter Node
 
-Sample that randomly controls a RGB led.
+Wireless node that mesures the moisture level in soil.
 
-Developed for the LK_MK5 primarly but will also run on other boards if the calls to in the ```gpio_definitions.h``` pin definitions of the board .dts file
+Primarly developed on the NRF52840 dongle DK.
