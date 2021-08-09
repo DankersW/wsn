@@ -17,6 +17,8 @@ target_sources(app PRIVATE
 	src/cli/cli_shell.c
 	src/cli/cli_definitions.c
 	src/cli/handlers/misc_cmd_handlers.c
+	src/cli/handlers/bt_cmd_handlers.c
+	
 	src/bt/commands_bt.c	
 )
 
