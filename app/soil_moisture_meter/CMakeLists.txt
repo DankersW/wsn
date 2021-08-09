@@ -20,9 +20,12 @@ target_sources(app PRIVATE
 	src/bt/models/model_definitions.c
 	src/bt/models/led_handlers.c
 	src/bt/models/attention_handlers.c
+	src/bt/models/sensor_handlers.c
 
 	src/ui/ui.c
 	src/ui/led_driver.c
+
+	src/sensors/chip_temp.c
 )
 
 target_include_directories(app PRIVATE 
@@ -30,4 +33,5 @@ target_include_directories(app PRIVATE
 	src/bt
 	src/bt/models
 	src/ui
+	src/sensors
 )
