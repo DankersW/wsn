@@ -6,7 +6,6 @@ static const struct device *chip_dev;
 
 void setup_chip_temp_sensor(void)
 {
-    LOG_INF("Sensor setup");
     chip_dev = device_get_binding(DT_PROP(DT_NODELABEL(temp), label));
 
 	if (chip_dev == NULL) 
