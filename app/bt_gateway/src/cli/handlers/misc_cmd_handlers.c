@@ -1,4 +1,4 @@
-#include "commands_misc.h"
+#include "misc_cmd_handlers.h"
 
 void blink(uint8_t blinks, uint16_t sleep)
 {

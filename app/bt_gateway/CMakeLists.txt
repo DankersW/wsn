@@ -14,12 +14,14 @@ project(
 # TODO: Find out how to add subdirectories in Zephyr with CMake, cleaning up this code
 target_sources(app PRIVATE 
 	src/main.c
-	src/commands/command_definitions.c
-	src/commands/commands_misc.c
+	src/cli/cli_shell.c
+	src/cli/cli_definitions.c
+	src/cli/handlers/misc_cmd_handlers.c
 	src/bt/commands_bt.c	
 )
 
 target_include_directories(app PRIVATE 
-	src/commands
+	src/cli
+	src/cli/handlers
 	src/bt
 )

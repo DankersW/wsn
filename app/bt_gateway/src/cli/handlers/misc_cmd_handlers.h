@@ -1,5 +1,5 @@
-#ifndef COMMANDS_MISC_H
-#define COMMANDS_MISC_H
+#ifndef MISC_CMD_HANDLERS_H
+#define MISC_CMD_HANDLERS_H
 
 #include <zephyr.h>
 #include <device.h>
@@ -18,4 +18,4 @@
 void blink(uint8_t blinks, uint16_t sleep);
 char * get_version();
 
-#endif // COMMANDS_MISC_H
+#endif // MISC_CMD_HANDLERS_H

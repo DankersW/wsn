@@ -1,4 +1,4 @@
-#include "command_definitions.h"
+#include "cli_definitions.h"
 
 static int cmd_misc_ping(const struct shell *shell, size_t argc, char **argv)
 {

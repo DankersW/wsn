@@ -1,9 +1,9 @@
-#ifndef COMMAND_DEFINITIONS_H
-#define COMMAND_DEFINITIONS_H
+#ifndef CLI_DEFINITIONS_H
+#define CLI_DEFINITIONS_H
 
 #include <stdlib.h>
 #include <shell/shell.h>
-#include "commands_misc.h"
+#include "misc_cmd_handlers.h"
 #include "commands_bt.h"
 
 static int cmd_misc_version(const struct shell *shell, size_t argc, char **argv);
@@ -28,4 +28,4 @@ SHELL_STATIC_SUBCMD_SET_CREATE(sub_bt,
 );
 SHELL_CMD_REGISTER(bt, &sub_bt, "Bluetooth commands", NULL);
 
-#endif // COMMAND_DEFINITIONS_H
+#endif // CLI_DEFINITIONS_H
