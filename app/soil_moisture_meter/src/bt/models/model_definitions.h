@@ -7,6 +7,7 @@
 #include "bt_types.h"
 #include "led_handlers.h"
 #include "attention_handlers.h"
+#include "sensor_handlers.h"
 
 
 const struct bt_mesh_comp *model_handler_init(void);
