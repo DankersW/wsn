@@ -14,3 +14,5 @@ SHELL_STATIC_SUBCMD_SET_CREATE(sub_bt,
 	SHELL_SUBCMD_SET_END
 );
 SHELL_CMD_REGISTER(bt, &sub_bt, "Bluetooth commands", NULL);
+
+SHELL_CMD_REGISTER(prov, NULL, "Test command", cmd_bt_prov);
