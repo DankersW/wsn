@@ -20,5 +20,9 @@ int cmd_bt_scan(const struct shell *shell, size_t argc, char **argv)
 int cmd_bt_prov(const struct shell *shell, size_t argc, char **argv)
 {
 	shell_print(shell, "Let's go");
+	//if (!enable_bluetooth()){return 1;}
+
+	do_prov();
+
 	return 0;
 }

@@ -20,6 +20,7 @@ target_sources(app PRIVATE
 	src/cli/handlers/bt_cmd_handlers.c
 	
 	src/bt/commands_bt.c	
+	src/bt/provisioning.c	
 )
 
 target_include_directories(app PRIVATE 
