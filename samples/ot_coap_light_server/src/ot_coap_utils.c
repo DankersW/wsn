@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
  */
 
+#include <stdint.h>
 #include <logging/log.h>
 #include <net/net_pkt.h>
 #include <net/net_l2.h>
@@ -15,7 +16,7 @@
 
 #include "ot_coap_utils.h"
 
-LOG_MODULE_REGISTER(ot_coap_utils);
+LOG_MODULE_REGISTER(ot_coap_utils, LOG_LEVEL_DBG);
 
 struct server_context {
 	struct otInstance *ot;
@@ -47,8 +48,7 @@ static otCoapResource light_resource = {
 	.mNext = NULL,
 };
 
-static otError provisioning_response_send(otMessage *request_message,
-					  const otMessageInfo *message_info)
+static otError provisioning_response_send(otMessage *request_message, const otMessageInfo *message_info)
 {
 	otError error = OT_ERROR_NO_BUFS;
 	otMessage *response;
@@ -60,12 +60,12 @@ static otError provisioning_response_send(otMessage *request_message,
 		goto end;
 	}
 
-	otCoapMessageInit(response, OT_COAP_TYPE_NON_CONFIRMABLE,
-			  OT_COAP_CODE_CONTENT);
+	otCoapMessageInit(response, OT_COAP_TYPE_NON_CONFIRMABLE,OT_COAP_CODE_CONTENT);
 
 	error = otCoapMessageSetToken(
 		response, otCoapMessageGetToken(request_message),
-		otCoapMessageGetTokenLength(request_message));
+		otCoapMessageGetTokenLength(request_message)						  
+	);
 	if (error != OT_ERROR_NONE) {
 		goto end;
 	}
@@ -95,8 +95,7 @@ end:
 	return error;
 }
 
-static void provisioning_request_handler(void *context, otMessage *message,
-					 const otMessageInfo *message_info)
+static void provisioning_request_handler(void *context, otMessage *message, const otMessageInfo *message_info)
 {
 	otError error;
 	otMessageInfo msg_info;
@@ -104,8 +103,7 @@ static void provisioning_request_handler(void *context, otMessage *message,
 	ARG_UNUSED(context);
 
 	if (!srv_context.provisioning_enabled) {
-		LOG_WRN("Received provisioning request but provisioning "
-			"is disabled");
+		LOG_WRN("Received provisioning request but provisioning is disabled");
 		return;
 	}
 
@@ -124,8 +122,7 @@ static void provisioning_request_handler(void *context, otMessage *message,
 	}
 }
 
-static void light_request_handler(void *context, otMessage *message,
-				  const otMessageInfo *message_info)
+static void light_request_handler(void *context, otMessage *message, const otMessageInfo *message_info)
 {
 	uint8_t command;
 
@@ -141,8 +138,7 @@ static void light_request_handler(void *context, otMessage *message,
 		goto end;
 	}
 
-	if (otMessageRead(message, otMessageGetOffset(message), &command, 1) !=
-	    1) {
+	if (otMessageRead(message, otMessageGetOffset(message), &command, 1) !=1) {
 		LOG_ERR("Light handler - Missing light command");
 		goto end;
 	}
@@ -155,15 +151,13 @@ end:
 	return;
 }
 
-static void coap_default_handler(void *context, otMessage *message,
-				 const otMessageInfo *message_info)
+static void coap_default_handler(void *context, otMessage *message, const otMessageInfo *message_info)
 {
 	ARG_UNUSED(context);
 	ARG_UNUSED(message);
 	ARG_UNUSED(message_info);
 
-	LOG_INF("Received CoAP message that does not match any request "
-		"or resource");
+	LOG_INF("Received CoAP message that does not match any request or resource");
 }
 
 void ot_coap_activate_provisioning(void)
@@ -181,8 +175,7 @@ bool ot_coap_is_provisioning_active(void)
 	return srv_context.provisioning_enabled;
 }
 
-int ot_coap_init(provisioning_request_callback_t on_provisioning_request,
-		 light_request_callback_t on_light_request)
+int ot_coap_init(provisioning_request_callback_t on_provisioning_request, light_request_callback_t on_light_request)
 {
 	otError error;
 

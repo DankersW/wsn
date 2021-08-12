@@ -6,7 +6,7 @@
 
 #include "ot_coap_utils.h"
 
-LOG_MODULE_REGISTER(coap_server);
+LOG_MODULE_REGISTER(coap_server, LOG_LEVEL_DBG);
 
 #define OT_CONNECTION_LED DK_LED1
 #define PROVISIONING_LED DK_LED3
@@ -95,6 +95,9 @@ static void on_button_changed(uint32_t button_state, uint32_t has_changed)
 
 	if (buttons & DK_BTN4_MSK) {
 		k_work_submit(&provisioning_work);
+	}
+	if (buttons & DK_BTN1_MSK) {
+		on_light_request(THREAD_COAP_UTILS_LIGHT_CMD_TOGGLE);
 	}
 }
 
