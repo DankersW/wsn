@@ -15,7 +15,7 @@
 
 #include "ot_coap_utils.h"
 
-LOG_MODULE_REGISTER(ot_coap_utils, CONFIG_OT_COAP_UTILS_LOG_LEVEL);
+LOG_MODULE_REGISTER(ot_coap_utils);
 
 struct server_context {
 	struct otInstance *ot;

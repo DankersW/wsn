@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2020 Nordic Semiconductor ASA
- *
- * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
- */
-
 #include <zephyr.h>
 #include <dk_buttons_and_leds.h>
 #include <logging/log.h>
@@ -12,7 +6,7 @@
 
 #include "ot_coap_utils.h"
 
-LOG_MODULE_REGISTER(coap_server, CONFIG_COAP_SERVER_LOG_LEVEL);
+LOG_MODULE_REGISTER(coap_server);
 
 #define OT_CONNECTION_LED DK_LED1
 #define PROVISIONING_LED DK_LED3
