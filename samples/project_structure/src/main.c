@@ -3,6 +3,8 @@
 #include <devicetree.h>
 #include <drivers/gpio.h>
 
+#include "module_a.h"
+
 #define SLEEP_TIME_MS   500
 
 #define LED_R_NODE DT_PATH(leds, led_1)
@@ -17,7 +19,8 @@ void main(void)
 	gpio_pin_set(led, PIN_R, 0);
 
 	while (1) {
-		gpio_pin_toggle(led, PIN_R);
+		//gpio_pin_toggle(led, PIN_R);
+		gpio_pin_set(led, PIN_R, get_bool());
 		k_msleep(SLEEP_TIME_MS);
 	}
 }
