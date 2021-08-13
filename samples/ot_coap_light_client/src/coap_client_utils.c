@@ -33,15 +33,16 @@ mtd_mode_toggle_cb_t on_mtd_mode_toggle;
 
 /* Options supported by the server */
 static const char *const light_option[] = { LIGHT_URI_PATH, NULL };
-static const char *const provisioning_option[] = { PROVISIONING_URI_PATH,
-						   NULL };
+static const char *const provisioning_option[] = { PROVISIONING_URI_PATH, NULL };
 
 /* Thread multicast mesh local address */
 static struct sockaddr_in6 multicast_local_addr = {
 	.sin6_family = AF_INET6,
 	.sin6_port = htons(COAP_PORT),
-	.sin6_addr.s6_addr = { 0xff, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-			       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 },
+	.sin6_addr.s6_addr = { 
+		0xff, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 
+	},
 	.sin6_scope_id = 0U
 };
 
@@ -97,9 +98,7 @@ static void poll_period_restore(void)
 	}
 }
 
-static int on_provisioning_reply(const struct coap_packet *response,
-				 struct coap_reply *reply,
-				 const struct sockaddr *from)
+static int on_provisioning_reply(const struct coap_packet *response, struct coap_reply *reply, const struct sockaddr *from)
 {
 	int ret = 0;
 	const uint8_t *payload;
@@ -110,8 +109,7 @@ static int on_provisioning_reply(const struct coap_packet *response,
 
 	payload = coap_packet_get_payload(response, &payload_size);
 
-	if (payload == NULL ||
-	    payload_size != sizeof(unique_local_addr.sin6_addr)) {
+	if (payload == NULL || payload_size != sizeof(unique_local_addr.sin6_addr)) {
 		LOG_ERR("Received data is invalid");
 		ret = -EINVAL;
 		goto exit;
@@ -119,8 +117,7 @@ static int on_provisioning_reply(const struct coap_packet *response,
 
 	memcpy(&unique_local_addr.sin6_addr, payload, payload_size);
 
-	if (!inet_ntop(AF_INET6, payload, unique_local_addr_str,
-		       INET6_ADDRSTRLEN)) {
+	if (!inet_ntop(AF_INET6, payload, unique_local_addr_str, INET6_ADDRSTRLEN)) {
 		LOG_ERR("Received data is not IPv6 address: %d", errno);
 		ret = -errno;
 		goto exit;
@@ -143,16 +140,12 @@ static void toggle_one_light(struct k_work *item)
 	ARG_UNUSED(item);
 
 	if (unique_local_addr.sin6_addr.s6_addr16[0] == 0) {
-		LOG_WRN("Peer address not set. Activate 'provisioning' option "
-			"on the server side");
+		LOG_WRN("Peer address not set. Activate 'provisioning' option on the server side");
 		return;
 	}
 
-	LOG_INF("Send 'light' request to: %s",
-		log_strdup(unique_local_addr_str));
-	coap_send_request(COAP_METHOD_PUT,
-			  (const struct sockaddr *)&unique_local_addr,
-			  light_option, &payload, sizeof(payload), NULL);
+	LOG_INF("Send 'light' request to: %s", log_strdup(unique_local_addr_str));
+	coap_send_request(COAP_METHOD_PUT, (const struct sockaddr *)&unique_local_addr, light_option, &payload, sizeof(payload), NULL);
 }
 
 static void toggle_mesh_lights(struct k_work *item)
@@ -161,14 +154,10 @@ static void toggle_mesh_lights(struct k_work *item)
 
 	ARG_UNUSED(item);
 
-	command = ((command == THREAD_COAP_UTILS_LIGHT_CMD_OFF) ?
-			   THREAD_COAP_UTILS_LIGHT_CMD_ON :
-			   THREAD_COAP_UTILS_LIGHT_CMD_OFF);
+	command = ((command == THREAD_COAP_UTILS_LIGHT_CMD_OFF) ? THREAD_COAP_UTILS_LIGHT_CMD_ON : THREAD_COAP_UTILS_LIGHT_CMD_OFF);
 
 	LOG_INF("Send multicast mesh 'light' request");
-	coap_send_request(COAP_METHOD_PUT,
-			  (const struct sockaddr *)&multicast_local_addr,
-			  light_option, &command, sizeof(command), NULL);
+	coap_send_request(COAP_METHOD_PUT, (const struct sockaddr *)&multicast_local_addr, light_option, &command, sizeof(command), NULL);
 }
 
 static void send_provisioning_request(struct k_work *item)
@@ -181,9 +170,7 @@ static void send_provisioning_request(struct k_work *item)
 	}
 
 	LOG_INF("Send 'provisioning' request");
-	coap_send_request(COAP_METHOD_GET,
-			  (const struct sockaddr *)&multicast_local_addr,
-			  provisioning_option, NULL, 0u, on_provisioning_reply);
+	coap_send_request(COAP_METHOD_GET, (const struct sockaddr *)&multicast_local_addr, provisioning_option, NULL, 0u, on_provisioning_reply);
 }
 
 static void toggle_minimal_sleepy_end_device(struct k_work *item)
@@ -246,9 +233,7 @@ static void submit_work_if_connected(struct k_work *work)
 	}
 }
 
-void coap_client_utils_init(ot_connection_cb_t on_connect,
-			    ot_disconnection_cb_t on_disconnect,
-			    mtd_mode_toggle_cb_t on_toggle)
+void coap_client_utils_init(ot_connection_cb_t on_connect, ot_disconnection_cb_t on_disconnect, mtd_mode_toggle_cb_t on_toggle)
 {
 	on_mtd_mode_toggle = on_toggle;
 
@@ -264,8 +249,7 @@ void coap_client_utils_init(ot_connection_cb_t on_connect,
 	openthread_start(openthread_get_default_context());
 
 	if (IS_ENABLED(CONFIG_OPENTHREAD_MTD_SED)) {
-		k_work_init(&toggle_MTD_SED_work,
-			    toggle_minimal_sleepy_end_device);
+		k_work_init(&toggle_MTD_SED_work, toggle_minimal_sleepy_end_device);
 		update_device_state();
 	}
 }
