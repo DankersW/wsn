@@ -1,5 +1,13 @@
 #include "misc_cmd_handlers.h"
 
+int cmd_ot_test(const struct shell *shell, size_t argc, char **argv)
+{
+	ARG_UNUSED(argc);
+	ARG_UNUSED(argv);
+	shell_print(shell, "test");
+	return 0;
+}
+
 int cmd_misc_ping(const struct shell *shell, size_t argc, char **argv)
 {
 	ARG_UNUSED(argc);
