@@ -9,7 +9,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(sub_misc,
 SHELL_CMD_REGISTER(misc, &sub_misc, "Miscellaneous commands", NULL);
 
 SHELL_STATIC_SUBCMD_SET_CREATE(sub_thread,
-	SHELL_CMD(test, NULL, "Test cmd", cmd_ot_test),
+	SHELL_CMD(start, NULL, "Thread start", cmd_ot_start),
 	SHELL_SUBCMD_SET_END
 );
-SHELL_CMD_REGISTER(_ot, &sub_thread, "thread", NULL);
+SHELL_CMD_REGISTER(thread, &sub_thread, "thread", NULL);

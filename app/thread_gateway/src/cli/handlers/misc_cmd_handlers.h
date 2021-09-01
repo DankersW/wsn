@@ -20,8 +20,6 @@ int cmd_misc_version(const struct shell *shell, size_t argc, char **argv);
 int cmd_misc_ping(const struct shell *shell, size_t argc, char **argv);
 int cmd_misc_blinky(const struct shell *shell, size_t argc, char **argv);
 
-int cmd_ot_test(const struct shell *shell, size_t argc, char **argv);
-
 void blink(uint8_t blinks, uint16_t sleep);
 char * get_version();
 
