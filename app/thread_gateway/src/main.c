@@ -52,7 +52,7 @@ static void on_button_changed(uint32_t button_state, uint32_t has_changed)
 
 	if (buttons & DK_BTN1_MSK) {
 		coap_client_toggle_mesh_lights();
-		
+		dk_set_led_on(0);
 	}
 
 	if (buttons & DK_BTN2_MSK) {
