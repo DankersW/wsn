@@ -52,20 +52,34 @@ static void on_button_changed(uint32_t button_state, uint32_t has_changed)
 
 	if (buttons & DK_BTN1_MSK) {
 		coap_client_toggle_mesh_lights();
-		dk_set_led_on(0);
+
+		dk_set_led_on(2);
+	k_sleep(K_MSEC(200));
+	dk_set_led_off(2);
+	k_sleep(K_MSEC(200));
 	}
 
 	if (buttons & DK_BTN2_MSK) {
 		coap_client_toggle_one_light();
+		
 	}
 
 	if (buttons & DK_BTN3_MSK) {
 		coap_client_toggle_minimal_sleepy_end_device();
+		dk_set_led_on(3);
+	k_sleep(K_MSEC(200));
+	dk_set_led_off(3);
+	k_sleep(K_MSEC(200));
 	}
 
 	if (buttons & DK_BTN4_MSK) {
 		coap_client_send_provisioning_request();
+		dk_set_led_on(3);
+	k_sleep(K_MSEC(200));
+	dk_set_led_off(3);
+	k_sleep(K_MSEC(200));
 	}
+	
 }
 
 void _main(void)
