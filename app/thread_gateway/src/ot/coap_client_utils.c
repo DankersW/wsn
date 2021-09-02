@@ -14,7 +14,8 @@
 
 #include "coap_client_utils.h"
 
-LOG_MODULE_REGISTER(coap_client_utils, CONFIG_COAP_CLIENT_UTILS_LOG_LEVEL);
+//LOG_MODULE_REGISTER(coap_client_utils, CONFIG_COAP_CLIENT_UTILS_LOG_LEVEL);
+LOG_MODULE_REGISTER(coap_client_utils, LOG_LEVEL_DBG);
 
 #define RESPONSE_POLL_PERIOD 100
 
