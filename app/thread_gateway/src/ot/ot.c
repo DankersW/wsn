@@ -25,3 +25,8 @@ void multi_light_toggle()
 {
     coap_client_toggle_mesh_lights();
 }
+
+void multi_light_set(bool state)
+{
+    coap_client_set_multicast(state);
+}

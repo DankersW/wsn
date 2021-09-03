@@ -10,5 +10,6 @@
 
 void init_ot();
 void multi_light_toggle();
+void multi_light_set(bool state);
 
 #endif // OT_H

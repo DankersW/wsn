@@ -276,3 +276,9 @@ void coap_client_toggle_minimal_sleepy_end_device(void)
 		k_work_submit(&toggle_MTD_SED_work);
 	}
 }
+
+void coap_client_set_multicast(bool state)
+{
+	uint8_t command = state ? THREAD_COAP_UTILS_LIGHT_CMD_ON : THREAD_COAP_UTILS_LIGHT_CMD_OFF;
+	coap_send_request(COAP_METHOD_PUT, (const struct sockaddr *)&multicast_local_addr, light_option, &command, sizeof(command), NULL);
+}

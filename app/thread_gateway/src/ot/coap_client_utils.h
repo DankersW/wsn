@@ -78,6 +78,11 @@ void coap_client_send_provisioning_request(void);
  */
 void coap_client_toggle_minimal_sleepy_end_device(void);
 
+
+
+void coap_client_set_multicast(bool state);
+
+
 #endif
 
 /**
