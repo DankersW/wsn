@@ -55,11 +55,11 @@ static void on_button_changed(uint32_t button_state, uint32_t has_changed)
 	uint32_t buttons = button_state & has_changed;
 
 	if (buttons & DK_BTN1_MSK) {
-		coap_client_toggle_one_light();
+		coap_client_toggle_mesh_lights();
 	}
 
 	if (buttons & DK_BTN2_MSK) {
-		coap_client_toggle_mesh_lights();
+		coap_client_toggle_one_light();
 	}
 
 	if (buttons & DK_BTN3_MSK) {
