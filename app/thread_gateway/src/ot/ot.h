@@ -9,5 +9,6 @@
 #define OT_CONNECTION_LED DK_LED1
 
 void init_ot();
+void multi_light_toggle();
 
 #endif // OT_H

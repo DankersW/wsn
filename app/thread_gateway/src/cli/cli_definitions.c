@@ -8,8 +8,12 @@ SHELL_STATIC_SUBCMD_SET_CREATE(sub_misc,
 );
 SHELL_CMD_REGISTER(misc, &sub_misc, "Miscellaneous commands", NULL);
 
+SHELL_STATIC_SUBCMD_SET_CREATE(sub_thread_multi_light,
+	SHELL_CMD(toggle, NULL, "Toggle all lights", cmd_ot_multi_light_toggle),
+	SHELL_SUBCMD_SET_END
+);
 SHELL_STATIC_SUBCMD_SET_CREATE(sub_thread,
-	SHELL_CMD(start, NULL, "Thread start", cmd_ot_start),
+	SHELL_CMD(multi_light, &sub_thread_multi_light, "Multicast light ctrl", NULL),
 	SHELL_SUBCMD_SET_END
 );
 SHELL_CMD_REGISTER(thread, &sub_thread, "thread", NULL);

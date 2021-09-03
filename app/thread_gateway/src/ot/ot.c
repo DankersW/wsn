@@ -20,3 +20,8 @@ void init_ot()
 {
     coap_client_utils_init(on_ot_connect, on_ot_disconnect, on_mtd_mode_toggle);
 }
+
+void multi_light_toggle()
+{
+    coap_client_toggle_mesh_lights();
+}
