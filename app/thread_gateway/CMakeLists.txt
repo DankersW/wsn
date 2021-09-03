@@ -18,6 +18,7 @@ target_sources(app PRIVATE
 	src/cli/cli_definitions.c
 	src/cli/handlers/misc_cmd_handlers.c
 	src/cli/handlers/ot_cmd_handlers.c
+	src/ot/ot.c
 	src/ot/coap_client_utils.c
 )
 
