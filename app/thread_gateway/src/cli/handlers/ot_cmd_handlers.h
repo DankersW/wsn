@@ -7,6 +7,9 @@
 
 #include "coap_client_utils.h"
 
+//#include "coap_client_utils.h"
+
+
 
 int cmd_ot_start(const struct shell *shell, size_t argc, char **argv);
 
