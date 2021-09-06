@@ -78,6 +78,7 @@ static void poll_period_response_set(void)
 		__ASSERT(error == OT_ERROR_NONE, "Failed to set pool period");
 
 		LOG_INF("Poll Period: %dms set", RESPONSE_POLL_PERIOD);
+		printk("Poll Period: %dms set", RESPONSE_POLL_PERIOD);
 	}
 }
 

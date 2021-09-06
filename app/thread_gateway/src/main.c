@@ -14,7 +14,6 @@ void main(void)
 		LOG_ERR("Cannot init leds, (error: %d)", ret);
 		return;
 	}
-
 	init_ot();
 	enable_shell();
 }
