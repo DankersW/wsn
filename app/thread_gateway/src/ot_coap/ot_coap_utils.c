@@ -2,17 +2,9 @@
 
 
 
-static struct sockaddr_in6 multicast_local_addr = {
-	.sin6_family = AF_INET6,
-	.sin6_port = htons(COAP_PORT),
-	.sin6_addr.s6_addr = { 
-		0xff, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 
-	},
-	.sin6_scope_id = 0U
-};
+//static 
 
-static const char *const light_option[] = { LIGHT_URI_PATH, NULL };
+//static
 
 
 
@@ -213,12 +205,9 @@ end:
 	return error == OT_ERROR_NONE ? 0 : 1;
 }
 
-
-void test_send_on()
+int coap_send(const struct sockaddr_in6 * address, const char *const uri, uint8_t message)
 {
-    uint8_t command = 49;
-    int ret = coap_send_request(COAP_METHOD_PUT, (const struct sockaddr *)&multicast_local_addr, light_option, &command, sizeof(command), NULL);
-    LOG_WRN("ret: %d", ret);
+    return coap_send_request(COAP_METHOD_PUT, address, uri, &message, sizeof(message), NULL);
 }
 
 /*

@@ -29,6 +29,6 @@ typedef void (*provisioning_request_callback_t)();
 
 int ot_coap_init(provisioning_request_callback_t on_provisioning_request, light_request_callback_t on_light_request);
 
-void test_send_on();
+int coap_send(const struct sockaddr_in6 *address, const char *const uri, uint8_t message);
 
 #endif // OT_COAP_UTILS_H

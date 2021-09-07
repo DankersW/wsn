@@ -3,7 +3,7 @@
 #include <logging/log.h>
 
 #include "cli_shell.h"
-#include "ot.h"
+//#include "ot.h"
 #include "ot_coap.h"
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
@@ -18,6 +18,6 @@ void main(void)
 	//init_ot();
 	
 	init_ot_coap();
-	
+
 	enable_shell();
 }

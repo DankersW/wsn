@@ -72,3 +72,16 @@ void init_ot_coap()
     openthread_set_state_changed_cb(on_thread_state_changed);
 	openthread_start(openthread_get_default_context());
 }
+
+void light_set_state(bool state)
+{
+    uint8_t command = state ? 49 : 48;
+    int ret = coap_send(&multicast_local_addr, light_option, command);
+    LOG_WRN("ret: %d", ret);
+	//coap_send_request(COAP_METHOD_PUT, (const struct sockaddr *)&multicast_local_addr, light_option, &command, sizeof(command), NULL);
+}
+
+void light_toggle()
+{
+
+}
