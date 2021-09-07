@@ -20,10 +20,14 @@ target_sources(app PRIVATE
 	src/cli/handlers/ot_cmd_handlers.c
 	src/ot/ot.c
 	src/ot/coap_client_utils.c
+
+	src/ot_coap/ot_coap.c
+	src/ot_coap/ot_coap_utils.c
 )
 
 target_include_directories(app PRIVATE 
 	src/cli
 	src/cli/handlers
 	src/ot
+	src/ot_coap
 )
