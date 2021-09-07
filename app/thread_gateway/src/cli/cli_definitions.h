@@ -6,4 +6,6 @@
 #include "misc_cmd_handlers.h"
 #include "ot_cmd_handlers.h"
 
+#include "ot_coap_utils.h"
+
 #endif // CLI_DEFINITIONS_H

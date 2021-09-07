@@ -1,5 +1,22 @@
 #include "ot_coap_utils.h"
 
+
+
+static struct sockaddr_in6 multicast_local_addr = {
+	.sin6_family = AF_INET6,
+	.sin6_port = htons(COAP_PORT),
+	.sin6_addr.s6_addr = { 
+		0xff, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 
+	},
+	.sin6_scope_id = 0U
+};
+
+static const char *const light_option[] = { LIGHT_URI_PATH, NULL };
+
+
+
+
 LOG_MODULE_REGISTER(ot_coap_utils, LOG_LEVEL_DBG);
 
 struct server_context {
@@ -190,6 +207,24 @@ int ot_coap_init(provisioning_request_callback_t on_provisioning_request, light_
 		goto end;
 	}
 
+    LOG_WRN("all good");
+
 end:
 	return error == OT_ERROR_NONE ? 0 : 1;
 }
+
+
+void test_send_on()
+{
+    uint8_t command = 49;
+    int ret = coap_send_request(COAP_METHOD_PUT, (const struct sockaddr *)&multicast_local_addr, light_option, &command, sizeof(command), NULL);
+    LOG_WRN("ret: %d", ret);
+}
+
+/*
+void coap_client_set_multicast(bool state)
+{
+	uint8_t command = state ? 49 : 48;
+	coap_send_request(COAP_METHOD_PUT, (const struct sockaddr *)&multicast_local_addr, light_option, &command, sizeof(command), NULL);
+}
+*/
