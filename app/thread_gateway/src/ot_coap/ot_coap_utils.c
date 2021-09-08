@@ -1,14 +1,5 @@
 #include "ot_coap_utils.h"
 
-
-
-//static 
-
-//static
-
-
-
-
 LOG_MODULE_REGISTER(ot_coap_utils, LOG_LEVEL_DBG);
 
 struct server_context {

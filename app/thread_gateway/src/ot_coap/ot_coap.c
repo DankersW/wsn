@@ -61,7 +61,6 @@ static void on_thread_state_changed(uint32_t flags, void *context)
 		case OT_DEVICE_ROLE_DETACHED:
 		default:
 			dk_set_led_off(OT_CONNECTION_LED);
-			deactivate_provisionig();
 			break;
 		}
 	}

@@ -12,17 +12,7 @@
 #include <openthread/thread.h>
 #include <net/coap_utils.h>
 
-#define COAP_PORT 5683
-#define PROVISIONING_URI_PATH "provisioning"
-#define LIGHT_URI_PATH "light"
-
-/*
-enum light_command {
-	THREAD_COAP_UTILS_LIGHT_CMD_OFF = '0',
-	THREAD_COAP_UTILS_LIGHT_CMD_ON = '1',
-	THREAD_COAP_UTILS_LIGHT_CMD_TOGGLE = '2'
-};
-*/
+#include "ot_definitions.h"
 
 typedef void (*light_request_callback_t)(uint8_t cmd);
 typedef void (*provisioning_request_callback_t)();

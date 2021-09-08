@@ -5,7 +5,6 @@
  */
 
 #include <zephyr.h>
-//#include <coap_server_client_interface.h>
 #include <net/coap_utils.h>
 #include <logging/log.h>
 #include <net/openthread.h>
