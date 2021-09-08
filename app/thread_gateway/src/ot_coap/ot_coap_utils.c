@@ -205,15 +205,7 @@ end:
 	return error == OT_ERROR_NONE ? 0 : 1;
 }
 
-int coap_send(const struct sockaddr_in6 * address, const char *const uri, uint8_t message)
+int coap_send(const char *const uri[], struct sockaddr_in6 addr, uint8_t message)
 {
-    return coap_send_request(COAP_METHOD_PUT, address, uri, &message, sizeof(message), NULL);
+	return coap_send_request(COAP_METHOD_PUT, (const struct sockaddr *)&addr, uri, &message, sizeof(message), NULL);
 }
-
-/*
-void coap_client_set_multicast(bool state)
-{
-	uint8_t command = state ? 49 : 48;
-	coap_send_request(COAP_METHOD_PUT, (const struct sockaddr *)&multicast_local_addr, light_option, &command, sizeof(command), NULL);
-}
-*/

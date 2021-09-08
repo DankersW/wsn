@@ -2,6 +2,18 @@
 
 LOG_MODULE_REGISTER(ot_coap, LOG_LEVEL_DBG);
 
+static const char *const light_uri[] = { LIGHT_URI_PATH, NULL };
+
+static struct sockaddr_in6 multicast_local_addr = {
+	.sin6_family = AF_INET6,
+	.sin6_port = htons(COAP_PORT),
+	.sin6_addr.s6_addr = { 
+		0xff, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 
+	},
+	.sin6_scope_id = 0U
+};
+
 static void on_light_request(uint8_t command)
 {
 	static uint8_t val;
@@ -76,9 +88,8 @@ void init_ot_coap()
 void light_set_state(bool state)
 {
     uint8_t command = state ? 49 : 48;
-    int ret = coap_send(&multicast_local_addr, light_option, command);
+    int ret = coap_send(light_uri, multicast_local_addr, command);
     LOG_WRN("ret: %d", ret);
-	//coap_send_request(COAP_METHOD_PUT, (const struct sockaddr *)&multicast_local_addr, light_option, &command, sizeof(command), NULL);
 }
 
 void light_toggle()
