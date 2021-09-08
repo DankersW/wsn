@@ -54,22 +54,18 @@ static void on_thread_state_changed(uint32_t flags, void *context)
 		case OT_DEVICE_ROLE_CHILD:
 		case OT_DEVICE_ROLE_ROUTER:
 		case OT_DEVICE_ROLE_LEADER:
-			//dk_set_led_on(OT_CONNECTION_LED);
-			dk_set_led_on(DK_LED3);
+			dk_set_led_on(OT_CONNECTION_LED);
 			break;
 
 		case OT_DEVICE_ROLE_DISABLED:
 		case OT_DEVICE_ROLE_DETACHED:
 		default:
-			//dk_set_led_off(OT_CONNECTION_LED);
-			dk_set_led_off(DK_LED3);
+			dk_set_led_off(OT_CONNECTION_LED);
 			deactivate_provisionig();
 			break;
 		}
 	}
 }
-
-
 
 void init_ot_coap()
 {
