@@ -83,12 +83,11 @@ void init_ot_coap()
 
 void light_set_state(bool state)
 {
-    uint8_t command = state ? 49 : 48;
-    int ret = coap_send(light_uri, multicast_local_addr, command);
-    LOG_WRN("ret: %d", ret);
+    uint8_t command = state ? THREAD_COAP_LIGHT_CMD_ON : THREAD_COAP_LIGHT_CMD_OFF;
+    coap_send(light_uri, multicast_local_addr, command);
 }
 
 void light_toggle()
 {
-
+	coap_send(light_uri, multicast_local_addr, THREAD_COAP_LIGHT_CMD_TOGGLE);
 }
