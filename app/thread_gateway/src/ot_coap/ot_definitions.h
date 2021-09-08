@@ -4,7 +4,6 @@
 #include <stdio.h>
 
 #define LIGHT_URI_PATH "light"
-#define PROVISIONING_URI_PATH "provisioning"
 #define COAP_PORT 5683
 
 #define OT_CONNECTION_LED DK_LED1

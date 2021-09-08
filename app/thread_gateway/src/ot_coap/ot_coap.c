@@ -39,12 +39,6 @@ static void on_light_request(uint8_t command)
 	}
 }
 
-static void deactivate_provisionig(void)
-{
-    LOG_ERR("Deactivate prov called");
-}
-
-
 static void on_thread_state_changed(uint32_t flags, void *context)
 {
 	struct openthread_context *ot_context = context;
@@ -70,7 +64,7 @@ void init_ot_coap()
 {
     coap_init(AF_INET6, NULL);
 
-    int ret = ot_coap_init(&deactivate_provisionig, &on_light_request);
+    int ret = ot_coap_init(&on_light_request);
 	if (ret) {
 		LOG_ERR("Could not initialize OpenThread CoAP");
 		return;
