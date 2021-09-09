@@ -23,3 +23,17 @@ int cmd_ot_multi_light_off(const struct shell *shell, size_t argc, char **argv)
 	light_set_state(false);
 	return 0;
 }
+
+int cmd_ot_monitor_temp_on(const struct shell *shell, size_t argc, char **argv)
+{
+	ARG_UNUSED(argc);
+	ARG_UNUSED(argv);
+	return 0;
+}
+
+int cmd_ot_monitor_temp_off(const struct shell *shell, size_t argc, char **argv)
+{
+	ARG_UNUSED(argc);
+	ARG_UNUSED(argv);
+	return 0;
+}
