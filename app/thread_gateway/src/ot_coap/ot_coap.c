@@ -14,29 +14,9 @@ static struct sockaddr_in6 multicast_local_addr = {
 	.sin6_scope_id = 0U
 };
 
-static void on_light_request(uint8_t command)
+static void on_temp_publish(uint8_t command)
 {
-	static uint8_t val;
-
-	switch (command) {
-	case 0:
-		dk_set_led_on(LIGHT_LED);
-		val = 1;
-		break;
-
-	case 1:
-		dk_set_led_off(LIGHT_LED);
-		val = 0;
-		break;
-
-	case 2:
-		val = !val;
-		dk_set_led(LIGHT_LED, val);
-		break;
-
-	default:
-		break;
-	}
+	LOG_WRN("reveiced msg: %d", command);
 }
 
 static void on_thread_state_changed(uint32_t flags, void *context)
@@ -64,7 +44,7 @@ void init_ot_coap()
 {
     coap_init(AF_INET6, NULL);
 
-    int ret = ot_coap_init(&on_light_request);
+    int ret = ot_coap_init(&on_temp_publish);
 	if (ret) {
 		LOG_ERR("Could not initialize OpenThread CoAP");
 		return;

@@ -14,9 +14,9 @@
 
 #include "ot_definitions.h"
 
-typedef void (*light_request_callback_t)(uint8_t cmd);
+typedef void (*temp_publish_callback_t)(uint8_t cmd);
 
-int ot_coap_init(light_request_callback_t on_light_request);
+int ot_coap_init(temp_publish_callback_t on_temp_publish);
 
 int coap_send(const char *const uri[], struct sockaddr_in6 addr, uint8_t message);
 
