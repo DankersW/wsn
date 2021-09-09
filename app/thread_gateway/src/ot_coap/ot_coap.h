@@ -12,7 +12,10 @@
 #define LIGHT_LED DK_LED2
 
 void init_ot_coap();
+
 void light_set_state(bool state);
 void light_toggle();
+
+void temp_monitor_set_state(bool state);
 
 #endif // OT_COAP_H

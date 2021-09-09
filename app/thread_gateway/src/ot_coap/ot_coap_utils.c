@@ -12,7 +12,7 @@ static struct server_context srv_context = {
 	.on_temp_publish = NULL,
 };
 
-static otCoapResource temp_pub_resource = {
+static otCoapResource temp_monitor_resource = {
 	.mUriPath = TEMP_PUB_URI_PATH,
 	.mHandler = NULL,
 	.mContext = NULL,
@@ -70,11 +70,11 @@ int ot_coap_init(temp_publish_callback_t on_temp_publish)
 		goto end;
 	}
 
-	temp_pub_resource.mContext = srv_context.ot;
-	temp_pub_resource.mHandler = temp_publish_handler;
+	temp_monitor_resource.mContext = srv_context.ot;
+	temp_monitor_resource.mHandler = temp_publish_handler;
 
 	otCoapSetDefaultHandler(srv_context.ot, coap_default_handler, NULL);
-	otCoapAddResource(srv_context.ot, &temp_pub_resource);
+	otCoapAddResource(srv_context.ot, &temp_monitor_resource);
 
 	error = otCoapStart(srv_context.ot, COAP_PORT);
 	if (error != OT_ERROR_NONE) {
