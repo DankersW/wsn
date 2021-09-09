@@ -3,6 +3,7 @@
 #include <logging/log.h>
 #include <net/openthread.h>
 #include <openthread/thread.h>
+#include <net/coap_utils.h>
 
 #include "ot_coap_utils.h"
 
@@ -12,6 +13,33 @@ LOG_MODULE_REGISTER(coap_server, LOG_LEVEL_DBG);
 #define LIGHT_LED DK_LED4
 #define TEMP_PUB_LED DK_LED2
 
+static const char *const temp_uri[] = { TEMP_URI_PATH, NULL };
+
+static struct sockaddr_in6 multicast_local_addr = {
+	.sin6_family = AF_INET6,
+	.sin6_port = htons(COAP_PORT),
+	.sin6_addr.s6_addr = { 
+		0xff, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 
+	},
+	.sin6_scope_id = 0U
+};
+
+//static const struct device *chip_dev;
+
+/*
+static int get_chip_temp(struct sensor_value *rsp)
+{
+    sensor_sample_fetch(chip_dev);
+
+	int err = sensor_channel_get(chip_dev, SENSOR_CHAN_DIE_TEMP, rsp);
+	if (err) 
+    {
+		printk("Error getting temperature sensor data (%d)\n", err);
+	}
+	return err;
+}
+*/
 
 static void on_light_request(uint8_t command)
 {
@@ -38,15 +66,20 @@ static void on_light_request(uint8_t command)
 	}
 }
 
-static void on_temp_request(uint8_t command)
+static void on_config_request(uint8_t command)
 {
+	uint8_t send_command;
 	switch (command) {
 	case THREAD_COAP_TEMP_PUBLISH_ON_CMD:
 		dk_set_led_on(TEMP_PUB_LED);
+		send_command = 10;
+		coap_send(temp_uri, multicast_local_addr, send_command);
 		break;
 
 	case THREAD_COAP_TEMP_PUBLISH_OFF_CMD:
 		dk_set_led_off(TEMP_PUB_LED);
+		send_command = 11;
+		coap_send(temp_uri, multicast_local_addr, send_command);
 		break;
 
 	default:
@@ -84,13 +117,29 @@ static void on_thread_state_changed(uint32_t flags, void *context)
 	}
 }
 
+/*
+static void init_chip_temp()
+{
+	chip_dev = device_get_binding(DT_PROP(DT_NODELABEL(temp), label));
+
+	if (chip_dev == NULL) 
+    {
+		LOG_ERR("Could not initiate temperature sensor");
+	} 
+    else 
+    {
+		LOG_INF("Temperature sensor (%s) initiated", chip_dev->name);
+	}
+}
+*/
+
 void main(void)
 {
 	int ret;
 
 	LOG_INF("Start CoAP-server sample");
 
-	ret = ot_coap_init(&on_light_request, &on_temp_request);
+	ret = ot_coap_init(&on_light_request, &on_config_request);
 	if (ret) {
 		LOG_ERR("Could not initialize OpenThread CoAP");
 		goto end;
@@ -107,6 +156,8 @@ void main(void)
 		LOG_ERR("Cannot init buttons (error: %d)", ret);
 		goto end;
 	}
+
+	//init_chip_temp();
 
 	openthread_set_state_changed_cb(on_thread_state_changed);
 	openthread_start(openthread_get_default_context());

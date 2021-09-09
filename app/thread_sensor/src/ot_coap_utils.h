@@ -18,12 +18,15 @@ enum ot_thread_commands {
 };
 
 #define LIGHT_URI_PATH "light"
+#define CONFIG_URI_PATH "config"
+#define TEMP_URI_PATH "temp"
 
 /**@brief Type definition of the function used to handle light resource change.
  */
 typedef void (*light_request_callback_t)(uint8_t cmd);
-typedef void (*temp_request_callback_t)(uint8_t cmd);
+typedef void (*config_request_callback_t)(uint8_t cmd);
 
-int ot_coap_init(light_request_callback_t on_light_request, temp_request_callback_t on_temp_request);
+int ot_coap_init(light_request_callback_t on_light_request, config_request_callback_t on_config_request);
+int coap_send(const char *const uri[], struct sockaddr_in6 addr, uint8_t message);
 
 #endif
