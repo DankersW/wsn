@@ -9,8 +9,8 @@
 LOG_MODULE_REGISTER(coap_server, LOG_LEVEL_DBG);
 
 #define OT_CONNECTION_LED DK_LED1
-#define PROVISIONING_LED DK_LED3
-#define LIGHT_LED DK_LED2
+#define LIGHT_LED DK_LED4
+#define TEMP_PUB_LED DK_LED2
 
 
 static void on_light_request(uint8_t command)
@@ -18,19 +18,35 @@ static void on_light_request(uint8_t command)
 	static uint8_t val;
 
 	switch (command) {
-	case THREAD_COAP_UTILS_LIGHT_CMD_ON:
+	case THREAD_COAP_LIGHT_CMD_ON:
 		dk_set_led_on(LIGHT_LED);
 		val = 1;
 		break;
 
-	case THREAD_COAP_UTILS_LIGHT_CMD_OFF:
+	case THREAD_COAP_LIGHT_CMD_OFF:
 		dk_set_led_off(LIGHT_LED);
 		val = 0;
 		break;
 
-	case THREAD_COAP_UTILS_LIGHT_CMD_TOGGLE:
+	case THREAD_COAP_LIGHT_CMD_TOGGLE:
 		val = !val;
 		dk_set_led(LIGHT_LED, val);
+		break;
+
+	default:
+		break;
+	}
+}
+
+static void on_temp_request(uint8_t command)
+{
+	switch (command) {
+	case THREAD_COAP_TEMP_PUBLISH_ON_CMD:
+		dk_set_led_on(TEMP_PUB_LED);
+		break;
+
+	case THREAD_COAP_TEMP_PUBLISH_OFF_CMD:
+		dk_set_led_off(TEMP_PUB_LED);
 		break;
 
 	default:
@@ -43,7 +59,7 @@ static void on_button_changed(uint32_t button_state, uint32_t has_changed)
 	uint32_t buttons = button_state & has_changed;
 
 	if (buttons & DK_BTN1_MSK) {
-		on_light_request(THREAD_COAP_UTILS_LIGHT_CMD_TOGGLE);
+		on_light_request(THREAD_COAP_LIGHT_CMD_TOGGLE);
 	}
 }
 
@@ -74,7 +90,7 @@ void main(void)
 
 	LOG_INF("Start CoAP-server sample");
 
-	ret = ot_coap_init(&on_light_request);
+	ret = ot_coap_init(&on_light_request, &on_temp_request);
 	if (ret) {
 		LOG_ERR("Could not initialize OpenThread CoAP");
 		goto end;

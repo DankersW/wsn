@@ -13,7 +13,7 @@ static struct server_context srv_context = {
 };
 
 static otCoapResource temp_monitor_resource = {
-	.mUriPath = TEMP_PUB_URI_PATH,
+	.mUriPath = TEMP_URI_PATH,
 	.mHandler = NULL,
 	.mContext = NULL,
 	.mNext = NULL,

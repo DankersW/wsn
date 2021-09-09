@@ -4,7 +4,8 @@
 #include <stdio.h>
 
 #define LIGHT_URI_PATH "light"
-#define TEMP_PUB_URI_PATH "temp_pub"
+#define TEMP_URI_PATH "temp"
+#define CONFIG_URI_PATH "config"
 #define COAP_PORT 5683
 
 #define OT_CONNECTION_LED DK_LED1

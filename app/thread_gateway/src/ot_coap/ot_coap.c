@@ -3,7 +3,7 @@
 LOG_MODULE_REGISTER(ot_coap, LOG_LEVEL_DBG);
 
 static const char *const light_uri[] = { LIGHT_URI_PATH, NULL };
-static const char *const temp_publish_uri[] = { TEMP_PUB_URI_PATH, NULL };
+static const char *const config_uri[] = { CONFIG_URI_PATH, NULL };
 
 static struct sockaddr_in6 multicast_local_addr = {
 	.sin6_family = AF_INET6,
@@ -69,6 +69,6 @@ void light_toggle()
 void temp_monitor_set_state(bool state)
 {
 	uint8_t command = state ? THREAD_COAP_TEMP_PUBLISH_ON_CMD : THREAD_COAP_TEMP_PUBLISH_OFF_CMD;
-	int ret = coap_send(temp_publish_uri, multicast_local_addr, command);
+	int ret = coap_send(config_uri, multicast_local_addr, command);
 	LOG_WRN("ret %d", ret);
 }
