@@ -2,7 +2,6 @@
 #include <dk_buttons_and_leds.h>
 #include <logging/log.h>
 
-
 #include "ot_coap.h"
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
@@ -45,7 +44,6 @@ static void init_chip_temp()
 void main(void)
 {
 	dk_leds_init();
-	//dk_buttons_init(on_button_changed);
 
 	init_ot_coap();
 }

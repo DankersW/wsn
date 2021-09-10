@@ -1,26 +1,3 @@
-/*
- * Copyright (c) 2020 Nordic Semiconductor ASA
- *
- * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
- */
-
-#include <stdint.h>
-#include <logging/log.h>
-#include <net/net_pkt.h>
-#include <net/net_l2.h>
-#include <net/openthread.h>
-#include <openthread/coap.h>
-#include <openthread/ip6.h>
-#include <openthread/message.h>
-#include <openthread/thread.h>
-#include <net/coap_utils.h>
-
-#include <net/coap_utils.h>
-#include <logging/log.h>
-#include <net/openthread.h>
-#include <net/socket.h>
-#include <openthread/thread.h>
-
 #include "ot_coap_utils.h"
 
 LOG_MODULE_REGISTER(ot_coap_utils, LOG_LEVEL_DBG);
