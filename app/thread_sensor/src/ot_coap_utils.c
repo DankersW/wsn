@@ -120,10 +120,6 @@ static void coap_default_handler(void *context, otMessage *message, const otMess
 
 int ot_coap_init(light_request_callback_t on_light_request, config_request_callback_t on_config_request)
 {
-
-	coap_init(AF_INET6, NULL);
-
-
 	otError error;
 
 	srv_context.on_light_request = on_light_request;
@@ -156,9 +152,7 @@ end:
 	return error == OT_ERROR_NONE ? 0 : 1;
 }
 
-
 int coap_send(const char *const uri[], struct sockaddr_in6 addr, uint8_t message)
 {
 	return coap_send_request(COAP_METHOD_PUT, (const struct sockaddr *)&addr, uri, &message, sizeof(message), NULL);
-	//return 0;
 }
