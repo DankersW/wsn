@@ -50,6 +50,6 @@ void main(void)
 	while (1) {
 		k_sleep(K_SECONDS(2));
 		double die_temp = get_chip_temp();
-		printk("Die temperature: %f.2", die_temp);
+		printk("Die temperature: %f\n", die_temp);
 	}
 }
