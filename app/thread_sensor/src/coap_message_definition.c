@@ -1,0 +1,1 @@
+#include "coap_message_definition.h"
