@@ -46,7 +46,9 @@ static void on_config_request(uint8_t command)
 	case THREAD_COAP_TEMP_PUBLISH_ON_CMD:
 		dk_set_led_on(TEMP_PUB_LED);
 		send_command = 10;
-		coap_send(temp_uri, multicast_local_addr, send_command);
+		struct sensor_value die_temp = get_chip_temp();
+		uint8_t t_1 = die_temp.val1;
+		coap_send(temp_uri, multicast_local_addr, t_1);
 		break;
 
 	case THREAD_COAP_TEMP_PUBLISH_OFF_CMD:
@@ -83,6 +85,8 @@ static void on_thread_state_changed(uint32_t flags, void *context)
 
 void init_ot_coap()
 {
+	setup_chip_temp_sensor();
+
 	coap_init(AF_INET6, NULL);
     ot_coap_init(&on_light_request, &on_config_request);
     openthread_set_state_changed_cb(on_thread_state_changed);
