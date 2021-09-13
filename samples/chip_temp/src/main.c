@@ -35,12 +35,8 @@ int get_chip_temp()
     {
 		printk("Error getting temperature sensor data (%d)\n", err);
 	}
-	double die_temp = (temp_val.val1 + temp_val.val2) * (10^(-6));
+	double die_temp = temp_val.val1 + (temp_val.val2 * 0.000001);
 	printk("val1: %f \n", die_temp);
-
-	printk("v1: %d - v2: %d\n", temp_val.val1, temp_val.val2);
-	float t = temp_val.val1 / 1.5;
-	printk("%f \n", t);
 	return err;
 }
 
