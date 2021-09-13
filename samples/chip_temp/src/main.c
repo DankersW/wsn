@@ -24,7 +24,7 @@ void setup_chip_temp_sensor(void)
 }
 
 
-int get_chip_temp()
+double get_chip_temp()
 {
 	sensor_sample_fetch(chip_dev);
 
@@ -35,9 +35,7 @@ int get_chip_temp()
     {
 		printk("Error getting temperature sensor data (%d)\n", err);
 	}
-	double die_temp = temp_val.val1 + (temp_val.val2 * 0.000001);
-	printk("val1: %f \n", die_temp);
-	return err;
+	return temp_val.val1 + (temp_val.val2 * 0.000001);
 }
 
 void main(void)
@@ -51,6 +49,7 @@ void main(void)
 	setup_chip_temp_sensor();
 	while (1) {
 		k_sleep(K_SECONDS(2));
-		get_chip_temp();
+		double die_temp = get_chip_temp();
+		printk("Die temperature: %f.2", die_temp);
 	}
 }
