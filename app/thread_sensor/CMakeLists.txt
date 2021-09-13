@@ -11,6 +11,7 @@ target_sources(app PRIVATE
     src/main.c
     src/ot_coap_utils.c
     src/ot_coap.c
+    src/die_temp.c
 )
 
 target_include_directories(app PRIVATE
