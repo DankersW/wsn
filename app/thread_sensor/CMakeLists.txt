@@ -12,6 +12,7 @@ target_sources(app PRIVATE
     src/ot_coap_utils.c
     src/ot_coap.c
     src/die_temp.c
+    src/coap_message_definition.c
 )
 
 target_include_directories(app PRIVATE

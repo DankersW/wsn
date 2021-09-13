@@ -47,8 +47,9 @@ static void on_config_request(uint8_t command)
 		dk_set_led_on(TEMP_PUB_LED);
 		send_command = 10;
 		struct sensor_value die_temp = get_chip_temp();
-		uint8_t t_1 = die_temp.val1;
-		coap_send(temp_uri, multicast_local_addr, &t_1, sizeof(t_1));
+		uint8_t msg_buffer[CHIP_TEMP_MSG_SIZE] = {0};
+		gen_chip_temp_msg(msg_buffer, &die_temp);
+		coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
 		break;
 
 	case THREAD_COAP_TEMP_PUBLISH_OFF_CMD:
