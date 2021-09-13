@@ -2,6 +2,10 @@
 .vscode/
 build/
 
+# Sketch files
+sketch.c
+a.out
+
 # Toolchain
 ncs/
 
