@@ -129,7 +129,7 @@ end:
 	return error == OT_ERROR_NONE ? 0 : 1;
 }
 
-int coap_send(const char *const uri[], struct sockaddr_in6 addr, uint8_t message)
+int coap_send(const char *const uri[], struct sockaddr_in6 addr, uint8_t *message, uint8_t size)
 {
-	return coap_send_request(COAP_METHOD_PUT, (const struct sockaddr *)&addr, uri, &message, sizeof(message), NULL);
+	return coap_send_request(COAP_METHOD_PUT, (const struct sockaddr *)&addr, uri, message, size, NULL);
 }

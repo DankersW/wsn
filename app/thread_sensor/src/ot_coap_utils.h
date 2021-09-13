@@ -19,6 +19,6 @@ typedef void (*light_request_callback_t)(uint8_t cmd);
 typedef void (*config_request_callback_t)(uint8_t cmd);
 
 int ot_coap_init(light_request_callback_t on_light_request, config_request_callback_t on_config_request);
-int coap_send(const char *const uri[], struct sockaddr_in6 addr, uint8_t message);
+int coap_send(const char *const uri[], struct sockaddr_in6 addr, uint8_t *message, uint8_t size);
 
 #endif
