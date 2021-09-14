@@ -40,6 +40,9 @@ static void temp_publish_handler(void *context, otMessage *message, const otMess
 		goto end;
 	}
 
+	int size = otMessageGetLength(message);
+	LOG_INF("size: %d", size);
+
 	LOG_INF("Received temp request: %c", command);
 
 	srv_context.on_temp_publish(command);
