@@ -16,9 +16,5 @@ void main(void)
 
 	init_ot_coap();
 
-	if (usb_enable(NULL)) {
-		return;
-	}
-
-	printk("hello");
+	usb_enable(NULL);
 }
