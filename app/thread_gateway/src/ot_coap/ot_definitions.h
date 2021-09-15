@@ -10,6 +10,8 @@
 
 #define OT_CONNECTION_LED DK_LED1
 
+#define CHIP_TEMP_MSG_SIZE 3
+
 enum ot_thread_commands {
 	THREAD_COAP_LIGHT_CMD_OFF = '0',
 	THREAD_COAP_LIGHT_CMD_ON = '1',

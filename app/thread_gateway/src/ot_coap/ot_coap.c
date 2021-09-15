@@ -18,6 +18,15 @@ static struct sockaddr_in6 multicast_local_addr = {
 //static void on_temp_publish(uint8_t command)
 static void on_temp_publish(otMessage *message)
 {
+	uint8_t payload[CHIP_TEMP_MSG_SIZE] = {0};
+	int8_t rss = otMessageGetRss(message);
+
+	otMessageRead(message, otMessageGetOffset(message), &payload, CHIP_TEMP_MSG_SIZE);
+
+	double temp = payload[1] + (payload[2] * 0.01);
+
+	LOG_INF("cmd: %c - temp: % - rrs: %d", payload[0], temp, rss);
+
 	int size = otMessageGetLength(message);
 	LOG_INF("size: %d", size);
 	//LOG_WRN("reveiced msg: %d", command);

@@ -36,15 +36,9 @@ static void temp_publish_handler(void *context, otMessage *message, const otMess
 	}
 
 	if (otMessageRead(message, otMessageGetOffset(message), &command, 1) !=1) {
-		LOG_ERR("Temp pub handler - Missing light command, check bit lenght");
+		LOG_ERR("Temp pub handler - Missing command");
 		goto end;
 	}
-
-	int size = otMessageGetLength(message);
-	LOG_INF("size: %d", size);
-
-	LOG_INF("Received temp request: %c", command);
-
 	srv_context.on_temp_publish(message);
 
 end:
