@@ -44,7 +44,12 @@ static void temp_publish_handler(void *context, otMessage *message, const otMess
 	otMessageRead(message, otMessageGetOffset(message), &payload, CHIP_TEMP_MSG_SIZE);
 	int16_t temperature =  (payload[1] * 100) + payload[2];
 
-	srv_context.on_temp_publish(temperature);
+	OtTempData data = {
+		.cmd = payload[0],
+		.temperature = temperature
+	};
+
+	srv_context.on_temp_publish(data);
 }
 
 static void coap_default_handler(void *context, otMessage *message, const otMessageInfo *message_info)

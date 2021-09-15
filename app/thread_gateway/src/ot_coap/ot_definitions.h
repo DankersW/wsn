@@ -21,11 +21,11 @@ enum ot_thread_commands {
 	THREAD_COAP_TEMP_MSG_CMD = '5'
 };
 
-struct ot_temp_data
+typedef struct OtTempData
 {
 	uint8_t cmd;
 	int16_t temperature;
-};
+} OtTempData;
 
 
 #endif // DEFINITIONS_H
