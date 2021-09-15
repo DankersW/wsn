@@ -21,4 +21,11 @@ enum ot_thread_commands {
 	THREAD_COAP_TEMP_MSG_CMD = '5'
 };
 
+struct ot_temp_data
+{
+	uint8_t cmd;
+	int16_t temperature;
+};
+
+
 #endif // DEFINITIONS_H

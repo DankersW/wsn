@@ -27,25 +27,24 @@ static void temp_publish_handler(void *context, otMessage *message, const otMess
 
 	if (otCoapMessageGetType(message) != OT_COAP_TYPE_NON_CONFIRMABLE) {
 		LOG_ERR("Temp pub handler - Unexpected type of message");
-		goto end;
+		return;
 	}
 
 	if (otCoapMessageGetCode(message) != OT_COAP_CODE_PUT) {
 		LOG_ERR("Temp pub handler - Unexpected CoAP code");
-		goto end;
+		return;
 	}
 
 	if (otMessageRead(message, otMessageGetOffset(message), &command, 1) !=1) {
 		LOG_ERR("Temp pub handler - Missing command");
-		goto end;
+		return;
 	}
 
-	LOG_WRN("ip: %d", message_info->mPeerAddr);
+	uint8_t payload[CHIP_TEMP_MSG_SIZE] = {0};
+	otMessageRead(message, otMessageGetOffset(message), &payload, CHIP_TEMP_MSG_SIZE);
+	int16_t temperature =  (payload[1] * 100) + payload[2];
 
-	srv_context.on_temp_publish(message);
-
-end:
-	return;
+	srv_context.on_temp_publish(temperature);
 }
 
 static void coap_default_handler(void *context, otMessage *message, const otMessageInfo *message_info)

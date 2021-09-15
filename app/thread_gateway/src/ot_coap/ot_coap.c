@@ -15,21 +15,9 @@ static struct sockaddr_in6 multicast_local_addr = {
 	.sin6_scope_id = 0U
 };
 
-//static void on_temp_publish(uint8_t command)
-static void on_temp_publish(otMessage *message)
+static void on_temp_publish(int16_t temperature)
 {
-	uint8_t payload[CHIP_TEMP_MSG_SIZE] = {0};
-	int8_t rss = otMessageGetRss(message);
-
-	otMessageRead(message, otMessageGetOffset(message), &payload, CHIP_TEMP_MSG_SIZE);
-
-	double temp = payload[1] + (payload[2] * 0.01);
-
-	LOG_INF("cmd: %c - temp: %f - rrs: %d", payload[0], temp, rss);
-
-	int size = otMessageGetLength(message);
-	LOG_INF("size: %d", size);
-	//LOG_WRN("reveiced msg: %d", command);
+	LOG_INF("temp: %d", temperature);
 }
 
 static void on_thread_state_changed(uint32_t flags, void *context)
