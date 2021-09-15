@@ -77,9 +77,7 @@ static void config_request_handler(void *context, otMessage *message, const otMe
 		LOG_ERR("Config handler - Missing config command");
 		goto end;
 	}
-
-	LOG_INF("Received Config request: %c", command);
-
+	
 	srv_context.on_config_request(command);
 
 end:

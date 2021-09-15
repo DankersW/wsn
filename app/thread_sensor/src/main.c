@@ -2,8 +2,8 @@
 #include <dk_buttons_and_leds.h>
 #include <logging/log.h>
 
-// Remove for usb printing
-#include <usb/usb_device.h>
+// USB printing
+//#include <usb/usb_device.h>
 
 
 #include "ot_coap.h"
@@ -16,5 +16,5 @@ void main(void)
 
 	init_ot_coap();
 
-	usb_enable(NULL);
+	//usb_enable(NULL);
 }

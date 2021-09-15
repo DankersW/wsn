@@ -41,22 +41,18 @@ static void on_light_request(uint8_t command)
 
 static void on_config_request(uint8_t command)
 {
-	printk("config request \n");
-	uint8_t send_command;
 	switch (command) {
 	case THREAD_COAP_TEMP_PUBLISH_ON_CMD:
 		dk_set_led_on(TEMP_PUB_LED);
-		send_command = 10;
 		struct sensor_value die_temp = get_chip_temp();
 		uint8_t msg_buffer[CHIP_TEMP_MSG_SIZE] = {0};
 		gen_chip_temp_msg(msg_buffer, &die_temp);
-		int r = coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
-		printk("ret: %d", r);
+		coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
 		break;
 
 	case THREAD_COAP_TEMP_PUBLISH_OFF_CMD:
 		dk_set_led_off(TEMP_PUB_LED);
-		send_command = 11;
+		uint8_t send_command = 11;
 		coap_send(temp_uri, multicast_local_addr, &send_command, sizeof(send_command));
 		break;
 
