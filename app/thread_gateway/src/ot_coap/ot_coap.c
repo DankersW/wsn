@@ -15,9 +15,12 @@ static struct sockaddr_in6 multicast_local_addr = {
 	.sin6_scope_id = 0U
 };
 
-static void on_temp_publish(uint8_t command)
+//static void on_temp_publish(uint8_t command)
+static void on_temp_publish(otMessage *message)
 {
-	LOG_WRN("reveiced msg: %d", command);
+	int size = otMessageGetLength(message);
+	LOG_INF("size: %d", size);
+	//LOG_WRN("reveiced msg: %d", command);
 }
 
 static void on_thread_state_changed(uint32_t flags, void *context)

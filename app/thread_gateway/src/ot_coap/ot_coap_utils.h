@@ -14,7 +14,7 @@
 
 #include "ot_definitions.h"
 
-typedef void (*temp_publish_callback_t)(uint8_t cmd);
+typedef void (*temp_publish_callback_t)(otMessage *message);
 
 int ot_coap_init(temp_publish_callback_t on_temp_publish);
 

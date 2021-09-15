@@ -45,7 +45,7 @@ static void temp_publish_handler(void *context, otMessage *message, const otMess
 
 	LOG_INF("Received temp request: %c", command);
 
-	srv_context.on_temp_publish(command);
+	srv_context.on_temp_publish(message);
 
 end:
 	return;
