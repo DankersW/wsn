@@ -39,6 +39,9 @@ static void temp_publish_handler(void *context, otMessage *message, const otMess
 		LOG_ERR("Temp pub handler - Missing command");
 		goto end;
 	}
+
+	LOG_WRN("ip: %d", message_info->mPeerAddr);
+
 	srv_context.on_temp_publish(message);
 
 end:

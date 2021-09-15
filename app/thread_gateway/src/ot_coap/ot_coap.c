@@ -25,7 +25,7 @@ static void on_temp_publish(otMessage *message)
 
 	double temp = payload[1] + (payload[2] * 0.01);
 
-	LOG_INF("cmd: %c - temp: % - rrs: %d", payload[0], temp, rss);
+	LOG_INF("cmd: %c - temp: %f - rrs: %d", payload[0], temp, rss);
 
 	int size = otMessageGetLength(message);
 	LOG_INF("size: %d", size);
