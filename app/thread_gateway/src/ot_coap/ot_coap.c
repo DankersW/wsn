@@ -15,9 +15,12 @@ static struct sockaddr_in6 multicast_local_addr = {
 	.sin6_scope_id = 0U
 };
 
-static void on_temp_publish(OtTempData temperature_data)
+static void on_temp_publish(OtTempData msg)
 {
-	LOG_INF("cmd: %d - temp: %d", temperature_data.cmd, temperature_data.temperature);
+	char addr_buffer[50] = {};
+	otIp6AddressToString(&msg.addr_sender, &addr_buffer[0], 50);
+
+	LOG_INF("%s | cmd: %d - temp: %d", log_strdup(addr_buffer), msg.cmd, msg.temperature);
 }
 
 static void on_thread_state_changed(uint32_t flags, void *context)

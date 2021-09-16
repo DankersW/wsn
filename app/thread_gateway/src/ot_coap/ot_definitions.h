@@ -2,6 +2,7 @@
 #define DEFINITIONS_H
 
 #include <stdio.h>
+#include <openthread/ip6.h>
 
 #define LIGHT_URI_PATH "light"
 #define TEMP_URI_PATH "temp"
@@ -25,6 +26,7 @@ typedef struct OtTempData
 {
 	uint8_t cmd;
 	int16_t temperature;
+	otIp6Address addr_sender;
 } OtTempData;
 
 
