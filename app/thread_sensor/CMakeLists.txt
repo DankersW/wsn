@@ -5,16 +5,20 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 list(APPEND BOARD_ROOT /work)
 
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
-project(openthread_coap_server)
+project(thread_sensor)
 
 target_sources(app PRIVATE 
     src/main.c
-    src/ot_coap_utils.c
-    src/ot_coap.c
-    src/die_temp.c
-    src/coap_message_definition.c
+
+    src/coap/ot_coap_utils.c
+    src/coap/ot_coap.c
+    src/coap/coap_message_definition.c
+    
+    src/sensor/die_temp.c
 )
 
 target_include_directories(app PRIVATE
     src
+    src/coap
+    src/sensor
 )
