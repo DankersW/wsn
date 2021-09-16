@@ -14,6 +14,32 @@ static struct sockaddr_in6 multicast_local_addr = {
 	.sin6_scope_id = 0U
 };
 
+bool state = false;
+
+struct k_timer temperature_publicaion_timer;
+struct k_work temperature_publicaion_worker;
+
+static void publication_work_hanlder(struct k_work *work)
+{
+	state = !state;
+	dk_set_led(LIGHT_LED, state);
+	
+	
+}
+
+static void publication_timer_expiry_function(struct k_timer *timer_id)
+{
+	//k_work_submit(&temperature_publicaion_worker);
+	//state = !state;
+	//dk_set_led(LIGHT_LED, state);
+
+	struct sensor_value die_temp = get_chip_temp();
+	uint8_t msg_buffer[CHIP_TEMP_MSG_SIZE] = {0};
+
+	gen_chip_temp_msg(msg_buffer, &die_temp);
+	coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
+}
+
 static void on_light_request(uint8_t command)
 {
 	static uint8_t val;
@@ -44,16 +70,12 @@ static void on_config_request(uint8_t command)
 	switch (command) {
 	case THREAD_COAP_TEMP_PUBLISH_ON_CMD:
 		dk_set_led_on(TEMP_PUB_LED);
-		struct sensor_value die_temp = get_chip_temp();
-		uint8_t msg_buffer[CHIP_TEMP_MSG_SIZE] = {0};
-		gen_chip_temp_msg(msg_buffer, &die_temp);
-		coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
+		k_timer_start(&temperature_publicaion_timer, K_SECONDS(0), K_SECONDS(5));
 		break;
 
 	case THREAD_COAP_TEMP_PUBLISH_OFF_CMD:
 		dk_set_led_off(TEMP_PUB_LED);
-		uint8_t send_command = 11;
-		coap_send(temp_uri, multicast_local_addr, &send_command, sizeof(send_command));
+		k_timer_stop(&temperature_publicaion_timer);
 		break;
 
 	default:
@@ -85,6 +107,9 @@ static void on_thread_state_changed(uint32_t flags, void *context)
 void init_ot_coap()
 {
 	setup_chip_temp_sensor();
+
+	k_timer_init(&temperature_publicaion_timer, publication_timer_expiry_function, NULL);
+	k_work_init(&temperature_publicaion_worker, publication_work_hanlder);
 
 	coap_init(AF_INET6, NULL);
     ot_coap_init(&on_light_request, &on_config_request);
