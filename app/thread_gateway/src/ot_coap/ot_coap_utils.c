@@ -49,6 +49,15 @@ static void temp_publish_handler(void *context, otMessage *message, const otMess
 		.temperature = temperature
 	};
 
+
+	LOG_INF("%X:%X", message_info->mSockAddr.mFields.m8[0], message_info->mSockAddr.mFields.m8[1]);
+
+	char buf[50] = {};
+	otIp6AddressToString(&message_info->mPeerAddr, &buf[0], 50);
+
+	LOG_INF("%s", log_strdup(buf));
+
+
 	srv_context.on_temp_publish(data);
 }
 
