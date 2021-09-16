@@ -10,10 +10,17 @@ LOG_MODULE_REGISTER(LOG_MODULE_NAME, LOG_LEVEL_DBG);
 bool timer_active = false;
 
 struct k_timer my_timer;
+struct k_work worker;
+
+void print_work_handler(struct k_work *work)
+{
+	LOG_INF("Work handler");
+}
 
 void my_expiry_function(struct k_timer *timer_id)
 {
 	LOG_INF("timer called");
+	k_work_submit(&worker);
 }
 
 void toggle_timer()
@@ -21,7 +28,7 @@ void toggle_timer()
 	timer_active = !timer_active;
 	if (timer_active)
 	{
-		LOG_INF("stating timer");
+		LOG_INF("stating timer %d", 0);
 		k_timer_start(&my_timer, K_SECONDS(0), K_SECONDS(5));
 	}
 	else
@@ -49,6 +56,7 @@ void main(void)
 	}
 
 	k_timer_init(&my_timer, my_expiry_function, NULL);
+	k_work_init(&worker, print_work_handler);
 
 	if (usb_enable(NULL)) {
 		return;
