@@ -24,20 +24,18 @@ static void publication_work_hanlder(struct k_work *work)
 	state = !state;
 	dk_set_led(LIGHT_LED, state);
 	
-	
+	// Program crashes when trying to transmit the message, 
+	// Need to tryout to use otCoapSendRequest to send a message instead, 
+	// since you pass the OT instance to it, hoping it will make it 
+	struct sensor_value die_temp = get_chip_temp();
+	uint8_t msg_buffer[CHIP_TEMP_MSG_SIZE] = {0};
+	gen_chip_temp_msg(msg_buffer, &die_temp);
+	//coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
 }
 
 static void publication_timer_expiry_function(struct k_timer *timer_id)
 {
-	//k_work_submit(&temperature_publicaion_worker);
-	//state = !state;
-	//dk_set_led(LIGHT_LED, state);
-
-	struct sensor_value die_temp = get_chip_temp();
-	uint8_t msg_buffer[CHIP_TEMP_MSG_SIZE] = {0};
-
-	gen_chip_temp_msg(msg_buffer, &die_temp);
-	coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
+	k_work_submit(&temperature_publicaion_worker);	
 }
 
 static void on_light_request(uint8_t command)
@@ -70,6 +68,7 @@ static void on_config_request(uint8_t command)
 	switch (command) {
 	case THREAD_COAP_TEMP_PUBLISH_ON_CMD:
 		dk_set_led_on(TEMP_PUB_LED);
+		//k_work_submit(&temperature_publicaion_worker);
 		k_timer_start(&temperature_publicaion_timer, K_SECONDS(0), K_SECONDS(5));
 		break;
 
@@ -108,10 +107,12 @@ void init_ot_coap()
 {
 	setup_chip_temp_sensor();
 
+	coap_init(AF_INET6, NULL);
+
 	k_timer_init(&temperature_publicaion_timer, publication_timer_expiry_function, NULL);
 	k_work_init(&temperature_publicaion_worker, publication_work_hanlder);
 
-	coap_init(AF_INET6, NULL);
+	
     ot_coap_init(&on_light_request, &on_config_request);
     openthread_set_state_changed_cb(on_thread_state_changed);
 	openthread_start(openthread_get_default_context());
