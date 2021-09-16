@@ -17,10 +17,9 @@ static struct sockaddr_in6 multicast_local_addr = {
 
 static void on_temp_publish(OtTempData msg)
 {
-	char addr_buffer[50] = {};
-	otIp6AddressToString(&msg.addr_sender, &addr_buffer[0], 50);
-
-	LOG_INF("%s | cmd: %d - temp: %d", log_strdup(addr_buffer), msg.cmd, msg.temperature);
+	char addr_buffer[38] = {};
+	otIp6AddressToString(&msg.addr_sender, &addr_buffer[0], 38);
+	LOG_INF("Msg received, cmd: %d - temp: %d from %s", msg.cmd, msg.temperature, log_strdup(addr_buffer));
 }
 
 static void on_thread_state_changed(uint32_t flags, void *context)
@@ -73,5 +72,5 @@ void temp_monitor_set_state(bool state)
 {
 	uint8_t command = state ? THREAD_COAP_TEMP_PUBLISH_ON_CMD : THREAD_COAP_TEMP_PUBLISH_OFF_CMD;
 	int ret = coap_send(config_uri, multicast_local_addr, command);
-	LOG_WRN("ret %d", ret);
+	LOG_DBG("Transmitted msg with return code %d", ret);
 }
