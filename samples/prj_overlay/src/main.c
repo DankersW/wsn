@@ -13,8 +13,9 @@ void main(void)
 	}
 	k_sleep(K_SECONDS(1));
 
+	int counter = 0;
 	while (1) {
 		k_sleep(K_SECONDS(2));
-		printk("Hello world\n");
+		LOG_INF("Hello world %d", counter++);
 	}
 }
