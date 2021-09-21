@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.13.1)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(OVERLAY_CONFIG 
+    "config/usb_overlay.conf config/ot_overlay.conf"
+)
+
 list(APPEND BOARD_ROOT /work)
 
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})

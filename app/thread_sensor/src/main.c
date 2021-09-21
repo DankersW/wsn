@@ -3,7 +3,7 @@
 #include <logging/log.h>
 
 // USB printing
-//#include <usb/usb_device.h>
+#include <usb/usb_device.h>
 
 
 #include "ot_coap.h"
@@ -14,7 +14,7 @@ void main(void)
 {
 	dk_leds_init();
 
-	init_ot_coap();
+	usb_enable(NULL);
 
-	//usb_enable(NULL);
+	init_ot_coap();	
 }
