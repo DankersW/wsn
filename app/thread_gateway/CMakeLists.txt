@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10...3.19)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(OVERLAY_CONFIG 
-    "config/usb_overlay.conf config/shell_overlay.conf"
+    "config/usb_overlay.conf config/shell_overlay.conf config/ot_overlay.conf"
 )
 
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
