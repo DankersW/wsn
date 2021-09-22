@@ -1,6 +1,6 @@
 #!/bin/bash
 
-base_dir=$(readlink -f $(dirname $0)/..)
+base_dir=$(readlink -f $(dirname $0)/../..)
 image_name="dankersw/wsn_toolchain"
 image_tag=`./scripts/toolchain/version_toolchain.sh`
 
