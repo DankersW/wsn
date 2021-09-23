@@ -50,7 +50,6 @@ static void light_request_handler(void *context, otMessage *message, const otMes
 	}
 
 	LOG_INF("Received light request: %c", command);
-	printk("hello\n");
 
 	srv_context.on_light_request(command);
 
