@@ -27,9 +27,9 @@ static void publication_work_hanlder(struct k_work *work)
 	// Program crashes when trying to transmit the message, 
 	// Need to tryout to use otCoapSendRequest to send a message instead, 
 	// since you pass the OT instance to it, hoping it will make it 
-	struct sensor_value die_temp = get_chip_temp();
-	uint8_t msg_buffer[CHIP_TEMP_MSG_SIZE] = {0};
-	gen_chip_temp_msg(msg_buffer, &die_temp);
+	//struct sensor_value die_temp = get_chip_temp();
+	uint8_t msg_buffer[3] = {0};
+	
 	//coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
 }
 
@@ -105,7 +105,6 @@ static void on_thread_state_changed(uint32_t flags, void *context)
 
 void init_ot_coap()
 {
-	setup_chip_temp_sensor();
 
 	coap_init(AF_INET6, NULL);
 

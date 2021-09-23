@@ -10,8 +10,6 @@
 
 #include "ot_definitions.h"
 #include "ot_coap_utils.h"
-#include "die_temp.h"
-#include "coap_message_definition.h"
 
 void init_ot_coap();
 

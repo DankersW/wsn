@@ -9,20 +9,16 @@ set(OVERLAY_CONFIG
 list(APPEND BOARD_ROOT /work)
 
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
-project(periodic publish)
+project(periodic_publish)
 
 target_sources(app PRIVATE 
     src/main.c
 
     src/coap/ot_coap_utils.c
     src/coap/ot_coap.c
-    src/coap/coap_message_definition.c
-    
-    src/sensor/die_temp.c
 )
 
 target_include_directories(app PRIVATE
     src
     src/coap
-    src/sensor
 )
