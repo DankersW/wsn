@@ -4,85 +4,11 @@ LOG_MODULE_REGISTER(ot_coap_utils, LOG_LEVEL_DBG);
 
 struct server_context {
 	struct otInstance *ot;
-	light_request_callback_t on_light_request;
-	config_request_callback_t on_config_request;
 };
 
 static struct server_context srv_context = {
 	.ot = NULL,
-	.on_light_request = NULL,
-	.on_config_request = NULL,
 };
-
-static otCoapResource light_resource = {
-	.mUriPath = LIGHT_URI_PATH,
-	.mHandler = NULL,
-	.mContext = NULL,
-	.mNext = NULL,
-};
-
-static otCoapResource config_resource = {
-	.mUriPath = CONFIG_URI_PATH,
-	.mHandler = NULL,
-	.mContext = NULL,
-	.mNext = NULL,
-};
-
-static void light_request_handler(void *context, otMessage *message, const otMessageInfo *message_info)
-{
-	uint8_t command;
-
-	ARG_UNUSED(context);
-
-	if (otCoapMessageGetType(message) != OT_COAP_TYPE_NON_CONFIRMABLE) {
-		LOG_ERR("Light handler - Unexpected type of message");
-		goto end;
-	}
-
-	if (otCoapMessageGetCode(message) != OT_COAP_CODE_PUT) {
-		LOG_ERR("Light handler - Unexpected CoAP code");
-		goto end;
-	}
-
-	if (otMessageRead(message, otMessageGetOffset(message), &command, 1) !=1) {
-		LOG_ERR("Light handler - Missing light command");
-		goto end;
-	}
-
-	LOG_INF("Received light request: %c", command);
-
-	srv_context.on_light_request(command);
-
-end:
-	return;
-}
-
-static void config_request_handler(void *context, otMessage *message, const otMessageInfo *message_info)
-{
-	uint8_t command;
-
-	ARG_UNUSED(context);
-
-	if (otCoapMessageGetType(message) != OT_COAP_TYPE_NON_CONFIRMABLE) {
-		LOG_ERR("Config handler - Unexpected type of message");
-		goto end;
-	}
-
-	if (otCoapMessageGetCode(message) != OT_COAP_CODE_PUT) {
-		LOG_ERR("Config handler - Unexpected CoAP code");
-		goto end;
-	}
-
-	if (otMessageRead(message, otMessageGetOffset(message), &command, 1) !=1) {
-		LOG_ERR("Config handler - Missing config command");
-		goto end;
-	}
-	
-	srv_context.on_config_request(command);
-
-end:
-	return;
-}
 
 static void coap_default_handler(void *context, otMessage *message, const otMessageInfo *message_info)
 {
@@ -93,12 +19,9 @@ static void coap_default_handler(void *context, otMessage *message, const otMess
 	LOG_INF("Received CoAP message that does not match any request or resource");
 }
 
-int ot_coap_init(light_request_callback_t on_light_request, config_request_callback_t on_config_request)
+int ot_coap_init()
 {
 	otError error;
-
-	srv_context.on_light_request = on_light_request;
-	srv_context.on_config_request = on_config_request;
 
 	srv_context.ot = openthread_get_default_instance();
 	if (!srv_context.ot) {
@@ -107,15 +30,7 @@ int ot_coap_init(light_request_callback_t on_light_request, config_request_callb
 		goto end;
 	}
 
-	light_resource.mContext = srv_context.ot;
-	light_resource.mHandler = light_request_handler;
-
-	config_resource.mContext = srv_context.ot;
-	config_resource.mHandler = config_request_handler;
-
 	otCoapSetDefaultHandler(srv_context.ot, coap_default_handler, NULL);
-	otCoapAddResource(srv_context.ot, &light_resource);
-	otCoapAddResource(srv_context.ot, &config_resource);
 
 	error = otCoapStart(srv_context.ot, COAP_PORT);
 	if (error != OT_ERROR_NONE) {
