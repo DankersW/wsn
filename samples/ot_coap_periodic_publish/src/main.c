@@ -25,11 +25,10 @@ static void publication_work_hanlder(struct k_work *work)
 	// Need to tryout to use otCoapSendRequest to send a message instead, 
 	// since you pass the OT instance to it, hoping it will make it 
 	//struct sensor_value die_temp = get_chip_temp();
-	uint8_t msg_buffer[3] = {0};
 
 	LOG_INF("state %d", state);
 
-	test_send();
+	//test_send();
 	
 	//coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
 }
