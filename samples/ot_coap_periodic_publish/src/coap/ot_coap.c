@@ -44,3 +44,9 @@ void init_ot_coap()
     openthread_set_state_changed_cb(on_thread_state_changed);
 	openthread_start(openthread_get_default_context());
 }
+
+void test_send()
+{
+	uint8_t msg_buffer[3] = {0};
+	coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
+}

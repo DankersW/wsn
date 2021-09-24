@@ -12,5 +12,6 @@
 #include "ot_coap_utils.h"
 
 void init_ot_coap();
+void test_send();
 
 #endif // OT_COAP_H
