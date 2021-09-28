@@ -35,7 +35,9 @@ void main(void)
 
 	init_ot_coap();
 
-	usb_enable(NULL);	
+	usb_enable(NULL);
+
+	// trying to use a busy loop for sending, using a queue that we fill from the timer
 }
 
 static void on_button_changed(uint32_t button_state, uint32_t has_changed)
