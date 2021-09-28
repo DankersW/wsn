@@ -46,3 +46,61 @@ int coap_send(const char *const uri[], struct sockaddr_in6 addr, uint8_t *messag
 {
 	return coap_send_request(COAP_METHOD_PUT, (const struct sockaddr *)&addr, uri, message, size, NULL);
 }
+
+static otCoapResponseHandler handler(void *               aContext,
+                                      otMessage *          aMessage,
+                                      const otMessageInfo *aMessageInfo,
+                                      otError              aResult)
+{
+	LOG_INF("called");
+}
+
+int new_send()
+{
+	otError error = OT_ERROR_NO_BUFS;
+
+	otMessage *message = otCoapNewMessage(srv_context.ot, NULL);
+	if (message == NULL) {
+		LOG_INF("Creating message failed");
+		return 0;
+	}
+	otCoapMessageInit(message, OT_COAP_TYPE_NON_CONFIRMABLE,OT_COAP_CODE_CONTENT);
+	LOG_INF("all good");
+	
+		//return 1;
+	otCoapMessageGenerateToken(message, 8);
+
+	
+
+	error = otCoapMessageSetPayloadMarker(message);
+	if (error != OT_ERROR_NONE) {
+		LOG_INF("Failed to set payload marker");
+		return 0;
+	}
+
+
+	const void *payload = otThreadGetMeshLocalEid(srv_context.ot);
+	uint16_t payload_size = sizeof(otIp6Address);
+	//LOG_INF("%s", payload);
+
+	error = otMessageAppend(message, payload, payload_size);
+	if (error != OT_ERROR_NONE) {
+		LOG_INF("Message append not working");
+		return 0;
+	}
+	
+	//error = otCoapSendRequest(srv_context.ot, message, ,handler, NULL);
+	//error = otCoapSendResponse(srv_context.ot, response, message_info);
+	LOG_INF("%d", error);
+/*
+	LOG_HEXDUMP_INF(payload, payload_size, "Sent provisioning response:");
+
+end:
+	if (error != OT_ERROR_NONE && response != NULL) {
+		otMessageFree(response);
+	}
+
+	return error;
+*/
+}
+

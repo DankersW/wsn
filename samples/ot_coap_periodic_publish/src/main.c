@@ -59,7 +59,7 @@ static void publication_work_hanlder(struct k_work *work)
 
 	LOG_INF("state %d", state);
 
-	//test_send();
+	test_send();
 	
 	//coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
 }

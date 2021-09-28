@@ -49,4 +49,5 @@ void test_send()
 {
 	uint8_t msg_buffer[3] = {0};
 	coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
+	//new_send();
 }

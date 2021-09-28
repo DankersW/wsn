@@ -19,5 +19,6 @@ int ot_coap_init();
 int coap_send(const char *const uri[], struct sockaddr_in6 addr, uint8_t *message, uint8_t size);
 
 int test_trans();
+int new_send();
 
 #endif
