@@ -37,6 +37,17 @@ void main(void)
 
 	usb_enable(NULL);
 
+	while (true)
+	{
+		k_sleep(K_SECONDS(2));
+		if (get_ot_connection_status())
+		{
+			test_send();	
+		}
+		
+	}
+	
+
 	// trying to use a busy loop for sending, using a queue that we fill from the timer
 }
 
@@ -59,9 +70,9 @@ static void publication_work_hanlder(struct k_work *work)
 	// since you pass the OT instance to it, hoping it will make it 
 	//struct sensor_value die_temp = get_chip_temp();
 
-	LOG_INF("state %d", state);
+	LOG_INF("state %d, connected%d", state, get_ot_connection_status());
 
-	test_send();
+	//test_send();
 	
 	//coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
 }

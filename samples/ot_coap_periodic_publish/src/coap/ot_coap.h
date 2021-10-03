@@ -12,6 +12,7 @@
 #include "ot_coap_utils.h"
 
 void init_ot_coap();
+bool get_ot_connection_status();
 void test_send();
 
 #endif // OT_COAP_H
