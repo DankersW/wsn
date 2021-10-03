@@ -1,13 +1,5 @@
 # TODO
 
-## Sensor app
-
-- Un-provisioning on button click
-- Send out a message without using the build-in models
-- Solve CMake includes with different directories
-
-## Edge node
-
-- Basic shell for interaction via a cli
-- A app that logs msgs to the shell
-- Provision un-provisioned devices
+- Power management
+- Get gateway ip address to transmit data on
+- Message format
