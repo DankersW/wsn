@@ -51,7 +51,7 @@ void main(void)
 		k_msgq_get(&msg_queue, &data, K_FOREVER);
 		if (get_ot_connection_status())
 		{
-			test_send();	
+			test_send(data.counter);	
 		}
 	}
 }

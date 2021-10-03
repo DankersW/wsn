@@ -13,6 +13,6 @@
 
 void init_ot_coap();
 bool get_ot_connection_status();
-void test_send();
+void test_send(uint8_t counter);
 
 #endif // OT_COAP_H
