@@ -27,7 +27,7 @@ struct k_msgq msg_queue;
 
 static void publication_work_hanlder(struct k_work *work);
 static void publication_timer_expiry_function(struct k_timer *timer_id);
-static void on_button_changed(int32_t button_state, int32_t has_changed);
+static void on_button_changed(__uint32_t button_state, __uint32_t has_changed);
 
 void setup()
 {
@@ -56,7 +56,7 @@ void main(void)
 	}
 }
 
-static void on_button_changed(int32_t button_state, int32_t has_changed)
+static void on_button_changed(__uint32_t button_state, __uint32_t has_changed)
 {
 	int32_t buttons = button_state & has_changed;
 	if (buttons & DK_BTN1_MSK) {
