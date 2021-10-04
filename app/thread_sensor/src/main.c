@@ -9,11 +9,25 @@
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
 
-void main(void)
+void setup()
 {
 	dk_leds_init();
-
 	init_ot_coap();	
+}
 
-	usb_enable(NULL);	
+void main(void)
+{
+	setup();
+
+	usb_enable(NULL);
+
+	while (true)
+	{
+		struct msg_q_data_type data;
+		//k_msgq_get(&msg_queue, &data, K_FOREVER);
+		//if (get_ot_connection_status())
+		//{
+		//	test_send(data.counter);	
+		//}
+	}	
 }
