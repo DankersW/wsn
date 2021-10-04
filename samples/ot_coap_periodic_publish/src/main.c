@@ -28,7 +28,6 @@ struct k_msgq msg_queue;
 static void publication_work_hanlder(struct k_work *work);
 static void publication_timer_expiry_function(struct k_timer *timer_id);
 static void on_button_changed(__uint32_t button_state, __uint32_t has_changed);
-static void publisher();
 
 void setup()
 {
@@ -46,7 +45,15 @@ void main(void)
 
 	usb_enable(NULL);
 
-	
+	while (true)
+	{
+		struct msg_q_data_type data;
+		k_msgq_get(&msg_queue, &data, K_FOREVER);
+		if (get_ot_connection_status())
+		{
+			test_send(data.counter);	
+		}
+	}
 }
 
 static void on_button_changed(__uint32_t button_state, __uint32_t has_changed)
@@ -70,17 +77,4 @@ static void publication_work_hanlder(struct k_work *work)
 static void publication_timer_expiry_function(struct k_timer *timer_id)
 {
 	k_work_submit(&temperature_publicaion_worker);	
-}
-
-static void publisher()
-{
-	while (true)
-	{
-		struct msg_q_data_type data;
-		k_msgq_get(&msg_queue, &data, K_FOREVER);
-		if (get_ot_connection_status())
-		{
-			test_send(data.counter);	
-		}
-	}
 }
