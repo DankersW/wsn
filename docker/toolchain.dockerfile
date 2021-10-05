@@ -1,4 +1,4 @@
-FROM dankersw/zephyr_builder:0.1
+FROM dankersw/zephyr_builder:0.1.0
 
 WORKDIR /work
 
