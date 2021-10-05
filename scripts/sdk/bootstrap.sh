@@ -1,6 +1,5 @@
 #!/bin/bash
 
-BUILDER_TAG="0.1"
 DOCKER_IMAGE="wsn_toolchain"
 TOOLCHAIN_TAG=`./scripts/toolchain/version_toolchain.sh`
 
