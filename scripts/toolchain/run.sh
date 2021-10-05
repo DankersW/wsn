@@ -2,7 +2,7 @@
 
 base_dir=$(readlink -f $(dirname $0)/../..)
 image_name="dankersw/wsn_toolchain"
-image_tag=`./scripts/toolchain/version_toolchain.sh`
+image_tag=`./scripts/toolchain/version.sh`
 
 fail() {
     echo "##### FAIL: $1"
