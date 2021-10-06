@@ -8,10 +8,12 @@
 
 #include "ot_coap.h"
 
-LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
+#define LOG_MODULE_NAME main
+LOG_MODULE_REGISTER(LOG_MODULE_NAME, LOG_LEVEL_DBG);
 
 void setup()
 {
+	
 	dk_leds_init();
 	init_ot_coap();	
 }
@@ -25,7 +27,7 @@ void main(void)
 	printk("hello");
 	while (true)
 	{
-		struct msg_q_data_type data;
+		//struct msg_q_data_type data;
 		//k_msgq_get(&msg_queue, &data, K_FOREVER);
 		//if (get_ot_connection_status())
 		//{

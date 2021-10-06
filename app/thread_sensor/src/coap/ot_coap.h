@@ -13,16 +13,13 @@
 #include "die_temp.h"
 #include "coap_message_definition.h"
 
+#define QUEUE_SIZE 10
+
 extern bool ot_connected;
 
-#define QUEUE_SIZE 10
-extern struct msg_q_data_type {
-    bool state;
-	bool something;
-	int8_t counter;
-};
-extern char msg_q_buffer[QUEUE_SIZE * sizeof(struct msg_q_data_type)];
-extern struct k_msgq msg_queue;
+//#define QUEUE_SIZE 10
+//extern char msg_q_buffer[QUEUE_SIZE * sizeof(struct msg_q_data_type)];
+//extern struct k_msgq msg_queue;
 
 void init_ot_coap();
 
