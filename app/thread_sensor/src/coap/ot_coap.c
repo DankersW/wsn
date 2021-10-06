@@ -15,6 +15,7 @@ static struct sockaddr_in6 multicast_local_addr = {
 };
 
 bool state = false;
+bool ot_connected = false;
 
 struct k_timer temperature_publicaion_timer;
 struct k_work temperature_publicaion_worker;
@@ -30,6 +31,8 @@ static void publication_work_hanlder(struct k_work *work)
 	struct sensor_value die_temp = get_chip_temp();
 	uint8_t msg_buffer[CHIP_TEMP_MSG_SIZE] = {0};
 	gen_chip_temp_msg(msg_buffer, &die_temp);
+
+	printk("state: %d\n", ot_connected);
 	//coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
 }
 
@@ -92,12 +95,14 @@ static void on_thread_state_changed(uint32_t flags, void *context)
 		case OT_DEVICE_ROLE_ROUTER:
 		case OT_DEVICE_ROLE_LEADER:
 			dk_set_led_on(OT_CONNECTION_LED);
+			ot_connected = true;
 			break;
 
 		case OT_DEVICE_ROLE_DISABLED:
 		case OT_DEVICE_ROLE_DETACHED:
 		default:
 			dk_set_led_off(OT_CONNECTION_LED);
+			ot_connected = false;
 			break;
 		}
 	}
