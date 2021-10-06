@@ -32,5 +32,6 @@ void main(void)
 		//	test_send(data.counter);	
 		//}
 		k_sleep(K_SECONDS(1));
+		LOG_INF("coap state: %d", ot_connected);
 	}	
 }
