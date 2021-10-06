@@ -32,6 +32,7 @@ static void publication_work_hanlder(struct k_work *work)
 	uint8_t msg_buffer[CHIP_TEMP_MSG_SIZE] = {0};
 	gen_chip_temp_msg(msg_buffer, &die_temp);
 
+	LOG_WRN("state: %d\n", ot_connected);
 	printk("state: %d\n", ot_connected);
 	//coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
 }

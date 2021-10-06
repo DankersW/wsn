@@ -3,6 +3,7 @@
 #include <logging/log.h>
 
 // USB printing
+#include <sys/printk.h>
 #include <usb/usb_device.h>
 
 #include "ot_coap.h"
@@ -21,6 +22,7 @@ void main(void)
 
 	usb_enable(NULL);
 
+	printk("hello");
 	while (true)
 	{
 		struct msg_q_data_type data;
@@ -29,5 +31,6 @@ void main(void)
 		//{
 		//	test_send(data.counter);	
 		//}
+		k_sleep(K_SECONDS(1));
 	}	
 }
