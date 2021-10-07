@@ -24,16 +24,5 @@ void main(void)
 
 	usb_enable(NULL);
 
-	printk("hello");
-	while (true)
-	{
-		//struct msg_q_data_type data;
-		//k_msgq_get(&msg_queue, &data, K_FOREVER);
-		//if (get_ot_connection_status())
-		//{
-		//	test_send(data.counter);	
-		//}
-		k_sleep(K_SECONDS(1));
-		LOG_INF("coap state: %d", ot_connected);
-	}	
+	publisher();
 }

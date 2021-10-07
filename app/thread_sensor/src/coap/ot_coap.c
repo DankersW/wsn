@@ -16,6 +16,7 @@ static struct sockaddr_in6 multicast_local_addr = {
 
 bool state = false;
 bool ot_connected = false;
+uint8_t msg_counter = 0;
 
 struct msgq_coap_tx {
     bool state;
@@ -40,11 +41,12 @@ static void publication_work_hanlder(struct k_work *work)
 	uint8_t msg_buffer[CHIP_TEMP_MSG_SIZE] = {0};
 	gen_chip_temp_msg(msg_buffer, &die_temp);
 
-	LOG_WRN("state: %d\n", ot_connected);
-	printk("state: %d\n", ot_connected);
-
-
-
+	struct msgq_coap_tx data = {
+		.state = true,
+		.something = false,
+		.counter = ++msg_counter,
+	};
+	k_msgq_put(&msg_queue, &data, K_NO_WAIT);
 
 	//coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
 }
@@ -133,4 +135,23 @@ void init_ot_coap()
     ot_coap_init(&on_light_request, &on_config_request);
     openthread_set_state_changed_cb(on_thread_state_changed);
 	openthread_start(openthread_get_default_context());
+}
+
+void test_send(uint8_t counter)
+{
+	uint8_t msg_buffer[3] = {52, counter, 0};
+	coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
+}
+
+void publisher()
+{
+	while (true)
+	{
+		struct msgq_coap_tx data;
+		k_msgq_get(&msg_queue, &data, K_FOREVER);
+		if (ot_connected)
+		{
+			test_send(data.counter);	
+		}
+	}
 }

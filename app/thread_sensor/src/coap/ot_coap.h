@@ -22,5 +22,6 @@ extern bool ot_connected;
 //extern struct k_msgq msg_queue;
 
 void init_ot_coap();
+void publisher();
 
 #endif // OT_COAP_H
