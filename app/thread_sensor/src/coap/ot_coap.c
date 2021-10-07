@@ -27,6 +27,46 @@ static char msgq_tx_buffer[QUEUE_SIZE * sizeof(struct msgq_coap_tx)];
 static bool ot_connected = false;
 static uint8_t msg_counter = 0;
 
+static void publication_work_hanlder(struct k_work *work);
+static void publication_timer_expiry_function(struct k_timer *timer_id);
+static void on_light_request(uint8_t command);
+static void on_config_request(uint8_t command);
+static void on_thread_state_changed(__uint32_t flags, void *context);
+
+void init_ot_coap()
+{
+	setup_chip_temp_sensor();
+
+	coap_init(AF_INET6, NULL);
+
+	k_msgq_init(&msg_queue, msgq_tx_buffer, sizeof(struct msgq_coap_tx), QUEUE_SIZE);
+	k_timer_init(&temperature_publicaion_timer, publication_timer_expiry_function, NULL);
+	k_work_init(&temperature_publicaion_worker, publication_work_hanlder);
+	
+    ot_coap_init(&on_light_request, &on_config_request);
+    openthread_set_state_changed_cb(on_thread_state_changed);
+	openthread_start(openthread_get_default_context());
+}
+
+void test_send(uint8_t counter)
+{
+	uint8_t msg_buffer[3] = {52, counter, 0};
+	coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
+}
+
+void publisher()
+{
+	while (true)
+	{
+		struct msgq_coap_tx data;
+		k_msgq_get(&msg_queue, &data, K_FOREVER);
+		if (ot_connected)
+		{
+			test_send(data.counter);	
+		}
+	}
+}
+
 static void publication_work_hanlder(struct k_work *work)
 {
 	struct sensor_value die_temp = get_chip_temp();
@@ -89,7 +129,7 @@ static void on_config_request(uint8_t command)
 	}
 }
 
-static void on_thread_state_changed(uint32_t flags, void *context)
+static void on_thread_state_changed(__uint32_t flags, void *context)
 {
 	struct openthread_context *ot_context = context;
 
@@ -108,40 +148,6 @@ static void on_thread_state_changed(uint32_t flags, void *context)
 			dk_set_led_off(OT_CONNECTION_LED);
 			ot_connected = false;
 			break;
-		}
-	}
-}
-
-void init_ot_coap()
-{
-	setup_chip_temp_sensor();
-
-	coap_init(AF_INET6, NULL);
-
-	k_msgq_init(&msg_queue, msgq_tx_buffer, sizeof(struct msgq_coap_tx), QUEUE_SIZE);
-	k_timer_init(&temperature_publicaion_timer, publication_timer_expiry_function, NULL);
-	k_work_init(&temperature_publicaion_worker, publication_work_hanlder);
-	
-    ot_coap_init(&on_light_request, &on_config_request);
-    openthread_set_state_changed_cb(on_thread_state_changed);
-	openthread_start(openthread_get_default_context());
-}
-
-void test_send(uint8_t counter)
-{
-	uint8_t msg_buffer[3] = {52, counter, 0};
-	coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
-}
-
-void publisher()
-{
-	while (true)
-	{
-		struct msgq_coap_tx data;
-		k_msgq_get(&msg_queue, &data, K_FOREVER);
-		if (ot_connected)
-		{
-			test_send(data.counter);	
 		}
 	}
 }
