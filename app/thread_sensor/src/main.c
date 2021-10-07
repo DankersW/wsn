@@ -13,7 +13,6 @@ LOG_MODULE_REGISTER(LOG_MODULE_NAME, LOG_LEVEL_DBG);
 
 void setup()
 {
-	
 	dk_leds_init();
 	init_ot_coap();	
 }

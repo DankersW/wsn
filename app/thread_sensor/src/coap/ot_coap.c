@@ -2,8 +2,6 @@
 
 LOG_MODULE_REGISTER(ot_coap, LOG_LEVEL_DBG);
 
-static const char *const temp_uri[] = { TEMP_URI_PATH, NULL };
-
 static struct sockaddr_in6 multicast_local_addr = {
 	.sin6_family = AF_INET6,
 	.sin6_port = htons(COAP_PORT),
@@ -14,29 +12,23 @@ static struct sockaddr_in6 multicast_local_addr = {
 	.sin6_scope_id = 0U
 };
 
-bool state = false;
-bool ot_connected = false;
-uint8_t msg_counter = 0;
-
-struct msgq_coap_tx {
+static struct msgq_coap_tx {
     bool state;
 	bool something;
 	int8_t counter;
 };
-char msgq_tx_buffer[QUEUE_SIZE * sizeof(struct msgq_coap_tx)];
-struct k_msgq msg_queue;
 
-struct k_timer temperature_publicaion_timer;
-struct k_work temperature_publicaion_worker;
+static struct k_msgq msg_queue;
+static struct k_timer temperature_publicaion_timer;
+static struct k_work temperature_publicaion_worker;
+
+static const char *const temp_uri[] = { TEMP_URI_PATH, NULL };
+static char msgq_tx_buffer[QUEUE_SIZE * sizeof(struct msgq_coap_tx)];
+static bool ot_connected = false;
+static uint8_t msg_counter = 0;
 
 static void publication_work_hanlder(struct k_work *work)
 {
-	state = !state;
-	dk_set_led(LIGHT_LED, state);
-	
-	// Program crashes when trying to transmit the message, 
-	// Need to tryout to use otCoapSendRequest to send a message instead, 
-	// since you pass the OT instance to it, hoping it will make it 
 	struct sensor_value die_temp = get_chip_temp();
 	uint8_t msg_buffer[CHIP_TEMP_MSG_SIZE] = {0};
 	gen_chip_temp_msg(msg_buffer, &die_temp);
@@ -47,8 +39,6 @@ static void publication_work_hanlder(struct k_work *work)
 		.counter = ++msg_counter,
 	};
 	k_msgq_put(&msg_queue, &data, K_NO_WAIT);
-
-	//coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
 }
 
 static void publication_timer_expiry_function(struct k_timer *timer_id)
