@@ -13,9 +13,7 @@ static struct sockaddr_in6 multicast_local_addr = {
 };
 
 static struct msgq_coap_tx {
-    bool state;
-	bool something;
-	int8_t counter;
+	uint8_t temp_msg[CHIP_TEMP_MSG_SIZE];
 };
 
 static struct k_msgq msg_queue;
@@ -25,7 +23,6 @@ static struct k_work temperature_publicaion_worker;
 static const char *const temp_uri[] = { TEMP_URI_PATH, NULL };
 static char msgq_tx_buffer[QUEUE_SIZE * sizeof(struct msgq_coap_tx)];
 static bool ot_connected = false;
-static uint8_t msg_counter = 0;
 
 static void publication_work_hanlder(struct k_work *work);
 static void publication_timer_expiry_function(struct k_timer *timer_id);
@@ -62,7 +59,8 @@ void publisher()
 		k_msgq_get(&msg_queue, &data, K_FOREVER);
 		if (ot_connected)
 		{
-			test_send(data.counter);	
+			printk("%d - %d - %d", data.temp_msg[0], data.temp_msg[1], data.temp_msg[2]);
+			coap_send(temp_uri, multicast_local_addr, data.temp_msg, sizeof(data.temp_msg));
 		}
 	}
 }
@@ -74,9 +72,7 @@ static void publication_work_hanlder(struct k_work *work)
 	gen_chip_temp_msg(msg_buffer, &die_temp);
 
 	struct msgq_coap_tx data = {
-		.state = true,
-		.something = false,
-		.counter = ++msg_counter,
+		.temp_msg = msg_buffer
 	};
 	k_msgq_put(&msg_queue, &data, K_NO_WAIT);
 }
