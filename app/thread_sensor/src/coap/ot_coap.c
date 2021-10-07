@@ -13,7 +13,9 @@ static struct sockaddr_in6 multicast_local_addr = {
 };
 
 static struct msgq_coap_tx {
-	uint8_t temp_msg[CHIP_TEMP_MSG_SIZE];
+	uint8_t cmd;
+	uint8_t temp_v1;
+	uint8_t temp_v2;
 };
 
 static struct k_msgq msg_queue;
@@ -57,10 +59,11 @@ void publisher()
 	{
 		struct msgq_coap_tx data;
 		k_msgq_get(&msg_queue, &data, K_FOREVER);
+		uint8_t buffer[3]={data.cmd, data.temp_v1, data.temp_v2};
 		if (ot_connected)
 		{
-			printk("%d - %d - %d", data.temp_msg[0], data.temp_msg[1], data.temp_msg[2]);
-			coap_send(temp_uri, multicast_local_addr, data.temp_msg, sizeof(data.temp_msg));
+			printk("msg_queue: %d - %d - %d\n", data.cmd, data.temp_v1, data.temp_v2);
+			coap_send(temp_uri, multicast_local_addr, buffer, sizeof(buffer));
 		}
 	}
 }
@@ -72,8 +75,11 @@ static void publication_work_hanlder(struct k_work *work)
 	gen_chip_temp_msg(msg_buffer, &die_temp);
 
 	struct msgq_coap_tx data = {
-		.temp_msg = msg_buffer
+		.cmd = msg_buffer[0],
+		.temp_v1 = msg_buffer[1],
+		.temp_v2 = msg_buffer[2],
 	};
+	printk("temp gen: %d - %d - %d\n", msg_buffer[0], msg_buffer[1], msg_buffer[2]);
 	k_msgq_put(&msg_queue, &data, K_NO_WAIT);
 }
 
