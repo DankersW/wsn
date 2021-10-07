@@ -62,7 +62,6 @@ void publisher()
 		uint8_t buffer[3]={data.cmd, data.temp_v1, data.temp_v2};
 		if (ot_connected)
 		{
-			printk("msg_queue: %d - %d - %d\n", data.cmd, data.temp_v1, data.temp_v2);
 			coap_send(temp_uri, multicast_local_addr, buffer, sizeof(buffer));
 		}
 	}
@@ -79,7 +78,6 @@ static void publication_work_hanlder(struct k_work *work)
 		.temp_v1 = msg_buffer[1],
 		.temp_v2 = msg_buffer[2],
 	};
-	printk("temp gen: %d - %d - %d\n", msg_buffer[0], msg_buffer[1], msg_buffer[2]);
 	k_msgq_put(&msg_queue, &data, K_NO_WAIT);
 }
 
