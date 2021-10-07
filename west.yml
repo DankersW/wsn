@@ -1,5 +1,5 @@
 manifest:
-  version: 0.9
+  version: "0.10"
 
   remotes:
     - name: ncs
@@ -8,7 +8,7 @@ manifest:
   projects:
     - name: nrf
       repo-path: sdk-nrf
-      revision: v1.5.1
+      revision: v1.6.1
       remote: ncs
       import:
         path-prefix: ncs

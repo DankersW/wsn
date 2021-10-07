@@ -35,7 +35,7 @@ fi
 
 
 echo "Building application $APP"
-./scripts/toolchain.sh west build -p -b $BOARD $APP || exit 1
+./scripts/toolchain/run.sh west build -p -b $BOARD $APP || exit 1
 
 echo "Flashing hex"
 if [ $BOARD = "nrf52840dongle_nrf52840" ]; then
@@ -45,6 +45,6 @@ if [ $BOARD = "nrf52840dongle_nrf52840" ]; then
     nrfutil dfu usb-serial -pkg $PKG_NAME -p /dev/ttyACM0
     rm $PKG_NAME
 elif [ $BOARD = "nrf52840dk_nrf52840" ]; then
-    ./scripts/toolchain.sh west flash
+    ./scripts/toolchain/run.sh west flash
 fi
 

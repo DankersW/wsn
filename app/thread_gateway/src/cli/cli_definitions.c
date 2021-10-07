@@ -14,8 +14,18 @@ SHELL_STATIC_SUBCMD_SET_CREATE(sub_thread_multi_light,
 	SHELL_CMD(off, NULL, "All lights off", cmd_ot_multi_light_off),
 	SHELL_SUBCMD_SET_END
 );
+SHELL_STATIC_SUBCMD_SET_CREATE(sub_thread_monitor_temp,
+	SHELL_CMD(on, NULL, "Turn on temperature monitoring", cmd_ot_monitor_temp_on),
+	SHELL_CMD(off, NULL, "Turn off temperature monitoring", cmd_ot_monitor_temp_off),
+	SHELL_SUBCMD_SET_END
+);
+SHELL_STATIC_SUBCMD_SET_CREATE(sub_thread_monitor,
+	SHELL_CMD(temp, &sub_thread_monitor_temp, "Temperature monitoring", NULL),
+	SHELL_SUBCMD_SET_END
+);
 SHELL_STATIC_SUBCMD_SET_CREATE(sub_thread,
 	SHELL_CMD(multi_light, &sub_thread_multi_light, "Multicast light ctrl", NULL),
+	SHELL_CMD(monitor, &sub_thread_monitor, "Monitoring commands", NULL),
 	SHELL_SUBCMD_SET_END
 );
 SHELL_CMD_REGISTER(thread, &sub_thread, "thread", NULL);

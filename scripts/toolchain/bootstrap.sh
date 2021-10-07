@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DOCKER_IMAGE="wsn_toolchain"
-TOOLCHAIN_TAG=`./scripts/toolchain/version_toolchain.sh`
+TOOLCHAIN_TAG=`./scripts/toolchain/version.sh`
 
 echo "Copy requirements files"
 rm -fr _requirements || exit 1

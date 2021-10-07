@@ -3,7 +3,7 @@
 #include <logging/log.h>
 
 #include "cli_shell.h"
-#include "ot.h"
+#include "ot_coap.h"
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
 
@@ -14,6 +14,8 @@ void main(void)
 		LOG_ERR("Cannot init leds, (error: %d)", ret);
 		return;
 	}
-	init_ot();
+	
+	init_ot_coap();
+
 	enable_shell();
 }

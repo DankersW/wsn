@@ -4,7 +4,7 @@ int cmd_ot_multi_light_toggle(const struct shell *shell, size_t argc, char **arg
 {
     ARG_UNUSED(argc);
 	ARG_UNUSED(argv);
-	multi_light_toggle();
+	light_toggle();
 	return 0;
 }
 
@@ -12,7 +12,7 @@ int cmd_ot_multi_light_on(const struct shell *shell, size_t argc, char **argv)
 {
     ARG_UNUSED(argc);
 	ARG_UNUSED(argv);
-	multi_light_set(true);
+	light_set_state(true);
 	return 0;
 }
 
@@ -20,6 +20,22 @@ int cmd_ot_multi_light_off(const struct shell *shell, size_t argc, char **argv)
 {
     ARG_UNUSED(argc);
 	ARG_UNUSED(argv);
-	multi_light_set(false);
+	light_set_state(false);
+	return 0;
+}
+
+int cmd_ot_monitor_temp_on(const struct shell *shell, size_t argc, char **argv)
+{
+	ARG_UNUSED(argc);
+	ARG_UNUSED(argv);
+	temp_monitor_set_state(true);
+	return 0;
+}
+
+int cmd_ot_monitor_temp_off(const struct shell *shell, size_t argc, char **argv)
+{
+	ARG_UNUSED(argc);
+	ARG_UNUSED(argv);
+	temp_monitor_set_state(false);
 	return 0;
 }
