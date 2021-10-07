@@ -12,7 +12,7 @@ static struct sockaddr_in6 multicast_local_addr = {
 	.sin6_scope_id = 0U
 };
 
-static struct msgq_coap_tx {
+struct msgq_coap_tx {
 	uint8_t cmd;
 	uint8_t temp_v1;
 	uint8_t temp_v2;
