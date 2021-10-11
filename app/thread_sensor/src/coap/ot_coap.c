@@ -47,12 +47,6 @@ void init_ot_coap()
 	openthread_start(openthread_get_default_context());
 }
 
-void test_send(uint8_t counter)
-{
-	uint8_t msg_buffer[3] = {52, counter, 0};
-	coap_send(temp_uri, multicast_local_addr, msg_buffer, sizeof(msg_buffer));
-}
-
 void publisher()
 {
 	while (true)
