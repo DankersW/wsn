@@ -23,7 +23,7 @@ static struct k_timer temperature_publicaion_timer;
 static struct k_work temperature_publicaion_worker;
 
 static const char *const temp_uri[] = { TEMP_URI_PATH, NULL };
-static char msgq_tx_buffer[QUEUE_SIZE * sizeof(struct msgq_coap_tx)];
+static char __aligned(4) msgq_tx_buffer[QUEUE_SIZE * sizeof(struct msgq_coap_tx)];
 static bool ot_connected = false;
 
 static void publication_work_hanlder(struct k_work *work);
