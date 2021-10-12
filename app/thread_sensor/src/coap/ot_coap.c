@@ -13,18 +13,12 @@ static struct sockaddr_in6 multicast_local_addr = {
 };
 
 struct msgq_coap_tx {
-	uint8_t cmd;
-	uint8_t temp_v1;
-	uint8_t temp_v2;
-};
-
-struct _msgq_coap_tx {
-    const char *uri;
+    const char *const uri[2];
 	struct sockaddr_in6 addr;
-	uint8_t b0;
-    uint8_t b1;
-    uint8_t b2;
-    uint8_t b3;
+	uint8_t d0;
+    uint8_t d1;
+    uint8_t d2;
+    uint8_t d3;
     uint8_t msg_size;
 }_msgq_coap_tx;
 
@@ -32,9 +26,7 @@ static struct k_msgq msg_queue;
 static struct k_timer temperature_publicaion_timer;
 static struct k_work temperature_publicaion_worker;
 
-static const char *const temp_uri[] = { TEMP_URI_PATH, NULL };
-//static char __aligned(4) msgq_tx_buffer[QUEUE_SIZE * sizeof(struct msgq_coap_tx)];
-static char __aligned(4) msgq_tx_buffer[QUEUE_SIZE * sizeof(struct _msgq_coap_tx)];
+static char __aligned(4) msgq_tx_buffer[QUEUE_SIZE * sizeof(struct msgq_coap_tx)];
 static bool ot_connected = false;
 
 static void publication_work_hanlder(struct k_work *work);
@@ -49,8 +41,7 @@ void init_ot_coap()
 
 	coap_init(AF_INET6, NULL);
 
-	//k_msgq_init(&msg_queue, msgq_tx_buffer, sizeof(struct msgq_coap_tx), QUEUE_SIZE);
-	k_msgq_init(&msg_queue, msgq_tx_buffer, sizeof(struct _msgq_coap_tx), QUEUE_SIZE);
+	k_msgq_init(&msg_queue, msgq_tx_buffer, sizeof(struct msgq_coap_tx), QUEUE_SIZE);
 	k_timer_init(&temperature_publicaion_timer, publication_timer_expiry_function, NULL);
 	k_work_init(&temperature_publicaion_worker, publication_work_hanlder);
 	
@@ -63,15 +54,11 @@ void publisher()
 {
 	while (true)
 	{
-		struct _msgq_coap_tx data;
+		struct msgq_coap_tx data;
 		k_msgq_get(&msg_queue, &data, K_FOREVER);
-		//uint8_t buffer[3]={data.cmd, data.temp_v1, data.temp_v2};
 		if (ot_connected)
 		{
-			if (data.uri == "temp")
-			{
-				coap_send(temp_uri, data.addr, &data.b0, data.msg_size);
-			}
+			coap_send(data.uri, data.addr, &data.d0, data.msg_size);
 		}
 	}
 }
@@ -82,15 +69,15 @@ static void publication_work_hanlder(struct k_work *work)
 	uint8_t msg_buffer[CHIP_TEMP_MSG_SIZE] = {0};
 	gen_chip_temp_msg(msg_buffer, &die_temp);
 
-	struct _msgq_coap_tx data = {
+	struct msgq_coap_tx packet = {
 		.addr = multicast_local_addr,
-		.b0 = msg_buffer[0],
-		.b1 = msg_buffer[1],
-		.b2 = msg_buffer[2],
+		.d0 = msg_buffer[0],
+		.d1 = msg_buffer[1],
+		.d2 = msg_buffer[2],
 		.msg_size = 3,
-		.uri = "temp"
+		.uri = TEMP_URI_PATH
 	};
-	k_msgq_put(&msg_queue, &data, K_NO_WAIT);
+	k_msgq_put(&msg_queue, &packet, K_NO_WAIT);
 }
 
 static void publication_timer_expiry_function(struct k_timer *timer_id)

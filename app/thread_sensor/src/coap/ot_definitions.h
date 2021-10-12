@@ -21,4 +21,8 @@ enum ot_thread_commands {
 	THREAD_COAP_TEMP_MSG_CMD = '5'
 };
 
+enum uris {
+	URI_TEMP_SERVER = '0'
+};
+
 #endif // OT_DEFINITIONS_H
