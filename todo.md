@@ -9,5 +9,8 @@
 =======
 - Protobuf msg
 - Make the gw receive the protobug msg and print it on the terminal
+<<<<<<< HEAD
 
 >>>>>>> docs: updated todo
+=======
+>>>>>>> samples: basic protobuf sample
