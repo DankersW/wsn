@@ -10,7 +10,15 @@
 - Protobuf msg
 - Make the gw receive the protobug msg and print it on the terminal
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 >>>>>>> docs: updated todo
 =======
 >>>>>>> samples: basic protobuf sample
+=======
+
+
+## WIP
+
+Use [NanoPB](https://github.com/nanopb/nanopb) to build the C proto files
+>>>>>>> docs: updated wiå
