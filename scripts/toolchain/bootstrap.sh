@@ -19,5 +19,9 @@ pip3 install -r requirements.txt
 echo "INIT SDK"
 ./scripts/toolchain/run.sh west update || exit 1
 
+echo "Fetching protobuf messages"
+git submodule init
+git submodule update
+
 echo "Cleaning up"
 rm -fr _requirements
