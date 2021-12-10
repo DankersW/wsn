@@ -56,7 +56,7 @@ int proto_magic()
     
     {
         wsn_SensorData message = wsn_SensorData_init_zero;
-        pb_istream_t stream = pb_istream_from_buffer(buffer, message_length);
+        pb_istream_t stream = pb_istream_from_buffer(buffer, sizeof(buffer));
         
         /* Now we are ready to decode the message. */
         status = pb_decode(&stream, wsn_SensorData_fields, &message);
