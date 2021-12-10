@@ -11,15 +11,15 @@ project(protobuf)
 
 target_sources(app PRIVATE 
     src/main.c
-    src/pb_common.c
-    src/pb_decode.c
-    src/pb_encode.c
-    src/simple.pb.c
-    #../../home-automation-ipc/generated/c/wsn.pb-c.c
+
+    ../../home-automation-ipc/generated/nanopb/pb_common.c
+    ../../home-automation-ipc/generated/nanopb/pb_decode.c
+    ../../home-automation-ipc/generated/nanopb/pb_encode.c
+    ../../home-automation-ipc/generated/nanopb/wsn.pb.c
    
 )
 
 target_include_directories(app PRIVATE
     src
-   #../../home-automation-ipc/generated/c/
+   ../../home-automation-ipc/generated/nanopb/
 )
