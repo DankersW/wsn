@@ -19,14 +19,14 @@ void main(void)
 	
 	while (1) {
 		k_sleep(K_SECONDS(2));
-		printk("Hello world\n");
 		proto_magic();
+        printk("\n");
 	}
 }
 
 int proto_magic()
 {
-	    /* This is the buffer where we will store our message. */
+	/* This is the buffer where we will store our message. */
     uint8_t buffer[128];
     size_t message_length;
     bool status;
@@ -38,6 +38,7 @@ int proto_magic()
         
 		message.temperature = 25.0;
 		message.humidity = 17.77;
+        strcpy(message.sensor_id,"SX_78766");
         
         status = pb_encode(&stream, wsn_SensorData_fields, &message);
         message_length = stream.bytes_written;
@@ -67,7 +68,10 @@ int proto_magic()
         }
         
         /* Print the data contained in the message. */
-        printf("The temperature was set to: %d\n", (int)message.temperature);
+        printf("Sensor ID: %s\n", message.sensor_id);
+        printf("Message lenght: %d\n", message_length);
+        printf("Temperature: %d\n", (int)message.temperature);
+        printf("Humidity: %d\n", (int)message.humidity);
     }
     
     return 0;
