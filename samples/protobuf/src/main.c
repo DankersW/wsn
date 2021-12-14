@@ -20,7 +20,6 @@ void main(void)
 	while (1) {
 		k_sleep(K_SECONDS(2));
 		proto_magic();
-        printk("\n");
 	}
 }
 
@@ -39,6 +38,8 @@ int proto_magic()
 		message.temperature = 25.0;
 		message.humidity = 17.77;
         strcpy(message.sensor_id,"SX_78766");
+
+        
         
         status = pb_encode(&stream, wsn_SensorData_fields, &message);
         message_length = stream.bytes_written;
@@ -48,7 +49,7 @@ int proto_magic()
             return 1;
         }
     }
-    
+
     /* 
 	Now we could transmit the message over network, store it in a file or
     wrap it to a pigeon's leg.
@@ -71,7 +72,7 @@ int proto_magic()
         printf("Sensor ID: %s\n", message.sensor_id);
         printf("Message lenght: %d\n", message_length);
         printf("Temperature: %d\n", (int)message.temperature);
-        printf("Humidity: %d\n", (int)message.humidity);
+        printf("Humidity: %d\n\n", (int)message.humidity);
     }
     
     return 0;
