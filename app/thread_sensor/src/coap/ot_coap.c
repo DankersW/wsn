@@ -63,13 +63,13 @@ void publisher()
 static void publication_work_hanlder(struct k_work *work)
 {
 	struct sensor_value die_temp = get_chip_temp();
-	uint8_t msg_buffer[CHIP_TEMP_MSG_SIZE] = {0};
-	gen_chip_temp_msg(msg_buffer, &die_temp);
+	uint8_t msg_buffer[20] = {0};
+	uint8_t msg_size = serialize_sensor_data_msg(msg_buffer, &die_temp);
 
 	struct tx_msgq packet = {
 		.addr = multicast_local_addr,
 		.msg = {msg_buffer[0], msg_buffer[1],msg_buffer[2]},
-		.msg_size = 3,
+		.msg_size = msg_size,
 		.uri = TEMP_URI_PATH
 	};
 	k_msgq_put(&msg_queue, &packet, K_NO_WAIT);
