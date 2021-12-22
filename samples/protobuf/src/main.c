@@ -37,9 +37,7 @@ int proto_magic()
         
 		message.temperature = 25.0;
 		message.humidity = 17.77;
-        strcpy(message.sensor_id,"SX_78766");
-
-        
+        strcpy(message.sensor_id,"S01");
         
         status = pb_encode(&stream, wsn_SensorData_fields, &message);
         message_length = stream.bytes_written;
