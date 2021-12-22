@@ -2,5 +2,6 @@
 #define APP_DEFINITIONS_H
 
 #define PROTO_MSG_MAX_SIZE 20
+#define SENSOR_ID "S01"
 
 #endif // APP_DEFINITIONS_H

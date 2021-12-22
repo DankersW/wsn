@@ -15,7 +15,7 @@ static struct sockaddr_in6 multicast_local_addr = {
 struct tx_msgq {
     const char *const uri[2];
 	struct sockaddr_in6 addr;
-	uint8_t msg[20];
+	uint8_t msg[PROTO_MSG_MAX_SIZE];
     uint8_t msg_size;
 }_tx_msgq;
 
@@ -63,13 +63,14 @@ void publisher()
 static void publication_work_hanlder(struct k_work *work)
 {
 	struct sensor_value die_temp = get_chip_temp();
-	uint8_t msg_buffer[20] = {0};
-	uint8_t msg_size = serialize_sensor_data_msg(msg_buffer, &die_temp);
+	uint8_t msg_buffer[PROTO_MSG_MAX_SIZE] = {0};
+	uint8_t msg_size = serialize_sensor_data(msg_buffer, &die_temp);
+	LOG_INF("message size %d", msg_size);
 
 	struct tx_msgq packet = {
 		.addr = multicast_local_addr,
 		.msg = {msg_buffer[0], msg_buffer[1],msg_buffer[2]},
-		.msg_size = msg_size,
+		.msg_size = 3,
 		.uri = TEMP_URI_PATH
 	};
 	k_msgq_put(&msg_queue, &packet, K_NO_WAIT);

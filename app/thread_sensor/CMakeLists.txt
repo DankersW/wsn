@@ -21,6 +21,11 @@ target_sources(app PRIVATE
     src/sensor/die_temp.c
 
     src/protobuf/proto_serializer.c
+
+    ../../home-automation-ipc/generated/nanopb/pb_common.c
+    ../../home-automation-ipc/generated/nanopb/pb_decode.c
+    ../../home-automation-ipc/generated/nanopb/pb_encode.c
+    ../../home-automation-ipc/generated/nanopb/wsn.pb.c
 )
 
 target_include_directories(app PRIVATE
@@ -28,4 +33,6 @@ target_include_directories(app PRIVATE
     src/coap
     src/sensor
     src/protobuf
+
+    ../../home-automation-ipc/generated/nanopb/
 )
