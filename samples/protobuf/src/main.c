@@ -10,6 +10,8 @@
 #define LOG_MODULE_NAME usb_print_example
 LOG_MODULE_REGISTER(LOG_MODULE_NAME, LOG_LEVEL_DBG);
 
+#define MSG_SIZE 128
+
 void main(void)
 {
 	if (usb_enable(NULL)) {
@@ -19,11 +21,39 @@ void main(void)
 	
 	while (1) {
 		k_sleep(K_SECONDS(2));
-		proto_magic();
+
+		//proto_encode_decode();
+        
+        some_handler();
 	}
 }
 
-int proto_magic()
+void some_handler()
+{
+    uint8_t buffer[128];
+    int msg_size = proto_encode(buffer);
+    printk("Message size: %d \n", msg_size);
+}
+
+int proto_encode(uint8_t *msg)
+{
+    wsn_SensorData message = wsn_SensorData_init_zero;
+    pb_ostream_t stream = pb_ostream_from_buffer(msg, MSG_SIZE);
+        
+	message.temperature = 25.0;
+	message.humidity = 17.77;
+    strcpy(message.sensor_id,"S01");
+        
+    if (!pb_encode(&stream, wsn_SensorData_fields, &message))
+    {
+        printf("Encoding failed: %s\n", PB_GET_ERROR(&stream));
+        return 1;
+    }
+    return stream.bytes_written;
+}
+
+
+int proto_encode_decode()
 {
 	/* This is the buffer where we will store our message. */
     uint8_t buffer[128];
