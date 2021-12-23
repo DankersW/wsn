@@ -34,7 +34,6 @@ static void temp_publish_handler(void *context, otMessage *message, const otMess
 	uint8_t proto_size = otMessageGetLength(message) - otMessageGetOffset(message);	
 	uint8_t payload[PROTO_MSG_MAX_SIZE] = {0};
 	otMessageRead(message, otMessageGetOffset(message), &payload, proto_size);
-	//int16_t temperature =  (payload[1] * 100) + payload[2];
 
 	OtData data = {
 		.addr_sender = message_info->mPeerAddr,

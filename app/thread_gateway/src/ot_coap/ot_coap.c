@@ -19,12 +19,8 @@ static void on_temp_publish(OtData msg)
 {
 	char addr_buffer[38] = {};
 	otIp6AddressToString(&msg.addr_sender, &addr_buffer[0], 38);
-	uint8_t msg_[20];
-	deserialize_sensor_data_to_console(&msg_, 20);
-	//LOG_INF("Msg received, cmd: %d - temp: %d from %s", msg.cmd, msg.temperature, log_strdup(addr_buffer));
-	LOG_INF("Msg received, size: %d - temp: %d from %s", msg.msg_size, msg.msg[0], log_strdup(addr_buffer));
-
-
+	LOG_INF("Msg received from %s with size %d", log_strdup(addr_buffer), msg.msg_size);
+	deserialize_sensor_data_to_console(&msg.msg, msg.msg_size);
 }
 
 static void on_thread_state_changed(uint32_t flags, void *context)
