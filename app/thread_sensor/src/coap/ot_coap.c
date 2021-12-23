@@ -65,14 +65,13 @@ static void publication_work_hanlder(struct k_work *work)
 	struct sensor_value die_temp = get_chip_temp();
 	uint8_t msg_buffer[PROTO_MSG_MAX_SIZE] = {0};
 	uint8_t msg_size = serialize_sensor_data(msg_buffer, &die_temp);
-	LOG_INF("message size %d", msg_size);
 
 	struct tx_msgq packet = {
 		.addr = multicast_local_addr,
-		.msg = {msg_buffer[0], msg_buffer[1],msg_buffer[2]},
-		.msg_size = 3,
+		.msg_size = msg_size,
 		.uri = TEMP_URI_PATH
 	};
+	memcpy(packet.msg, msg_buffer, msg_size);
 	k_msgq_put(&msg_queue, &packet, K_NO_WAIT);
 }
 
