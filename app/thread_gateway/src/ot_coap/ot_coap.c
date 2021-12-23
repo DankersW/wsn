@@ -18,7 +18,7 @@ static struct sockaddr_in6 multicast_local_addr = {
 static void on_temp_publish(OtData msg)
 {
 	char addr_buffer[38] = {};
-	otIp6AddressToString(&msg.addr, &addr_buffer[0], 38);
+	otIp6AddressToString(&msg.addr, &addr_buffer, 38);
 	LOG_INF("Msg received from %s with size %d", log_strdup(addr_buffer), msg.size);
 	deserialize_sensor_data_to_console(&msg.data, msg.size);
 }
