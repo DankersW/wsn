@@ -19,6 +19,8 @@ static void on_temp_publish(OtTempData msg)
 {
 	char addr_buffer[38] = {};
 	otIp6AddressToString(&msg.addr_sender, &addr_buffer[0], 38);
+	uint8_t msg_[20];
+	deserialize_sensor_data_to_console(&msg_, 20);
 	LOG_INF("Msg received, cmd: %d - temp: %d from %s", msg.cmd, msg.temperature, log_strdup(addr_buffer));
 }
 

@@ -25,10 +25,20 @@ target_sources(app PRIVATE
 
 	src/ot_coap/ot_coap.c
 	src/ot_coap/ot_coap_utils.c
+
+	src/protobuf/proto_deserializer.c
+
+	../../home-automation-ipc/generated/nanopb/pb_common.c
+    ../../home-automation-ipc/generated/nanopb/pb_decode.c
+    ../../home-automation-ipc/generated/nanopb/pb_encode.c
+    ../../home-automation-ipc/generated/nanopb/wsn.pb.c
 )
 
 target_include_directories(app PRIVATE 
 	src/cli
 	src/cli/handlers
 	src/ot_coap
+	src/protobuf
+
+    ../../home-automation-ipc/generated/nanopb/
 )
