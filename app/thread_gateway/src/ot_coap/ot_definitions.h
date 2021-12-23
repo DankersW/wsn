@@ -26,9 +26,9 @@ enum ot_thread_commands {
 
 typedef struct OtData
 {
-	otIp6Address addr_sender;
-	uint8_t msg[PROTO_MSG_MAX_SIZE];
-    uint8_t msg_size;
+	otIp6Address addr;
+	uint8_t data[PROTO_MSG_MAX_SIZE];
+    uint8_t size;
 } OtData;
 
 

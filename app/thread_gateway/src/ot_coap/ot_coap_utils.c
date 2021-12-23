@@ -35,13 +35,13 @@ static void temp_publish_handler(void *context, otMessage *message, const otMess
 	uint8_t payload[PROTO_MSG_MAX_SIZE] = {0};
 	otMessageRead(message, otMessageGetOffset(message), &payload, proto_size);
 
-	OtData data = {
-		.addr_sender = message_info->mPeerAddr,
-		.msg_size = proto_size
+	OtData msg = {
+		.addr = message_info->mPeerAddr,
+		.size = proto_size
 	};
-	memcpy(data.msg, payload, proto_size);
+	memcpy(msg.data, payload, proto_size);
 
-	srv_context.on_temp_publish(data);
+	srv_context.on_temp_publish(msg);
 }
 
 static void coap_default_handler(void *context, otMessage *message, const otMessageInfo *message_info)
