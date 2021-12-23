@@ -40,6 +40,9 @@ static void temp_publish_handler(void *context, otMessage *message, const otMess
 		return;
 	}
 
+	LOG_WRN("message size: %d", otMessageGetOffset(message));
+	LOG_WRN("message size: %d", otMessageGetLength(message));
+
 	uint8_t payload[CHIP_TEMP_MSG_SIZE] = {0};
 	otMessageRead(message, otMessageGetOffset(message), &payload, CHIP_TEMP_MSG_SIZE);
 	int16_t temperature =  (payload[1] * 100) + payload[2];
