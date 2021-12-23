@@ -12,6 +12,8 @@
 #include "ot_coap_utils.h"
 #include "die_temp.h"
 #include "coap_message_definition.h"
+#include "definitions.h"
+#include "proto_serializer.h"
 
 #define QUEUE_SIZE 10
 

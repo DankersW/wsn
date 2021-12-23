@@ -8,6 +8,7 @@
 
 #include "ot_definitions.h"
 #include "ot_coap_utils.h"
+#include "proto_deserializer.h"
 
 #define LIGHT_LED DK_LED2
 

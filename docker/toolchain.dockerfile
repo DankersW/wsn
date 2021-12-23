@@ -1,4 +1,6 @@
-FROM dankersw/zephyr_builder:0.1.0
+FROM dankersw/zephyr_builder:0.1.1
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /work
 

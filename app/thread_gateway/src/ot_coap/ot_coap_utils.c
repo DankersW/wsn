@@ -21,36 +21,27 @@ static otCoapResource temp_monitor_resource = {
 
 static void temp_publish_handler(void *context, otMessage *message, const otMessageInfo *message_info)
 {
-	uint8_t command;
-
 	ARG_UNUSED(context);
-
 	if (otCoapMessageGetType(message) != OT_COAP_TYPE_NON_CONFIRMABLE) {
 		LOG_ERR("Temp pub handler - Unexpected type of message");
 		return;
 	}
-
 	if (otCoapMessageGetCode(message) != OT_COAP_CODE_PUT) {
 		LOG_ERR("Temp pub handler - Unexpected CoAP code");
 		return;
 	}
 
-	if (otMessageRead(message, otMessageGetOffset(message), &command, 1) !=1) {
-		LOG_ERR("Temp pub handler - Missing command");
-		return;
-	}
+	uint8_t proto_size = otMessageGetLength(message) - otMessageGetOffset(message);	
+	uint8_t payload[PROTO_MSG_MAX_SIZE] = {0};
+	otMessageRead(message, otMessageGetOffset(message), &payload, proto_size);
 
-	uint8_t payload[CHIP_TEMP_MSG_SIZE] = {0};
-	otMessageRead(message, otMessageGetOffset(message), &payload, CHIP_TEMP_MSG_SIZE);
-	int16_t temperature =  (payload[1] * 100) + payload[2];
-
-	OtTempData data = {
-		.cmd = payload[0],
-		.temperature = temperature,
-		.addr_sender = message_info->mPeerAddr
+	OtData msg = {
+		.addr = message_info->mPeerAddr,
+		.size = proto_size
 	};
+	memcpy(msg.data, payload, proto_size);
 
-	srv_context.on_temp_publish(data);
+	srv_context.on_temp_publish(msg);
 }
 
 static void coap_default_handler(void *context, otMessage *message, const otMessageInfo *message_info)

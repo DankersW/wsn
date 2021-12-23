@@ -14,7 +14,7 @@
 
 #include "ot_definitions.h"
 
-typedef void (*temp_publish_callback_t)(OtTempData temperature_data);
+typedef void (*temp_publish_callback_t)(OtData temperature_data);
 
 int ot_coap_init(temp_publish_callback_t on_temp_publish);
 

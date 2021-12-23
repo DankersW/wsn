@@ -11,7 +11,9 @@
 
 #define OT_CONNECTION_LED DK_LED1
 
-#define CHIP_TEMP_MSG_SIZE 3
+#define CHIP_TEMP_MSG_SIZE 3 // TODO: Remove
+
+#define PROTO_MSG_MAX_SIZE 20
 
 enum ot_thread_commands {
 	THREAD_COAP_LIGHT_CMD_OFF = '0',
@@ -22,12 +24,12 @@ enum ot_thread_commands {
 	THREAD_COAP_TEMP_MSG_CMD = '5'
 };
 
-typedef struct OtTempData
+typedef struct OtData
 {
-	uint8_t cmd;
-	int16_t temperature;
-	otIp6Address addr_sender;
-} OtTempData;
+	otIp6Address addr;
+	uint8_t data[PROTO_MSG_MAX_SIZE];
+    uint8_t size;
+} OtData;
 
 
 #endif // DEFINITIONS_H
