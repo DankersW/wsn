@@ -5,6 +5,8 @@ LOG_MODULE_REGISTER(ot_coap, LOG_LEVEL_DBG);
 static const char *const light_uri[] = { LIGHT_URI_PATH, NULL };
 static const char *const config_uri[] = { CONFIG_URI_PATH, NULL };
 
+static bool decode_msg = false;
+
 static struct sockaddr_in6 multicast_local_addr = {
 	.sin6_family = AF_INET6,
 	.sin6_port = htons(COAP_PORT),
@@ -20,7 +22,10 @@ static void on_temp_publish(OtData msg)
 	char addr_buffer[38] = {};
 	otIp6AddressToString(&msg.addr, &addr_buffer, 38);
 	LOG_INF("Msg received from %s with size %d", log_strdup(addr_buffer), msg.size);
-	deserialize_sensor_data_to_console(&msg.data, msg.size);
+	if (decode_msg) 
+	{
+		deserialize_sensor_data_to_console(&msg.data, msg.size);
+	}
 }
 
 static void on_thread_state_changed(uint32_t flags, void *context)
@@ -76,7 +81,7 @@ void temp_monitor_set_state(bool state)
 	LOG_DBG("Transmitted msg with return code %d", ret);
 }
 
-void set_raw_monitor(bool state)
+void set_decoded_monitor(bool state)
 {
-	LOG_DBG("Monitoring data raw %d", state);
+	decode_msg = state;
 }
