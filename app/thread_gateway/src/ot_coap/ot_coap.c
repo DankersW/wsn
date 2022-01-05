@@ -81,7 +81,7 @@ void temp_monitor_set_state(bool state)
 	LOG_DBG("Transmitted msg with return code %d", ret);
 }
 
-void set_decoded_monitor(bool state)
+void set_decode_msg(bool state)
 {
 	decode_msg = state;
 }
