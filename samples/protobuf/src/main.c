@@ -60,6 +60,21 @@ void decode_to_console(uint8_t *msg, uint8_t size)
         printf("Decoding failed: %s\n", PB_GET_ERROR(&stream));
         return;
     }
+
+    char raw_buffer[50] = {};
+    for (int i=0; i<size; ++i) {
+        printf("%d ", msg[i]);
+        raw_buffer[i] = msg[i] + '0';
+    }
+    printf("\n");
+    printf("0: %d - %c \n", msg[0], raw_buffer[0]);
+    printf("5: %d - %c \n", msg[5], raw_buffer[5]);
+    printf("10: %d - %c \n", msg[10], raw_buffer[10]);
+
+    size_t result = bin2hex(msg, size, raw_buffer, size);
+
+    //size_t bin2hex(const uint8_t *buf, size_t buflen, char *hex, size_t hexlen)
+
     printf("Sensor ID: %s\n", message.sensor_id);
     printf("Temperature: %d\n", (int)message.temperature);
     printf("Humidity: %d\n\n", (int)message.humidity);

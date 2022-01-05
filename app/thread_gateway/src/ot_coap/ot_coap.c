@@ -21,10 +21,13 @@ static void on_temp_publish(OtData msg)
 {
 	char addr_buffer[38] = {};
 	otIp6AddressToString(&msg.addr, &addr_buffer, 38);
-	LOG_INF("Msg received from %s with size %d", log_strdup(addr_buffer), msg.size);
-	if (decode_msg) 
-	{
+	
+	if (decode_msg) {
+		//char decode_buffer[100] = {};
+		//LOG_INF("msg | %s | %d | %s", log_strdup(decode_buffer), msg.size, log_strdup(addr_buffer));
 		deserialize_sensor_data_to_console(&msg.data, msg.size);
+	} else {
+		LOG_INF("msg | hex | %d | %s", msg.size, log_strdup(addr_buffer));
 	}
 }
 
