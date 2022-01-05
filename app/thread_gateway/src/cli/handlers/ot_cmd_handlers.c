@@ -39,3 +39,19 @@ int cmd_ot_monitor_temp_off(const struct shell *shell, size_t argc, char **argv)
 	temp_monitor_set_state(false);
 	return 0;
 }
+
+int cmd_ot_monitor_raw_on(const struct shell *shell, size_t argc, char **argv)
+{
+	ARG_UNUSED(argc);
+	ARG_UNUSED(argv);
+	set_raw_monitor(true);
+	return 0;
+}
+
+int cmd_ot_monitor_raw_off(const struct shell *shell, size_t argc, char **argv)
+{
+	ARG_UNUSED(argc);
+	ARG_UNUSED(argv);
+	set_raw_monitor(false);
+	return 0;
+}

@@ -19,8 +19,14 @@ SHELL_STATIC_SUBCMD_SET_CREATE(sub_thread_monitor_temp,
 	SHELL_CMD(off, NULL, "Turn off temperature monitoring", cmd_ot_monitor_temp_off),
 	SHELL_SUBCMD_SET_END
 );
+SHELL_STATIC_SUBCMD_SET_CREATE(sub_thread_monitor_raw,
+	SHELL_CMD(on, NULL, "HEX protobuf", cmd_ot_monitor_raw_on),
+	SHELL_CMD(off, NULL, "Readable ASCII", cmd_ot_monitor_raw_off),
+	SHELL_SUBCMD_SET_END
+);
 SHELL_STATIC_SUBCMD_SET_CREATE(sub_thread_monitor,
 	SHELL_CMD(temp, &sub_thread_monitor_temp, "Temperature monitoring", NULL),
+	SHELL_CMD(raw, &sub_thread_monitor_raw, "Translated received data from hex (protobuf) to readable ascii", NULL),
 	SHELL_SUBCMD_SET_END
 );
 SHELL_STATIC_SUBCMD_SET_CREATE(sub_thread,

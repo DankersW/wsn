@@ -18,5 +18,6 @@ void light_set_state(bool state);
 void light_toggle();
 
 void temp_monitor_set_state(bool state);
+void set_raw_monitor(bool state);
 
 #endif // OT_COAP_H

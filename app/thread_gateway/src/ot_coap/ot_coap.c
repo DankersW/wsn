@@ -75,3 +75,8 @@ void temp_monitor_set_state(bool state)
 	int ret = coap_send(config_uri, multicast_local_addr, command);
 	LOG_DBG("Transmitted msg with return code %d", ret);
 }
+
+void set_raw_monitor(bool state)
+{
+	LOG_DBG("Monitoring data raw %d", state);
+}
