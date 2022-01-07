@@ -14,3 +14,12 @@ void deserialize_sensor_data_to_console(uint8_t *msg, uint8_t size)
     }
     LOG_INF("Msg content: Sensor ID %s Temperature %d Humidity %d", log_strdup(message.sensor_id), (int)message.temperature, (int)message.humidity);
 }
+
+void protobuf2str(uint8_t *data, size_t size, char *buffer)
+{
+    for (int i=0; i<size; ++i){
+        char tmp[4];
+        sprintf(tmp, "%d ", data[i]);
+        strcat(buffer, tmp);
+    }
+}

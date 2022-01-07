@@ -27,7 +27,9 @@ static void on_temp_publish(OtData msg)
 		//LOG_INF("msg | %s | %d | %s", log_strdup(decode_buffer), msg.size, log_strdup(addr_buffer));
 		deserialize_sensor_data_to_console(&msg.data, msg.size);
 	} else {
-		LOG_INF("msg | hex | %d | %s", msg.size, log_strdup(addr_buffer));
+		char proto_str[100] = {};
+		protobuf2str(msg.data, msg.size, proto_str);
+		LOG_INF("SensorData | %s| %d | %s", log_strdup(proto_str), msg.size, log_strdup(addr_buffer));
 	}
 }
 
