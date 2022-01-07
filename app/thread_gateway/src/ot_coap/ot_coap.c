@@ -1,6 +1,7 @@
 #include "ot_coap.h"
 
-LOG_MODULE_REGISTER(ot_coap, LOG_LEVEL_DBG);
+#define LOG_MODULE_NAME ot_coap
+LOG_MODULE_REGISTER(LOG_MODULE_NAME, LOG_LEVEL_DBG);
 
 static const char *const light_uri[] = { LIGHT_URI_PATH, NULL };
 static const char *const config_uri[] = { CONFIG_URI_PATH, NULL };
@@ -23,9 +24,12 @@ static void on_temp_publish(OtData msg)
 	otIp6AddressToString(&msg.addr, &addr_buffer, 38);
 	
 	if (decode_msg) {
-		//char decode_buffer[100] = {};
+		
 		//LOG_INF("msg | %s | %d | %s", log_strdup(decode_buffer), msg.size, log_strdup(addr_buffer));
-		deserialize_sensor_data_to_console(&msg.data, msg.size);
+		//deserialize_sensor_data_to_console(&msg.data, msg.size);
+		char buffer[100] = {};
+		deserialize_sensor_data(&msg.data, msg.size, buffer);
+		LOG_INF("SensorData | %s | %d | %s", log_strdup(buffer), msg.size, log_strdup(addr_buffer));
 	} else {
 		char proto_str[100] = {};
 		protobuf2str(msg.data, msg.size, proto_str);
