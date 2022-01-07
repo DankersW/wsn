@@ -39,3 +39,19 @@ int cmd_ot_monitor_temp_off(const struct shell *shell, size_t argc, char **argv)
 	temp_monitor_set_state(false);
 	return 0;
 }
+
+int cmd_ot_monitor_decode_on(const struct shell *shell, size_t argc, char **argv)
+{
+	ARG_UNUSED(argc);
+	ARG_UNUSED(argv);
+	set_decode_msg(true);
+	return 0;
+}
+
+int cmd_ot_monitor_decode_off(const struct shell *shell, size_t argc, char **argv)
+{
+	ARG_UNUSED(argc);
+	ARG_UNUSED(argv);
+	set_decode_msg(false);
+	return 0;
+}

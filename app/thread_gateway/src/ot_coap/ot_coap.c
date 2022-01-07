@@ -1,9 +1,12 @@
 #include "ot_coap.h"
 
-LOG_MODULE_REGISTER(ot_coap, LOG_LEVEL_DBG);
+#define LOG_MODULE_NAME ot_coap
+LOG_MODULE_REGISTER(LOG_MODULE_NAME, LOG_LEVEL_DBG);
 
 static const char *const light_uri[] = { LIGHT_URI_PATH, NULL };
 static const char *const config_uri[] = { CONFIG_URI_PATH, NULL };
+
+static bool decode_msg = false;
 
 static struct sockaddr_in6 multicast_local_addr = {
 	.sin6_family = AF_INET6,
@@ -19,8 +22,14 @@ static void on_temp_publish(OtData msg)
 {
 	char addr_buffer[38] = {};
 	otIp6AddressToString(&msg.addr, &addr_buffer, 38);
-	LOG_INF("Msg received from %s with size %d", log_strdup(addr_buffer), msg.size);
-	deserialize_sensor_data_to_console(&msg.data, msg.size);
+
+	char buffer[100] = {};
+	if (decode_msg) {
+		deserialize_sensor_data(&msg.data, msg.size, buffer);	
+	} else {
+		protobuf2str(msg.data, msg.size, buffer);
+	}
+	LOG_INF("SensorData | %s| %d | %s", log_strdup(buffer), msg.size, log_strdup(addr_buffer));
 }
 
 static void on_thread_state_changed(uint32_t flags, void *context)
@@ -74,4 +83,9 @@ void temp_monitor_set_state(bool state)
 	uint8_t command = state ? THREAD_COAP_TEMP_PUBLISH_ON_CMD : THREAD_COAP_TEMP_PUBLISH_OFF_CMD;
 	int ret = coap_send(config_uri, multicast_local_addr, command);
 	LOG_DBG("Transmitted msg with return code %d", ret);
+}
+
+void set_decode_msg(bool state)
+{
+	decode_msg = state;
 }
