@@ -9,7 +9,6 @@
 
 #include "wsn.pb.h"
 
-void deserialize_sensor_data_to_console(uint8_t *msg, uint8_t size);
 void deserialize_sensor_data(uint8_t *msg, uint8_t size, char *buffer);
 void protobuf2str(uint8_t *data, size_t size, char *buffer);
 
