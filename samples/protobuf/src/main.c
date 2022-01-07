@@ -7,10 +7,20 @@
 #include <pb_decode.h>
 #include "wsn.pb.h"
 
-#define LOG_MODULE_NAME usb_print_example
+#include <stdio.h>
+#include <string.h>
+
+
+#define LOG_MODULE_NAME protobuf
 LOG_MODULE_REGISTER(LOG_MODULE_NAME, LOG_LEVEL_DBG);
 
 #define MSG_SIZE 128
+
+void some_handler();
+int proto_encode(uint8_t *msg);
+void decode_to_console(uint8_t *msg, uint8_t size);
+void bin2str(uint8_t *data, size_t size, char *buffer);
+
 
 void main(void)
 {
@@ -61,21 +71,18 @@ void decode_to_console(uint8_t *msg, uint8_t size)
         return;
     }
 
-    char raw_buffer[50] = {};
-    for (int i=0; i<size; ++i) {
-        printf("%d ", msg[i]);
-        raw_buffer[i] = msg[i] + '0';
+    char raw_buffer[100] = {};
+    bin2str(msg, size, raw_buffer);
+
+    LOG_INF("raw: %s", log_strdup(raw_buffer));
+    LOG_INF("decoded: ID %s, temp %d, humi %d", log_strdup(message.sensor_id), (int)message.temperature, (int)message.humidity);
+}
+
+void bin2str(uint8_t *data, size_t size, char *buffer)
+{
+    for (int i=0; i<size; ++i){
+        char tmp[4];
+        sprintf(tmp, "%d ", data[i]);
+        strcat(buffer, tmp);
     }
-    printf("\n");
-    printf("0: %d - %c \n", msg[0], raw_buffer[0]);
-    printf("5: %d - %c \n", msg[5], raw_buffer[5]);
-    printf("10: %d - %c \n", msg[10], raw_buffer[10]);
-
-    size_t result = bin2hex(msg, size, raw_buffer, size);
-
-    //size_t bin2hex(const uint8_t *buf, size_t buflen, char *hex, size_t hexlen)
-
-    printf("Sensor ID: %s\n", message.sensor_id);
-    printf("Temperature: %d\n", (int)message.temperature);
-    printf("Humidity: %d\n\n", (int)message.humidity);
 }
