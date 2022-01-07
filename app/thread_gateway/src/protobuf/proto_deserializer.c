@@ -24,7 +24,7 @@ void deserialize_sensor_data(uint8_t *msg, uint8_t size, char *buffer)
         LOG_ERR("Decoding failed: %s\n", PB_GET_ERROR(&stream));
         return;
     }
-    sprintf(buffer, "ID %s, temp %d, humi %d", log_strdup(message.sensor_id), (int)message.temperature, (int)message.humidity);
+    sprintf(buffer, "ID %s, temp %d, humi %d ", log_strdup(message.sensor_id), (int)message.temperature, (int)message.humidity);
     //LOG_INF("Msg content: Sensor ID %s Temperature %d Humidity %d", log_strdup(message.sensor_id), (int)message.temperature, (int)message.humidity);
 }
 

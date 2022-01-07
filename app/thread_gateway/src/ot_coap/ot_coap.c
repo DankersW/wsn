@@ -22,19 +22,14 @@ static void on_temp_publish(OtData msg)
 {
 	char addr_buffer[38] = {};
 	otIp6AddressToString(&msg.addr, &addr_buffer, 38);
-	
+
+	char buffer[100] = {};
 	if (decode_msg) {
-		
-		//LOG_INF("msg | %s | %d | %s", log_strdup(decode_buffer), msg.size, log_strdup(addr_buffer));
-		//deserialize_sensor_data_to_console(&msg.data, msg.size);
-		char buffer[100] = {};
-		deserialize_sensor_data(&msg.data, msg.size, buffer);
-		LOG_INF("SensorData | %s | %d | %s", log_strdup(buffer), msg.size, log_strdup(addr_buffer));
+		deserialize_sensor_data(&msg.data, msg.size, buffer);	
 	} else {
-		char proto_str[100] = {};
-		protobuf2str(msg.data, msg.size, proto_str);
-		LOG_INF("SensorData | %s| %d | %s", log_strdup(proto_str), msg.size, log_strdup(addr_buffer));
+		protobuf2str(msg.data, msg.size, buffer);
 	}
+	LOG_INF("SensorData | %s| %d | %s", log_strdup(buffer), msg.size, log_strdup(addr_buffer));
 }
 
 static void on_thread_state_changed(uint32_t flags, void *context)
