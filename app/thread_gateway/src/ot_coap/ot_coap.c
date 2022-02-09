@@ -29,7 +29,7 @@ static void on_temp_publish(OtData msg)
 	} else {
 		protobuf2str(msg.data, msg.size, buffer);
 	}
-	LOG_INF("SensorData | %s| %d | %s", log_strdup(buffer), msg.size, log_strdup(addr_buffer));
+	LOG_INF("SensorData | %s| %s", log_strdup(buffer), msg.size, log_strdup(addr_buffer));
 }
 
 static void on_thread_state_changed(uint32_t flags, void *context)
