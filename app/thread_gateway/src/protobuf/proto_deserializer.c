@@ -29,7 +29,7 @@ void decode_msg_type(wsn_MessageType msg_type, char *buffer)
     switch (msg_type) 
     {
         case wsn_MessageType_SENSOR_DATA: 
-            buffer = "SENSOR_DATA";
+            strcpy(buffer, "SENSOR_DATA");
             break;
     }
     return;
