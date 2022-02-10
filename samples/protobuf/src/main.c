@@ -49,8 +49,8 @@ int proto_encode(uint8_t *msg)
     wsn_SensorData message = wsn_SensorData_init_zero;
     pb_ostream_t stream = pb_ostream_from_buffer(msg, MSG_SIZE);
         
-	message.temperature = 25.0;
-	message.humidity = 17.77;
+	message.temperature = 25;
+	message.humidity = 17;
     strcpy(message.sensor_id,"S01");
         
     if (!pb_encode(&stream, wsn_SensorData_fields, &message))
@@ -75,7 +75,7 @@ void decode_to_console(uint8_t *msg, uint8_t size)
     bin2str(msg, size, raw_buffer);
 
     LOG_INF("raw: %s", log_strdup(raw_buffer));
-    LOG_INF("decoded: ID %s, temp %d, humi %d", log_strdup(message.sensor_id), (int)message.temperature, (int)message.humidity);
+    LOG_INF("decoded: type %d, id %s, temp %d, humi %d", wsn_MessageType_SENSOR_DATA, log_strdup(message.sensor_id), message.temperature, message.humidity);
 }
 
 void bin2str(uint8_t *data, size_t size, char *buffer)

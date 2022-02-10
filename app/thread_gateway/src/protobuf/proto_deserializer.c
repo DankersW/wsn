@@ -12,7 +12,7 @@ void deserialize_sensor_data(uint8_t *msg, uint8_t size, char *buffer)
         LOG_ERR("Decoding failed: %s\n", PB_GET_ERROR(&stream));
         return;
     }
-    sprintf(buffer, "ID %s, temp %d, humi %d ", log_strdup(message.sensor_id), (int)message.temperature, (int)message.humidity);
+    sprintf(buffer, "ID %s, temp %d, humi %d ", log_strdup(message.sensor_id), message.temperature, message.humidity);
 }
 
 void protobuf2str(uint8_t *data, size_t size, char *buffer)
@@ -22,4 +22,15 @@ void protobuf2str(uint8_t *data, size_t size, char *buffer)
         sprintf(tmp, "%d ", data[i]);
         strcat(buffer, tmp);
     }
+}
+
+void decode_msg_type(wsn_MessageType msg_type, char *buffer)
+{
+    switch (msg_type) 
+    {
+        case wsn_MessageType_SENSOR_DATA: 
+            strcpy(buffer, "SENSOR_DATA");
+            break;
+    }
+    return;
 }
