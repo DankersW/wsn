@@ -23,3 +23,14 @@ void protobuf2str(uint8_t *data, size_t size, char *buffer)
         strcat(buffer, tmp);
     }
 }
+
+void decode_msg_type(wsn_MessageType msg_type, char *buffer)
+{
+    switch (msg_type) 
+    {
+        case wsn_MessageType_SENSOR_DATA: 
+            buffer = "SENSOR_DATA";
+            break;
+    }
+    return;
+}

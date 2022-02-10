@@ -23,13 +23,16 @@ static void on_temp_publish(OtData msg)
 	char addr_buffer[38] = {};
 	otIp6AddressToString(&msg.addr, &addr_buffer, 38);
 
-	char buffer[100] = {};
+	char data_buffer[100] = {};
+	char type_buffer[20] = {};
 	if (decode_msg) {
-		deserialize_sensor_data(&msg.data, msg.size, buffer);	
+		deserialize_sensor_data(&msg.data, msg.size, data_buffer);
+		decode_msg_type(wsn_MessageType_SENSOR_DATA, type_buffer);	
 	} else {
-		protobuf2str(msg.data, msg.size, buffer);
+		sprintf(type_buffer, "%d", wsn_MessageType_SENSOR_DATA);
+		protobuf2str(msg.data, msg.size, data_buffer);
 	}
-	LOG_INF("SensorData | %s| %s", log_strdup(buffer), msg.size, log_strdup(addr_buffer));
+	LOG_INF("%s | %s| %s", log_strdup(type_buffer), log_strdup(data_buffer), log_strdup(addr_buffer));
 }
 
 static void on_thread_state_changed(uint32_t flags, void *context)
