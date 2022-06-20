@@ -3,7 +3,7 @@ manifest:
 
   remotes:
     - name: ncs
-      url-base: git://github.com/nrfconnect
+      url-base: https://github.com/nrfconnect
 
   projects:
     - name: nrf

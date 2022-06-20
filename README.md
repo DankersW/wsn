@@ -6,10 +6,10 @@ Repository containing several WSN node projects. All nodes use Zephyr RTOS and t
 
 ### Toolchain
 
-Setting up the toolchain and the development enviroment is done by executing the ```sdk/bootstrap.sh``` script from the root directoy.
+Setting up the toolchain and the development environment is done by executing the ```sdk/bootstrap.sh``` script from the root directory.
 
 ```sh
-./scripts/sdk/bootstrap.sh
+./scripts/toolchain/bootstrap.sh
 ```
 
 Executing a command in the toolchain is done by invoking the ```toolchain/run.sh``` script together with the command you want to execute from the project root.
