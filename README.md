@@ -8,6 +8,10 @@ Repository containing several WSN node projects. All nodes use Zephyr RTOS and t
 
 Setting up the toolchain and the development environment is done by executing the ```sdk/bootstrap.sh``` script from the root directory.
 
+Make sure docker and Python (>=3.8) are install.
+
+**TO BE VERIFIED!!!** On a clean machine it might be that you need to install the SEGGER JLink drivers to interact with the debugger. Working version is 7.2. [Download](https://www.segger.com/downloads/jlink/)
+
 ```sh
 ./scripts/toolchain/bootstrap.sh
 ```
